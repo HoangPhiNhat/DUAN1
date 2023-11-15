@@ -1,4 +1,4 @@
-<?php
+<h1>10đ</h1><?php
 require_once('config/connection.php');
 
 if (isset($_GET['controller'])) {
