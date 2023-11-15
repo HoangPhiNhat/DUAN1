@@ -1,0 +1,40 @@
+#ftco-navbar .container
+{
+        background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
+#page {
+    padding: 60px 0;
+}
+.the_title {
+    color: #222;
+}
+.the_title {
+    margin-bottom: 0.5em;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 110%;
+    text-align: center;
+    position: relative;
+    text-transform: uppercase;
+    color: #222;
+    font-size: 2em;
+}
+.the_title:after {
+    background-color: #1B2F4E;
+}
+.the_title:after {
+    content: "";
+    height: 2px;
+    width: 200px;
+    display: block;
+    position: relative;
+    margin-top: 0.3em;
+    margin-left: auto;
+    margin-right: auto;
+    background: #8e7467;
+}
+.the_title+.the_content {
+    margin-top: 3em;
+}
