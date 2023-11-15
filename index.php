@@ -1,4 +1,4 @@
-<h1>thu nghiem</h1><?php
+<h1>thu nghiem</h1><p>sao ko day len duoc</p><?php
 require_once('config/connection.php');
 
 if (isset($_GET['controller'])) {
