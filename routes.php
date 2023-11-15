@@ -9,6 +9,7 @@ $controllers = array(
 // thì trang báo lỗi sẽ được gọi ra.
 if (!array_key_exists($controller, $controllers) || !in_array($action, $controllers[$controller])) {
     $controller = 'client';
+
     $action = 'error';
 }
 
