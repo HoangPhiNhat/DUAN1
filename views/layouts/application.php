@@ -1,17 +1,19 @@
-# views/layouts/application.php
+<!doctype html>
+<html lang="zxx">
 
-<DOCTYPE html>
-    <html>
+<!-- Mirrored from templates.hibootstrap.com/atoli/default/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2023 09:52:12 GMT -->
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Demo PHP MVC</title>
-    </head>
+<head>
 
-    <body>
-        <?= @$content ?>
-    </body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </html>
+    <link rel="stylesheet" href="../client/assets/css/bootstrap.min.css">
+    <title>Atoli - Hotel & Resorts HTML Template</title>
+</head>
+
+<body>
+    <?= @$content ?>
+</body>
+
+</html>

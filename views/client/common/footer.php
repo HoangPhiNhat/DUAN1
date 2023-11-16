@@ -1,92 +1,217 @@
-<footer class="ftco-footer ftco-section img" style="background-image: url(images/bg_4.jpg);">
-    <div class="overlay"></div>
+<footer class="footer-area footer-bg">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Harbor Lights</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
-                        live the blind texts.</p>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
+        <div class="footer-top pt-100 pb-70">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <a href="index.html">
+                                <img src="assets/img/logos/footer-logo2.png" alt="Images">
+                            </a>
+                        </div>
+                        <p>
+                            Aenean finibus convallis nisl sit amet
+                            hendrerit. Etiam blandit velit non lorem
+                            mattis, non ultrices eros bibendum .
+                        </p>
+                        <ul class="footer-list-contact">
+                            <li>
+                                <i class="bx bx-home-alt"></i>
+                                <a href="#">123 Stanton, Virginia, USA</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-phone-call"></i>
+                                <a href="tel:+1-(123)-456-7890">+1 (123)
+                                    456 7890</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-envelope"></i>
+                                <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#90f8f5fcfcffd0f1e4fffcf9bef3fffd"><span class="__cf_email__" data-cfemail="7a121f1616153a1b0e15161354191517">[email&#160;protected]</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget pl-5">
+                        <h3>Links</h3>
+                        <ul class="footer-list">
+                            <li>
+                                <a href="about.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="services-1.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Services
+                                </a>
+                            </li>
+                            <li>
+                                <a href="team.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Team
+                                </a>
+                            </li>
+                            <li>
+                                <a href="gallery.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Gallery
+                                </a>
+                            </li>
+                            <li>
+                                <a href="terms-condition.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Terms
+                                </a>
+                            </li>
+                            <li>
+                                <a href="privacy-policy.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Privacy Policy
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3>Useful Links</h3>
+                        <ul class="footer-list">
+                            <li>
+                                <a href="index.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="blog-1.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Blog
+                                </a>
+                            </li>
+                            <li>
+                                <a href="faq.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    FAQ
+                                </a>
+                            </li>
+                            <li>
+                                <a href="testimonials.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Testimonials
+                                </a>
+                            </li>
+                            <li>
+                                <a href="gallery.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Gallery
+                                </a>
+                            </li>
+                            <li>
+                                <a href="contact.html" target="_blank">
+                                    <i class="bx bx-caret-right"></i>
+                                    Contact Us
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3>Newsletter</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit.
+                            Nullam tempor eget ante fringilla rutrum
+                            aenean sed venenatis .
+                        </p>
+                        <div class="footer-form">
+                            <form class="newsletter-form" data-toggle="validator" method="POST">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control border-radius-50" placeholder="Your Email*" name="EMAIL" required autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <button type="submit" class="default-btn btn-bg-two border-radius-50">
+                                            Subscribe Now
+                                        </button>
+                                        <div id="validator-newsletter" class="form-result"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Useful Links</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Blog</a></li>
-                        <li><a href="#" class="py-2 d-block">Rooms</a></li>
-                        <li><a href="#" class="py-2 d-block">Amenities</a></li>
-                        <li><a href="#" class="py-2 d-block">Gift Card</a></li>
-                    </ul>
+        </div>
+        <div class="copy-right-area copy-right-top">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="copy-right-text text-align1">
+                        <p>
+                            Copyright @<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            Group 12. All Rights Reserved by
+                            <a href="https://hibootstrap.com/" target="_blank">Group 12</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Privacy</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Career</a></li>
-                        <li><a href="#" class="py-2 d-block">About Us</a></li>
-                        <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-                        <li><a href="#" class="py-2 d-block">Services</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Have a Questions?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View,
-                                    San Francisco, California, USA</span></li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
-                                        210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                <div class="col-lg-4 col-md-4">
+                    <div class="social-icon text-align2">
+                        <ul class="social-link">
+                            <li>
+                                <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank"><i class="bx bxl-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank"><i class="bx bxl-pinterest-alt"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank"><i class="bx bxl-youtube"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-
-                <p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>
-                        document.write(new Date().getFullYear());
-                    </script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-            </div>
-        </div>
     </div>
 </footer>
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-    </svg></div>
+
+<script src="assets/js/jquery.min.js"></script>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+
+<script src="assets/js/owl.carousel.min.js"></script>
+
+<script src="assets/js/jquery.nice-select.min.js"></script>
+
+<script src="assets/js/wow.min.js"></script>
+
+<script src="assets/js/jquery-ui.js"></script>
+
+<script src="assets/js/meanmenu.js"></script>
+
+<script src="assets/js/jquery.ajaxchimp.min.js"></script>
+
+<script src="assets/js/mixitup.min.js"></script>
+
+<script src="assets/js/form-validator.min.js"></script>
+
+<script src="assets/js/contact-form-script.js"></script>
+
+<script src="assets/js/custom.js"></script>
 </body>
-
-<script src="./public/js/jquery.min.js"></script>
-<script src="./public/js/jquery-migrate-3.0.1.min.js"></script>
-<script src="./public/js/popper.min.js"></script>
-<script src="./public/js/bootstrap.min.js"></script>
-<script src="./public/js/jquery.easing.1.3.js"></script>
-<script src="./public/js/jquery.waypoints.min.js"></script>
-<script src="./public/js/jquery.stellar.min.js"></script>
-<script src="./public/js/owl.carousel.min.js"></script>
-<script src="./public/js/jquery.magnific-popup.min.js"></script>
-<script src="./public/js/aos.js"></script>
-<script src="./public/js/jquery.animateNumber.min.js"></script>
-<script src="./public/js/bootstrap-datepicker.js"></script>
-<script src="./public/js/scrollax.min.js"></script>
-<!-- <script src="./public/js/google-map.js"></script> -->
-<script src="./public/js/main.js"></script>
-
-
 
 </html>
