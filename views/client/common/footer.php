@@ -6,7 +6,7 @@
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img src="assets/img/logos/footer-logo2.png" alt="Images">
+                                <img src="views/client/assets/img/logos/footer-logo2.png" alt="Images">
                             </a>
                         </div>
                         <p>
@@ -187,31 +187,31 @@
     </div>
 </footer>
 
-<script src="assets/js/jquery.min.js"></script>
+<script src="views/client/assets/js/jquery.min.js"></script>
 
-<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="views/client/assets/js/bootstrap.bundle.min.js"></script>
 
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<script src="views/client/assets/js/jquery.magnific-popup.min.js"></script>
 
-<script src="assets/js/owl.carousel.min.js"></script>
+<script src="views/client/assets/js/owl.carousel.min.js"></script>
 
-<script src="assets/js/jquery.nice-select.min.js"></script>
+<script src="views/client/assets/js/jquery.nice-select.min.js"></script>
 
-<script src="assets/js/wow.min.js"></script>
+<script src="views/client/assets/js/wow.min.js"></script>
 
-<script src="assets/js/jquery-ui.js"></script>
+<script src="views/client/assets/js/jquery-ui.js"></script>
 
-<script src="assets/js/meanmenu.js"></script>
+<script src="views/client/assets/js/meanmenu.js"></script>
 
-<script src="assets/js/jquery.ajaxchimp.min.js"></script>
+<script src="views/client/assets/js/jquery.ajaxchimp.min.js"></script>
 
-<script src="assets/js/mixitup.min.js"></script>
+<script src="views/client/assets/js/mixitup.min.js"></script>
 
-<script src="assets/js/form-validator.min.js"></script>
+<script src="views/client/assets/js/form-validator.min.js"></script>
 
-<script src="assets/js/contact-form-script.js"></script>
+<script src="views/client/assets/js/contact-form-script.js"></script>
 
-<script src="assets/js/custom.js"></script>
+<script src="views/client/assets/js/custom.js"></script>
 </body>
 
 </html>
