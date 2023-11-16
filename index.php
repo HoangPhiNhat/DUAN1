@@ -1,4 +1,4 @@
-<p>sao ko day len duoc</p><?php
+<p>git add -> git commit ->git push</p><?php
 require_once('config/connection.php');
 
 if (isset($_GET['controller'])) {
