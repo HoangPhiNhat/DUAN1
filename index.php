@@ -1,4 +1,4 @@
-<p>git add -> git commit ->git push</p><?php
+<p>git add -> git commit ->git </p><?php
 require_once('config/connection.php');
 
 if (isset($_GET['controller'])) {
