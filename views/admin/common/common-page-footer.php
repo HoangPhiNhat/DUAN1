@@ -1,16 +1,7 @@
-<?php include "header.php"; ?>
-<div class="container-scroller">
-    <?php include "navbar.php"; ?>
-    <div class="container-fluid page-body-wrapper">
-        <?php include "sidebar.php"; ?>
-        <div class="main-panel">
-            <div class="content-wrapper">
-                <?php include $admin_page ?>
-
-                <?php include "footer.php"; ?>
-            </div>
-        </div>
-    </div>
+<?php include "footer.php"; ?>
+</div>
+</div>
+</div>
 </div>
 <!-- plugins:js -->
 <script src="views/admin/assets/vendors/js/vendor.bundle.base.js"></script>

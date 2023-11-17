@@ -1,14 +1,16 @@
-
 <?php
 class BaseController
 {
+    protected $parentFolder; // Biến có giá trị là thư mục nào đó trong thư mục views, chứa các file view template của phần đang truy cập.
+    protected $subFolder; // Biến có giá trị là thư mục nào đó trong thư mục views, chứa các file view template của phần đang truy cập.
     protected $folder; // Biến có giá trị là thư mục nào đó trong thư mục views, chứa các file view template của phần đang truy cập.
+
 
     // Hàm hiển thị kết quả ra cho người dùng.
     function render($file, $data = array())
     {
         // Kiểm tra file gọi đến có tồn tại hay không?
-        $view_file = 'views/' . $this->folder . '/' . $file . '.php';
+        $view_file = 'views/' . $this->parentFolder . '/' . $this->subFolder . '/' . $this->folder . '/' . $file . '.php';
         if (is_file($view_file)) {
             // Nếu tồn tại file đó thì tạo ra các biến chứa giá trị truyền vào lúc gọi hàm
             extract($data);
