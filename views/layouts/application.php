@@ -1,5 +1,10 @@
-<?php include "./views/client/common/header.php"  ?>
+<?php
+include "views/client/common/header.php";
 
-<body>
-    <?= @$content ?>
-    <?php include "./views/client/common/footer.php"  ?>
+?>
+<?= @$content ?>
+<?php
+if (!isset($is404) || !$is404) {
+    include "views/client/common/footer.php";
+}
+?>

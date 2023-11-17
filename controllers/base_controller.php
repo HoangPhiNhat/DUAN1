@@ -1,5 +1,3 @@
-# controllers/base_controller.php
-
 <?php
 class BaseController
 {

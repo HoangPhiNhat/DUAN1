@@ -10,15 +10,32 @@ class ClientController extends BaseController
 
     public function home()
     {
-        $data = array(
-            'name' => 'Sang Beo',
-            'age' => 22
-        );
-        $this->render('home', $data);
+        $this->render('home');
     }
-
+    public function about()
+    {
+        $this->render('about');
+    }
+    public function bookNow()
+    {
+        $this->render('book');
+    }
+    public function register()
+    {
+        $this->render('register');
+    }
+    public function signIn()
+    {
+        $this->render('sign-in');
+    }
     public function error()
     {
-        $this->render('error');
+        $data = array('is404' => true);
+        $this->render('404', $data);
+    }
+    public function someOtherPage()
+    {
+        $data = array(); // Dữ liệu cho trang khác trang 404
+        $this->render('someOtherPage', $data);
     }
 }
