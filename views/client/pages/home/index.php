@@ -74,8 +74,7 @@
                                     <div class="form-group">
                                         <label>Check in</label>
                                         <div class="input-group">
-                                            <input id="datetimepicker" type="text" class="form-control"
-                                                placeholder="09/29/2020">
+                                            <input id="datetimepicker" type="text" class="form-control" placeholder="09/29/2020">
                                             <span class="input-group-addon"></span>
                                         </div>
                                         <i class="bx bxs-calendar"></i>
@@ -97,8 +96,7 @@
                                     <div class="form-group">
                                         <label>Check Out</label>
                                         <div class="input-group">
-                                            <input id="datetimepicker-check" type="text" class="form-control"
-                                                placeholder="09/29/2020">
+                                            <input id="datetimepicker-check" type="text" class="form-control" placeholder="09/29/2020">
                                             <span class="input-group-addon"></span>
                                         </div>
                                         <i class="bx bxs-calendar"></i>
