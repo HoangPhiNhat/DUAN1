@@ -1,4 +1,4 @@
-# routes.php
+
 
 <?php
 $controllers = array(

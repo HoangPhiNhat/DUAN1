@@ -12,5 +12,4 @@ if (isset($_GET['controller'])) {
     $controller = 'client';
     $action = 'home';
 }
-require_once('routes.php');?>
-<p>fdaha</p>;
+require_once('routes.php');
