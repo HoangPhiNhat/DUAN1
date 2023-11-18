@@ -21,6 +21,7 @@ class ClientController extends BaseController
     }
     public function bookNow()
     {
+        
         $this->folder = 'bookingRoom';
         $this->render('book');
     }
