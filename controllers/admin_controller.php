@@ -5,12 +5,13 @@ class AdminController extends BaseController
 {
     function __construct()
     {
-        $this->folder = 'admin';
+        $this->parentFolder = 'admin';
         $this->subFolder = 'pages';
     }
 
     public function dashboard()
     {
+        $this->folder = 'dashboard';
         $this->render('dashboard');
     }
     public function about()
