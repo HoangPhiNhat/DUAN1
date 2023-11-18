@@ -5,38 +5,28 @@ class AdminController extends BaseController
 {
     function __construct()
     {
-        $this->folder = 'admin';
+        $this->parentFolder = 'admin';
         $this->subFolder = 'pages';
     }
 
     public function dashboard()
     {
+        $this->folder = 'dashboard';
         $this->render('dashboard');
     }
-    public function about()
+    public function facilityList()
     {
-        $this->render('about');
+        $this->folder = 'facilities';
+        $this->render('facility_list');
     }
-    public function bookNow()
+    public function addFacility()
     {
-        $this->render('book');
+        $this->folder = 'facilities';
+        $this->render('add_facility');
     }
-    public function register()
+    public function updateFacility()
     {
-        $this->render('register');
-    }
-    public function signIn()
-    {
-        $this->render('sign-in');
-    }
-    public function error()
-    {
-        $data = array('is404' => true);
-        $this->render('404', $data);
-    }
-    public function someOtherPage()
-    {
-        $data = array(); // Dữ liệu cho trang khác trang 404
-        $this->render('someOtherPage', $data);
+        $this->folder = 'facilities';
+        $this->render('update_facility');
     }
 }

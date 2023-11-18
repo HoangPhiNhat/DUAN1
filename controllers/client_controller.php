@@ -40,9 +40,4 @@ class ClientController extends BaseController
         $this->folder = 'error_404';
         $this->render('404', $data);
     }
-    public function someOtherPage()
-    {
-        $data = array(); // Dữ liệu cho trang khác trang 404
-        $this->render('someOtherPage', $data);
-    }
 }
