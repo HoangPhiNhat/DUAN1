@@ -12,4 +12,5 @@ if (isset($_GET['controller'])) {
     $controller = 'client';
     $action = 'home';
 }
+echo "chất vcl hehe";
 require_once('routes.php');
