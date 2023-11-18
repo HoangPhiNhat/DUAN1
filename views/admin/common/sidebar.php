@@ -15,13 +15,13 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.php?page=admin&action=adminDashboard">
+            <a class="nav-link" href="index.php?controller=admin&action=dashboard">
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="index.php?page=admin&action=facility_list" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="index.php?controller=admin&action=facilityList">
                 <span class="menu-title">Quản lý cơ sở</span>
             </a>
             <!-- <div class="collapse" id="ui-basic">
