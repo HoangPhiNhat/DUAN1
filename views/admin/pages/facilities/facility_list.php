@@ -24,37 +24,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php // foreach ($listFacility as $value) :
-                    // extract($value)
+                    <?php foreach ($lists as $value) :
                     ?>
-                    <tr>
-                        <td><?php //echo $id
-                            ?>
-                        </td>
-                        <td> <?php //echo $name
-                                ?> </td>
-                        <td> <?php //echo $email
-                                ?> </td>
-                        <td> <?php //echo $phone_number
-                                ?> </td>
-                        <td class="text-center"> <?php //echo $starts
-                                                    ?><i class="mdi mdi-star-outline"></i></td>
-                        <td> <?php //echo $address
-                                ?> </td>
-                        <td> <?php //echo $created_date
-                                ?> </td>
-                        <td> <?php //echo $updated_date
-                                ?> </td>
-                        <td style="display:flex;
+                        <tr>
+                            <td><?php echo $value->id
+                                ?>
+                            </td>
+                            <td> <?php echo $value->name
+                                    ?> </td>
+                            <td> <?php echo $value->email
+                                    ?> </td>
+                            <td> <?php echo $value->phone_number
+                                    ?> </td>
+                            <td class="text-center"> <?php echo $value->starts
+                                                        ?><i class="mdi mdi-star-outline"></i></td>
+                            <td> <?php echo $value->address
+                                    ?> </td>
+                            <td> <?php echo $value->created_date
+                                    ?> </td>
+                            <td> <?php echo $value->updated_date
+                                    ?> </td>
+                            <td style="display:flex;
                         flex-wrap: wrap;
                         justify-content: center;
                         align-items: center;">
-                            <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a>Sửa</a></button>
-                            <button class="btn btn-gradient-primary "><a href=<?php //echo "index.php?act=delete_facility&id=" . $id
-                                                                                ?>>Xóa</a></button>
-                        </td>
-                    </tr>
-                    <?php // endforeach
+                                <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a style="padding: 0; color: #fff;" class="nav-link">Sửa</a></button>
+                                <button class="btn btn-gradient-primary "><a href=<?php echo "c"?> style="padding: 0; color: #fff;" class="nav-link">Xóa</a></button>
+                            </td>
+                        </tr>
+                    <?php endforeach
                     ?>
                 </tbody>
             </table>

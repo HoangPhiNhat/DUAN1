@@ -2,26 +2,30 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm Cơ sở</h4>
-            <form action="index.php?action=add_facility" method="POST" class="forms-sample">
+            <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample">
                 <div class="form-group">
                     <label for="facilityName">Tên Cơ Sở</label>
-                    <input type="text" class="form-control" id="facilityName" name="facilityName" placeholder="Tên Cở Sở">
+                    <input type="text" class="form-control" id="facilityName" name="name" placeholder="Tên Cở Sở">
                 </div>
                 <div class="form-group">
                     <label for="facilityEmail">Email</label>
-                    <input type="Email" class="form-control" id="facilityEmail" name="facilityEmail" placeholder="Địa chỉ Email">
+                    <input type="Email" class="form-control" id="facilityEmail" name="email" placeholder="Địa chỉ Email">
                 </div>
                 <div class="form-group">
                     <label for="facilityPhone">Số điện thoại</label>
-                    <input type="tel" class="form-control" id="facilityPhone" name="facilityPhone" placeholder="Số điện thoại">
+                    <input type="tel" class="form-control" id="facilityPhone" name="phone_number" placeholder="Số điện thoại">
                 </div>
                 <div class="form-group">
                     <label for="facilityRank">Xếp loại</label>
-                    <input type="text" class="form-control" id="facilityRank" name="facilityRank" placeholder="VD: 4 sao">
+                    <input type="text" class="form-control" id="facilityRank" name="starts" placeholder="VD: 4 sao">
+                </div>
+                <div class="form-group">
+                    <label for="facilityDescription">Mô tả</label>
+                    <input type="text" class="form-control" id="facilityDescription" name="description" placeholder="Nhập địa chỉ">
                 </div>
                 <div class="form-group">
                     <label for="facilityAddress">Địa chỉ</label>
-                    <input type="text" class="form-control" id="facilityAddress" name="facilityAddress" placeholder="Nhập địa chỉ">
+                    <input type="text" class="form-control" id="facilityAddress" name="address" placeholder="Nhập địa chỉ">
                 </div>
                 <!-- <div class="form-group">
                     <label>Hình ảnh</label>
@@ -41,25 +45,6 @@
 
                     </div>
                 </div> -->
-                <?php
-                if (isset($error)) {
-                    echo "<p style='color: red;'>$error</p>";
-                }
-
-                if (isset($success) && !empty($success)) {
-                    echo '<div class="success-message">' . $success . '</div>';
-                }
-
-                if (isset($errors) && count($errors) > 0) {
-                    echo '<div class="error-message">';
-                    foreach ($errors as $error) {
-                        echo '<p>' . $error . '</p>';
-                    }
-                    echo '</div>';
-                }
-
-
-                ?>
                 <button type="submit" name="submitAddFacility" class="btn btn-gradient-primary me-2">Submit</button>
                 <button class="btn btn-light">Cancel</button>
             </form>

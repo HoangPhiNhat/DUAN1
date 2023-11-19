@@ -139,13 +139,9 @@
                             <div class="side-item">
                                 <div class="option-item">
                                     <div class="language-option-list">
-                                        <select class="language-list-item">
-                                            <option>English</option>
-                                            <option>العربيّة</option>
-                                            <option>Deutsch</option>
-                                            <option>Português</option>
-                                            <option>简体中文</option>
-                                        </select>
+                                        <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập
+                                            /
+                                            Đăng ký</a>
                                     </div>
                                 </div>
                             </div>
