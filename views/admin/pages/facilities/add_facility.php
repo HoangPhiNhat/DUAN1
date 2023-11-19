@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="facilityDescription">Mô tả</label>
-                    <input type="text" class="form-control" id="facilityDescription" name="description" placeholder="Nhập địa chỉ">
+                    <input type="text" class="form-control" id="facilityDescription" name="description" placeholder="Nhập mô tả">
                 </div>
                 <div class="form-group">
                     <label for="facilityAddress">Địa chỉ</label>
