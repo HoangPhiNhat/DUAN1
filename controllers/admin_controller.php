@@ -20,7 +20,7 @@ class AdminController extends BaseController
         $lists = facilityList::getAllData();
         $data = array('lists' => $lists);
         $this->folder = 'facilities';
-        $this->render('facility_list', $data);
+        $this->render('list', $data);
     }
     public function addFacility()
     {
@@ -40,14 +40,14 @@ class AdminController extends BaseController
                 $message = "Dữ liệu đã được thêm thành công";
                 $data = array('message' => $message);
                 $this->folder = 'facilities';
-                $this->render('add_facility', $data);
+                $this->render('add', $data);
                 // Chuyển hướng người dùng
               //  header("Location: index.php?controller=admin&action=addFacility");
 
             } else {
                 // Nếu không phải là phương thức POST, chỉ hiển thị form thêm dữ liệu
                 $this->folder = 'facilities';
-                $this->render('add_facility');
+                $this->render('add');
             }
         }
 

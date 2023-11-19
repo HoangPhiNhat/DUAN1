@@ -2,6 +2,9 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm Cơ sở</h4>
+            <?php
+            if (isset($message) && ($message != "")) echo $message;
+            ?>
             <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample">
                 <div class="form-group">
                     <label for="facilityName">Tên Cơ Sở</label>
@@ -46,7 +49,9 @@
                     </div>
                 </div> -->
                 <button type="submit" name="submitAddFacility" class="btn btn-gradient-primary me-2">Submit</button>
-                <button class="btn btn-light">Cancel</button>
+                <a href="index.php?controller=admin&action=facilityList">
+                    Cancel
+                </a>
             </form>
         </div>
     </div>
