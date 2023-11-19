@@ -3,8 +3,13 @@
         <div class="card-body">
             <h4 class="card-title">Thêm Cơ sở</h4>
             <?php
-            if (isset($message) && ($message != "")) echo $message;
+            if (isset($message) && ($message != ""))
+             echo "<div id='customAlert' class='alert alert-success position-fixed top-0 end-0' role='alert' style='display: none;'>
+                   $message
+                   </div>";
+
             ?>
+
             <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample">
                 <div class="form-group">
                     <label for="facilityName">Tên Cơ Sở</label>
@@ -56,3 +61,9 @@
         </div>
     </div>
 </div>
+<script>
+        // Hiển thị thông báo và tự động ẩn sau 10s
+        $(document).ready(function(){
+            $("#customAlert").fadeIn().delay(10000).fadeOut();
+        });
+    </script>

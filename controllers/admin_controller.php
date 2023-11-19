@@ -10,7 +10,7 @@ class AdminController extends BaseController
         $this->subFolder = 'pages';
     }
 
-    public function dashboard()
+    public function dashboard()  
     {
         $this->folder = 'dashboard';
         $this->render('dashboard');
