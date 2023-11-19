@@ -1,3 +1,5 @@
+
+
 <?php
 $controllers = array(
     'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error'],
