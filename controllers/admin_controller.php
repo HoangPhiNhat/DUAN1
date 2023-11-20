@@ -16,16 +16,6 @@ class AdminController extends BaseController
         $this->folder = 'dashboard';
         $this->render('dashboard');
     }
-<<<<<<< HEAD
-=======
-    public function facilityList()
-    {
-        $lists = Facility::getAllData();
-        $data = array('lists' => $lists);
-        $this->folder = 'facilities';
-        $this->render('list', $data);
-    }
->>>>>>> 413df3a45d626ef63afc46463b9088d5c79e4584
     public function addFacility()
     {
         // Xử lý thêm dữ liệu
@@ -103,13 +93,13 @@ class AdminController extends BaseController
     public function addRoomtype()
     {
         // Xử lý thêm dữ liệu
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Lấy dữ liệu từ form
                 $name = $_POST['name'];
                 $description = $_POST['description'];
                 // echo "vc";
                 // Thêm dữ liệu vào cơ sở dữ liệu
-                roomtypeList::addData($name, $description);
+                RoomtypeList::addData($name, $description);
                 // Hiển thị thông báo
                 $message = "Dữ liệu đã được thêm thành công";
                 $data = array('message' => $message);
@@ -123,11 +113,35 @@ class AdminController extends BaseController
                 $this->folder = 'roomtypes';
                 $this->render('add_room');
             }
+     }
+        public function findRoomtype()
+        {
+            $value = RoomtypeList::findData($_GET['id']);
+            $data = array('value' => $value);
+            $this->folder = 'roomtypes';
+            $this->render('update', $data);
         }
-
+    
     public function updateRoomtype()
     {
-        $this->folder = 'roomtypes';
-        $this->render('update_room');
+        // Xử lý sửa dữ liệu
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Lấy dữ liệu từ form
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            // $email = $_POST['email'];
+            // $phone_number = $_POST['phone_number'];
+            // $starts = $_POST['starts'];
+            $description = $_POST['description'];
+            // echo "vc";
+            // Thêm dữ liệu vào cơ sở dữ liệu
+            Facility::updateData($id, $name, $description);
+            // Hiển thị thông báo
+            $message = "Dữ liệu đã được sửa thành công";
+            $data = array('message' => $message);
+            $this->folder = 'roomtypes';
+            $this->render('update_room');
+        // Chuyển hướng người dùng
+            //  header("Location: index.php?controller=admin&action=addFacility");
     }
 }
