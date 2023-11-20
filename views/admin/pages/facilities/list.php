@@ -49,7 +49,7 @@
                                     <?php echo $value->description ?>
                                 </td>
                                 <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->address ?>">
-                                   <?php echo $value->address ?>
+                                    <?php echo $value->address ?>
                                 </td>
                                 <td>
                                     <?php echo $value->created_date ?>
@@ -57,16 +57,20 @@
                                 <td>
                                     <?php echo $value->updated_date ?>
                                 </td>
-                                <td style="display:flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        align-items: center;">
-                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a style="padding: 0; color: #fff;" class="nav-link">Sửa</a></button>
-                                    <button class="btn btn-gradient-primary "><a href=<?php echo "c" ?> style="padding: 0; color: #fff;" class="nav-link">Xóa</a></button>
+                                <td style="display:flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;">
+                                            <a href='<?php echo "index.php?controller=admin&action=findFacility&id=$value->id" ?>' style="padding: 0; color: #fff;" class="nav-link">
+                                                Sửa
+                                            </a>
+                                    </button>
+                                    <button class="btn btn-gradient-primary ">
+                                        <a href=<?php echo "c" ?> style="padding: 0; color: #fff;" class="nav-link">
+                                            Xóa
+                                        </a>
+                                    </button>
                                 </td>
                             </tr>
-                        <?php endforeach
-                        ?>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
