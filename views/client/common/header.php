@@ -139,9 +139,9 @@
                             <div class="side-item">
                                 <div class="option-item">
                                     <div class="language-option-list">
-                                        <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập
-                                            /
-                                            Đăng ký</a>
+                                        <a href="index.php?controller=client&action=register" class="nav-link">
+                                            Đăng ký
+                                        git</a>
                                     </div>
                                 </div>
                             </div>

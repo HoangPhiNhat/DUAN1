@@ -1,5 +1,5 @@
 <?php
-class facilityList
+class Facility
 {
     public $id;
     public $name;
@@ -40,7 +40,7 @@ class facilityList
         $req = $db->query('SELECT * FROM facilities');
 
         foreach ($req->fetchAll() as $value) {
-            $list[] = new facilityList(
+            $list[] = new Facility(
                 $value['id'],
                 $value['name'],
                 $value['email'],
@@ -75,6 +75,48 @@ class facilityList
         // Thực hiện truy vấn
         $stmt->execute();
     }
+    static function findData($id)
+    {
+        $db = DB::getInstance();
+        $req = $db->prepare('SELECT * FROM facilities WHERE id = :id');
+        $req->execute(array('id' => $id));
 
+        $value = $req->fetch();
+        if (isset($value['id'])) {
+            return new Facility(
+                $value['id'],
+                $value['name'],
+                $value['email'],
+                $value['phone_number'],
+                $value['starts'],
+                $value['description'],
+                $value['address'],
+                $value['created_date'],
+                $value['updated_date']
+            );
+        }
+        return null;
+    }
+    static function updateData($id, $name, $email, $phone_number, $starts, $description, $address)
+    {
+        $db = DB::getInstance();
 
+        // Thực hiện truy vấn UPDATE
+        $query = 'UPDATE facilities SET name = :name, email = :email, phone_number = :phone_number,
+                  starts = :starts, description = :description, address = :address, updated_date = NOW()
+                  WHERE id = :id';
+
+        $stmt = $db->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone_number', $phone_number);
+        $stmt->bindParam(':starts', $starts);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':address', $address);
+
+        // Thực hiện truy vấn
+        $stmt->execute();
+    }
 }
