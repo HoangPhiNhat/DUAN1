@@ -34,85 +34,43 @@ function validateCapacity() {
     capacityInput.setCustomValidity("");
   }
 }
-document.getElementById("Email").addEventListener("input", function () {
-  validateEmail();
-});
-function validateEmail() {
-  var emailInput = document.getElementById("Email");
-  var emailError = document.getElementById("emailError");
-  var email = emailInput.value.trim();
 
-  var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (!emailRegex.test(email)) {
-    emailError.innerText = "Vui lòng nhập đúng định dạng email.";
-    emailInput.classList.add("is-invalid");
-    return false;
-  } else {
-    emailError.innerText = "";
-    emailInput.classList.remove("is-invalid");
-    return true;
-  }
-}
 // room
-function validateForm() {
-  var name = document.getElementById("Name").value;
-  var pricePerNight = document.getElementById("pricePerNight").value;
-  var capacity = document.getElementById("capacity").value;
-  var roomType = document.getElementById("roomTypeSelect").value;
-  var facility = document.getElementById("facilitySelect").value;
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.querySelector('.forms-sample');
+  var inputs = form.querySelectorAll('input');
+  var selects = form.querySelectorAll('select');
+  var submitButton = document.getElementById('submitButton');
 
-  if (
-    name === "" ||
-    pricePerNight === "" ||
-    capacity === "" ||
-    roomType === "0" ||
-    facility === "0"
-  ) {
-    alert("Vui lòng điền đầy đủ thông tin và chọn tùy chọn hợp lệ");
-    return false;
+  inputs.forEach(function(input) {
+    input.addEventListener('input', validateForm);
+  });
+
+  selects.forEach(function(select) {
+    select.addEventListener('change', validateForm);
+  });
+
+  function validateForm() {
+    var isValid = true;
+    inputs.forEach(function(input) {
+      if (input.value === '') {
+        isValid = false;
+      }
+    });
+
+    selects.forEach(function(select) {
+      if (select.value === '0') {
+        isValid = false;
+      }
+    });
+
+    if (isValid) {
+      submitButton.removeAttribute('disabled');
+    } else {
+      submitButton.setAttribute('disabled', 'disabled');
+    }
   }
-
-  if (isNaN(pricePerNight) || isNaN(capacity) || capacity < 1 || capacity > 4) {
-    alert("Vui lòng kiểm tra định dạng và giá trị hợp lệ cho các trường");
-    return false;
-  }
-
-  return true;
-}
-
-function validateInput(inputId) {
-  var input = document.getElementById(inputId);
-  var value = input.value.trim();
-  var errorSpan = document.getElementById(inputId + "Error");
-
-  if (value === "" || value === "0") {
-    input.classList.add("is-invalid");
-    errorSpan.textContent = "Vui lòng chọn tùy chọn hợp lệ";
-    document.getElementById("submitButton").disabled = true;
-  } else {
-    input.classList.remove("is-invalid");
-    errorSpan.textContent = "";
-    checkFormValidity();
-  }
-}
-
-function checkFormValidity() {
-  var name = document.getElementById("Name").value;
-  var pricePerNight = document.getElementById("pricePerNight").value;
-  var capacity = document.getElementById("capacity").value;
-  var roomType = document.getElementById("roomTypeSelect").value;
-  var facility = document.getElementById("facilitySelect").value;
-
-  document.getElementById("submitButton").disabled = !(
-    name !== "" &&
-    pricePerNight !== "" &&
-    capacity !== "" &&
-    roomType !== "0" &&
-    facility !== "0"
-  );
-}
-
+});
 // room type
 function validateFormSecond() {
   var name = document.getElementById("name").value;

@@ -1,7 +1,7 @@
 <div class="col-12 grid-margin stretch-card h-100">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Sửa loại phòng</h4>
+            <h4 class="card-title">Thêm loại phòng</h4>
             <form action="/DUAN1/index.php?controller=admin&action=addRoomType" method="POST" class="forms-sample" onsubmit="return validateFormSecond()">
                 <div class="form-group">
                     <label for="name">Tên loại phòng</label>
