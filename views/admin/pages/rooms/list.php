@@ -2,10 +2,10 @@
     <div class="card">
         <div class="card-body ">
             <div class="page-header">
-                <h4 class="card-title">Danh sách cơ sở</h4>
+                <h4 class="card-title">Danh sách Phòng</h4>
                 <span>
-                    <a class="nav-link" href="index.php?controller=admin&action=addFacility">
-                        Thêm cơ sở
+                    <a class="nav-link" href="index.php?controller=admin&action=addRoom">
+                        Thêm Phòng
                     </a>
                 </span>
             </div>
@@ -14,12 +14,11 @@
                     <thead>
                         <tr>
                             <th> ID </th>
-                            <th> Tên cở sở </th>
-                            <th> Email </th>
-                            <th> Số điện thoại </th>
-                            <th> Chất lượng </th>
-                            <th> Mô tả </th>
-                            <th> Địa chỉ </th>
+                            <th> Tên Phòng </th>
+                            <th> Giá Tiền Một Đêm </th>
+                            <th> Số Lượng Người Một Phòng </th>
+                            <th> Cơ Sở </th>
+                            <th> Loại Phòng </th>
                             <th> Ngày tạo </th>
                             <th> Ngày chỉnh sửa </th>
                             <th> Chức Năng </th>
@@ -36,20 +35,16 @@
                                     <?php echo $value->name ?>
                                 </td>
                                 <td>
-                                    <?php echo $value->email ?>
+                                    <?php echo $value->price_per_night ?>
                                 </td>
                                 <td>
-                                    <?php echo $value->phone_number ?>
+                                    <?php echo $value->capacity ?>
                                 </td>
-                                <td class="text-center">
-                                    <?php echo $value->starts ?><i class="mdi mdi-star-outline"></i>
+                                <td>
+                                    <?php echo $value->facility_id ?>
                                 </td>
-
-                                <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->description ?>">
-                                    <?php echo $value->description ?>
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->address ?>">
-                                   <?php echo $value->address ?>
+                                <td>
+                                    <?php echo $value->room_type_id ?>
                                 </td>
                                 <td>
                                     <?php echo $value->created_date ?>

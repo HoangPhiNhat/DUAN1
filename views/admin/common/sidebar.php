@@ -5,7 +5,6 @@
                 <div class="nav-profile-image">
                     <img src="views/admin/assets/images/faces/face1.jpg" alt="profile">
                     <span class="login-status online"></span>
-                    <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                     <span class="font-weight-bold mb-2">David Grey. H</span>
@@ -24,18 +23,16 @@
             <a class="nav-link" href="index.php?controller=admin&action=facilityList">
                 <span class="menu-title">Quản lý cơ sở</span>
             </a>
-            <!-- <div class="collapse" id="ui-basic">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?action=facility_list">Danh sách cở sở</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?action=add_facility">Thêm cở sở</a>
-          </li>
-        </ul>
-      </div> -->
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=roomList">
+                <span class="menu-title">Quản lý Phòng</span>
+            </a>
         </li>
-
-
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=roomTypeList">
+                <span class="menu-title">Quản lý các loại phòng</span>
+            </a>
+        </li>
     </ul>
 </nav>

@@ -37,7 +37,7 @@ class Facility
     {
         $list = [];
         $db = DB::getInstance();
-        $req = $db->query('SELECT * FROM facilities');
+        $req = $db->query('SELECT * FROM facilities ORDER BY id desc');
 
         foreach ($req->fetchAll() as $value) {
             $list[] = new Facility(

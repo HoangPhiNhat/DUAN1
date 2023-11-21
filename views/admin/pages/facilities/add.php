@@ -4,36 +4,37 @@
             <h4 class="card-title">Thêm Cơ sở</h4>
             <?php
             if (isset($message) && ($message != ""))
-             echo "<div id='customAlert' class='alert alert-success position-fixed top-0 end-0' role='alert' style='display: none;'>
+                echo "<div id='customAlert' class='alert alert-success position-fixed top-0 end-0' role='alert' style='display: none;'>
                    $message
                    </div>";
 
             ?>
 
-            <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample">
+            <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample" onsubmit="return validateForm()">
                 <div class="form-group">
-                    <label for="facilityName">Tên Cơ Sở</label>
-                    <input type="text" class="form-control" id="facilityName" name="name" placeholder="Tên Cở Sở">
+                    <label for="Name">Tên Cơ Sở</label>
+                    <input type="text" class="form-control" id="Name" name="name" placeholder="Tên Cở Sở">
                 </div>
                 <div class="form-group">
-                    <label for="facilityEmail">Email</label>
-                    <input type="Email" class="form-control" id="facilityEmail" name="email" placeholder="Địa chỉ Email">
+                    <label for="Email">Email</label>
+                    <input type="Email" class="form-control" id="Email" name="email" placeholder="Địa chỉ Email">
+                    <span id="emailError" style="color: red;"></span>
                 </div>
                 <div class="form-group">
-                    <label for="facilityPhone">Số điện thoại</label>
-                    <input type="tel" class="form-control" id="facilityPhone" name="phone_number" placeholder="Số điện thoại">
+                    <label for="Phone">Số điện thoại</label>
+                    <input type="tel" class="form-control" id="Phone" name="phone_number" placeholder="Số điện thoại">
                 </div>
                 <div class="form-group">
-                    <label for="facilityRank">Xếp loại</label>
-                    <input type="text" class="form-control" id="facilityRank" name="starts" placeholder="VD: 4 sao">
+                    <label for="Rank">Xếp loại</label>
+                    <input type="text" class="form-control" id="Rank" name="starts" placeholder="VD: 4 sao">
                 </div>
                 <div class="form-group">
-                    <label for="facilityDescription">Mô tả</label>
-                    <input type="text" class="form-control" id="facilityDescription" name="description" placeholder="Nhập mô tả">
+                    <label for="Description">Mô tả</label>
+                    <input type="text" class="form-control" id="Description" name="description" placeholder="Nhập mô tả">
                 </div>
                 <div class="form-group">
-                    <label for="facilityAddress">Địa chỉ</label>
-                    <input type="text" class="form-control" id="facilityAddress" name="address" placeholder="Nhập địa chỉ">
+                    <label for="Address">Địa chỉ</label>
+                    <input type="text" class="form-control" id="Address" name="address" placeholder="Nhập địa chỉ">
                 </div>
                 <!-- <div class="form-group">
                     <label>Hình ảnh</label>
@@ -53,7 +54,7 @@
 
                     </div>
                 </div> -->
-                <button type="submit" name="submitAddFacility" class="btn btn-gradient-primary me-2">Submit</button>
+                <button type="submit" name="submitButton" class="btn btn-gradient-primary me-2">Submit</button>
                 <a href="index.php?controller=admin&action=facilityList">
                     Cancel
                 </a>
@@ -61,9 +62,3 @@
         </div>
     </div>
 </div>
-<script>
-        // Hiển thị thông báo và tự động ẩn sau 10s
-        $(document).ready(function(){
-            $("#customAlert").fadeIn().delay(10000).fadeOut();
-        });
-    </script>

@@ -1,55 +1,53 @@
 <div class="col-12 grid-margin stretch-card h-100">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Thêm Cơ sở</h4>
-            <form action="/DUAN1/index.php?controller=admin&action=addFacility" method="POST" class="forms-sample">
+            <h4 class="card-title">Thêm phòng</h4>
+            <form action="/DUAN1/index.php?controller=admin&action=addRoom" method="POST" class="forms-sample" onsubmit="return validateForm()">
                 <div class="form-group">
-                    <label for="facilityName">Tên Cơ Sở</label>
-                    <input type="text" class="form-control" id="facilityName" name="name" placeholder="Tên Cở Sở">
+                    <label for="Name">Tên Phòng</label>
+                    <input type="text" class="form-control" id="Name" name="name" placeholder="Nhập tên phòng" oninput="validateInput('Name')">
+                    <span id="nameError" style="color: red;"></span>
                 </div>
                 <div class="form-group">
-                    <label for="facilityEmail">Email</label>
-                    <input type="Email" class="form-control" id="facilityEmail" name="email" placeholder="Địa chỉ Email">
+                    <label for="pricePerNight">Giá</label>
+                    <input type="text" class="form-control" id="pricePerNight" name="price_per_night" placeholder="Nhập Giá " oninput="validateInput('pricePerNight')">
+                    <span id="pricePerNightError" style="color: red;"></span>
                 </div>
                 <div class="form-group">
-                    <label for="facilityPhone">Số điện thoại</label>
-                    <input type="tel" class="form-control" id="facilityPhone" name="phone_number" placeholder="Số điện thoại">
+                    <label for="capacity">Số lượng người trong một phòng</label>
+                    <input type="text" class="form-control" id="capacity" name="capacity" placeholder="Tối đa 4 người / phòng" oninput="validateInput('capacity')">
+                    <span id="capacityError" style="color: red;"></span>
                 </div>
+                <!-- Hiển thị thông tin từ bảng roomType -->
                 <div class="form-group">
-                    <label for="facilityRank">Xếp loại</label>
-                    <input type="text" class="form-control" id="facilityRank" name="starts" placeholder="VD: 4 sao">
+                    <label for="roomTypeSelect">Loại phòng</label>
+                    <select id="roomTypeSelect" name="room_type_id">
+                        <option value="0" selected>Tất cả</option>
+                        <?php foreach ($roomType as $value) : ?>
+                            <option value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
+                <!-- Hiển thị thông tin từ bảng facilities -->
                 <div class="form-group">
-                    <label for="facilityDescription">Mô tả</label>
-                    <input type="text" class="form-control" id="facilityDescription" name="description" placeholder="Nhập mô tả">
+                    <label for="facilitySelect">Cơ Sở</label>
+                    <select id="facilitySelect" name="facility_id">
+                        <option value="0" selected>Tất cả</option>
+                        <?php foreach ($facility as $value) : ?>
+                            <option value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <label for="facilityAddress">Địa chỉ</label>
-                    <input type="text" class="form-control" id="facilityAddress" name="address" placeholder="Nhập địa chỉ">
-                </div>
-                <!-- <div class="form-group">
-                    <label>Hình ảnh</label>
-                    <input type="file" name="img[]" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <span class="input-group-append custom_image">
-                            <div id="imageOverlay" class="image-overlay">
-                                <img id="overlayImage" src="" alt="Full Image Preview" class="overlay-image">
-                                <button id="deleteImage" class="delete-button">Delete</button>
-                            </div>
 
-                            <div id="img-previews"></div>
-                            <input style="display: none" type="file" class="form-control-file" id="imageInput"
-                                name="imageInput" accept="image/*">
-                            <button id="uploadImage" class="btn btn-upload" type="button">+ Upload</button>
-                        </span>
-
-                    </div>
-                </div> -->
-                <button type="submit" name="submitAddFacility" class="btn btn-gradient-primary me-2">Submit</button>
-                <a href="index.php?controller=admin&action=facilityList">
+                <button type="submit" name="submitButton" class="btn btn-gradient-primary me-2" id="submitButton" disabled>Submit</button>
+                <a href="index.php?controller=admin&action=roomsList">
                     Cancel
                 </a>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+
+</script>

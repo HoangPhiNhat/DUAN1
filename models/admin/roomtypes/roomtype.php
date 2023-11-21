@@ -1,34 +1,23 @@
 <?php
-class roomList
+class roomType
 {
-    public $singelroom;
-    public $dbroom;
-    public $fmlroom;
-    public $viproom;
-    public $budgetroom;
+
+    public $id;
+    public $name;
     public $description;
-    public $address;
     public $created_date;
     public $updated_date;
 
     function __construct(
         $id,
         $name,
-        $email,
-        $phone_number,
-        $starts,
         $description,
-        $address,
         $created_date,
         $updated_date
     ) {
-        $this->singelroom = $sgelroom;
-        $this->dbroom = $dbroom;
-        $this->fmlroom = $fmlroom;
-        $this->viproom = $viproom;
-        $this->budgetroom = $budgetroom;
+        $this->id = $id;
+        $this->name = $name;
         $this->description = $description;
-        $this->address = $address;
         $this->created_date = $created_date;
         $this->updated_date = $updated_date;
     }
@@ -37,17 +26,13 @@ class roomList
     {
         $list = [];
         $db = DB::getInstance();
-        $req = $db->query('SELECT * FROM facilities');
+        $req = $db->query('SELECT * FROM room_types ORDER BY id desc');
 
         foreach ($req->fetchAll() as $value) {
-            $list[] = new facilityList(
-                $value['singelroom'],
-                $value['dbroom'],
-                $value[''],
-                $value['phone_number'],
-                $value['starts'],
+            $list[] = new roomType(
+                $value['id'],
+                $value['name'],
                 $value['description'],
-                $value['address'],
                 $value['created_date'],
                 $value['updated_date']
             );
@@ -55,26 +40,54 @@ class roomList
 
         return $list;
     }
-    static function addData($name, $email, $phone_number, $starts, $description, $address)
+    static function addData($name, $description)
     {
         $db = DB::getInstance();
 
         // Thực hiện truy vấn INSERT INTO
-        $query = 'INSERT INTO facilities (name, email, phone_number, starts, description, address, created_date, updated_date)
-        VALUES (:name, :email, :phone_number, :starts, :description, :address, NOW(), NOW())';
+        $query = 'INSERT INTO room_types (name, description, created_date, updated_date)
+        VALUES (:name,:description, NOW(), NOW())';
 
         $stmt = $db->prepare($query);
 
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':phone_number', $phone_number);
-        $stmt->bindParam(':starts', $starts);
         $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':address', $address);
 
         // Thực hiện truy vấn
         $stmt->execute();
     }
+    static function findData($id)
+    {
+        $db = DB::getInstance();
+        $req = $db->prepare('SELECT * FROM room_types WHERE id = :id');
+        $req->execute(array('id' => $id));
 
+        $value = $req->fetch();
+        if (isset($value['id'])) {
+            return  new roomType(
+                $value['id'],
+                $value['name'],
+                $value['description'],
+                $value['created_date'],
+                $value['updated_date']
+            );
+        }
+        return null;
+    }
+    static function updateData($id, $name, $description)
+    {
+        $db = DB::getInstance();
 
+        // Thực hiện truy vấn UPDATE
+        $query = 'UPDATE room_types SET name = :name, description = :description
+                  WHERE id = :id';
+
+        $stmt = $db->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);
+        // Thực hiện truy vấn
+        $stmt->execute();
+    }
 }

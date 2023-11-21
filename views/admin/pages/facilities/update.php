@@ -4,7 +4,7 @@
             <h4 class="card-title">Sửa Cơ sở</h4>
             <form action="/DUAN1/index.php?controller=admin&action=updateFacility" method="POST" class="forms-sample">
                 <div class="form-group">
-                <input type="hidden" name="id" value="<?php echo $value->id ?>">
+                <input type="hidden" name="id" value="<?php echo isset($value->id) ? $value->id : ''; ?>">
                     <label for="facilityName">Tên Cơ Sở</label>
                     <input type="text" class="form-control" id="facilityName" name="name" placeholder="Tên Cở Sở" value="<?php echo $value->name ?>">
                 </div>
