@@ -113,4 +113,6 @@ class Rooms
         // Thực hiện truy vấn
         $stmt->execute();
     }
+    
+
 }

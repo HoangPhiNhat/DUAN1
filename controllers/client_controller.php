@@ -1,6 +1,6 @@
 <?php
 require_once('controllers/base_controller.php');
-
+require_once("models/admin/facilities/facility.php");
 class ClientController extends BaseController
 {
     function __construct()
@@ -41,4 +41,5 @@ class ClientController extends BaseController
         $this->folder = 'error_404';
         $this->render('404', $data);
     }
+    
 }

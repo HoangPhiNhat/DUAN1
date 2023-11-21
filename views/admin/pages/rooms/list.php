@@ -41,11 +41,11 @@
                                     <?php echo $value->capacity ?>
                                 </td>
                                 <td>
-                                    <?php echo $value->facility_id ?>
-                                </td>
-                                <td>
-                                    <?php echo $value->room_type_id ?>
-                                </td>
+    <?php echo Facility::getNameById($value->facility_id); ?>
+</td>
+<td>
+    <?php echo RoomType::getNameById($value->room_type_id); ?>
+</td>
                                 <td>
                                     <?php echo $value->created_date ?>
                                 </td>

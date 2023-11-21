@@ -119,4 +119,13 @@ class Facility
         // Thực hiện truy vấn
         $stmt->execute();
     }
+    static function getNameById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT name FROM facilities WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['name'] : null;
+    }
 }

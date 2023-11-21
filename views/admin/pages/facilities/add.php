@@ -62,3 +62,61 @@
         </div>
     </div>
 </div>
+<!-- <script>
+    function validateForm() {
+  var name = document.getElementById("Name").value;
+  var email = document.getElementById("Email").value;
+  var phone = document.getElementById("Phone").value;
+  var rank = document.getElementById("Rank").value;
+  var Description = document.getElementById("Description").value;
+  var Address = document.getElementById("Address").value;
+
+  if (
+    name === "" ||
+    email === "" ||
+    phone === "" ||
+    rank === "0" ||
+    Description === "0" ||
+    Address === "0"
+  ) {
+    alert("Vui lòng điền đầy đủ thông tin và chọn tùy chọn hợp lệ");
+    return false;
+  }
+  return true;
+}
+
+function validateInput(inputId) {
+  var input = document.getElementById(inputId);
+  var value = input.value.trim();
+  var errorSpan = document.getElementById(inputId + "Error");
+
+  if (value === "" || value === "0") {
+    input.classList.add("is-invalid");
+    errorSpan.textContent = "Vui lòng chọn tùy chọn hợp lệ";
+    document.getElementById("submitButton").disabled = true;
+  } else {
+    input.classList.remove("is-invalid");
+    errorSpan.textContent = "";
+    checkFormValidity();
+  }
+}
+
+function checkFormValidity() {
+  var name = document.getElementById("Name").value;
+  var email = document.getElementById("email").value;
+  var phone = document.getElementById("phone").value;
+  var rank = document.getElementById("rank").value;
+  var Description = document.getElementById("Description").value;
+  var Address = document.getElementById("Address").value;
+
+
+  document.getElementById("submitButton").disabled = !(
+    name !== "" &&
+    email !== "" &&
+    phone !== "" &&
+    rank !== "0" &&
+    Description !== "0" &&
+    Address !== "0"
+  );
+}
+</script> -->

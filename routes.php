@@ -2,9 +2,10 @@
 
 <?php
 $controllers = array(
-    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error'],
+    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error',
+    ],
     'admin' => ['dashboard', 'facilityList', 'addFacility', 'findFacility', 'updateFacility',
-    'roomList', 'addRoom',
+    'roomList', 'addRoom', 'showRoomsAndFacilities',
     'roomTypeList', 'findRoomType', 'updateRoomType', 'addRoomType']
 ); // Các controllers trong hệ thống và các action có thể gọi ra từ controller đó.
 

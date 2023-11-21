@@ -113,6 +113,7 @@ function checkFormValidity() {
   );
 }
 
+// room type
 function validateFormSecond() {
   var name = document.getElementById("name").value;
   var description = document.getElementById("description").value;
@@ -124,7 +125,6 @@ function validateFormSecond() {
 
   return true;
 }
-// room type
 function validateInputSecond(inputId) {
   var input = document.getElementById(inputId);
   var value = input.value.trim();

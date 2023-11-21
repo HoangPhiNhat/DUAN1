@@ -144,6 +144,7 @@ class AdminController extends BaseController
     {
         $facility = Facility::getAllData();
         $roomType = roomType::getAllData();
+        
         $data = array('facility' => $facility, 'roomType' => $roomType);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -164,9 +165,6 @@ class AdminController extends BaseController
             $this->render('add', $data);
         }
     }
-
-
-
 
     public function findRoom()
     {

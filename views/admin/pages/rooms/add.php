@@ -20,14 +20,14 @@
                 </div>
                 <!-- Hiển thị thông tin từ bảng roomType -->
                 <div class="form-group">
-                    <label for="roomTypeSelect">Loại phòng</label>
-                    <select id="roomTypeSelect" name="room_type_id">
-                        <option value="0" selected>Tất cả</option>
-                        <?php foreach ($roomType as $value) : ?>
-                            <option value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+    <label for="roomTypeSelect">Loại phòng</label>
+    <select id="roomTypeSelect" name="room_type_id">
+        <option value="0" selected>Tất cả</option>
+        <?php foreach ($roomType as $value) : ?>
+            <option value="<?= $value->id ?>"><?= $value->name ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
                 <!-- Hiển thị thông tin từ bảng facilities -->
                 <div class="form-group">
                     <label for="facilitySelect">Cơ Sở</label>

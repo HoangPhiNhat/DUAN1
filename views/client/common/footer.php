@@ -9,6 +9,7 @@
                                 <img src="views/client/assets/img/logos/footer-logo2.png" alt="Images">
                             </a>
                         </div>
+                        
                         <p>
                             Aenean finibus convallis nisl sit amet
                             hendrerit. Etiam blandit velit non lorem
