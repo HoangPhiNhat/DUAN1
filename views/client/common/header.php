@@ -79,7 +79,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="index.php?controller=client&action=rooms" class="nav-link">
                                     Phòng
                                 </a>
                             </li>
@@ -89,7 +89,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="contact.html" class="nav-link">
+                                <a href="index.php?controller=client&action=Contact" class="nav-link">
                                     Liên hệ
                                 </a>
                             </li>
