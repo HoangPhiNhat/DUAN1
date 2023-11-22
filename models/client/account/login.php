@@ -30,10 +30,8 @@ class login {
 
     // Kiểm tra mật khẩu
     if ($user && password_verify($password, $user['password'])) {
-        // Mật khẩu đúng, có thể thực hiện các hành động khác
-        // ...
+
     } else {
-        // Mật khẩu sai hoặc người dùng không tồn tại
         throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
     }
 }
