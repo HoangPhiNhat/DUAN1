@@ -808,7 +808,7 @@ img {
     margin-right: 20px;
     display: inline-block;
     position: relative;
-    /* margin-top: -13px; */
+    margin-top: -13px;
 }
 
 .option-item:last-child {

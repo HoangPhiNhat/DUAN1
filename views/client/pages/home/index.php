@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-
+<?php  echo $_SESSION['user_id'] ?>
 <div class="about-area pt-100 pb-70">
     <div class="container-fluid">
         <div class="row align-items-center">

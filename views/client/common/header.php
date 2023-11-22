@@ -1,7 +1,7 @@
-<!doctype html>
-<html lang="vn">
+<?php session_start(); ?>
 
-<!-- Mirrored from templates.hibootstrap.com/atoli/default/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2023 09:52:12 GMT -->
+<!DOCTYPE html>
+<html lang="vn">
 
 <head>
 
@@ -106,9 +106,12 @@
                             <div class="option-item d-line">
                                 <div class="account-nav-list">
                                     <span class="account-btn">
-                                        <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập
-                                            /
-                                            Đăng ký</a>
+                                        <?php if (isset($_SESSION['user_name'])) : ?>
+                                            <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>
+                                        <?php else : ?>
+                                            <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập / Đăng ký</a>
+                                        <?php endif; ?>
+
                                     </span>
                                 </div>
                             </div>
@@ -141,7 +144,7 @@
                                     <div class="language-option-list">
                                         <a href="index.php?controller=client&action=register" class="nav-link">
                                             Đăng ký
-                                        git</a>
+                                            git</a>
                                     </div>
                                 </div>
                             </div>
