@@ -24,21 +24,32 @@
                             <span class="sp-color">Sign Up</span>
                             <h2>Create an Account!</h2>
                         </div>
-                        <form id="contactForm">
+                        <form action="/DUAN1/index.php?controller=client&action=register" method="POST" id="contactForm" novalidate="true" class="">
                             <div class="row">
-                                <div class="col-lg-12 ">
-                                    <div class="form-group">
-                                        <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your Username" placeholder="Username">
-                                    </div>
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name" class="form-control" required="" data-error="Vui lòng nhập họ tên đầy đủ" placeholder="Họ và tên">
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <input type="email" name="email" id="email" class="form-control" required data-error="Please enter email" placeholder="Email">
+                                        <span id="emailError" style="color: red;"></span>
+                                        <?php if (isset($error)) : ?>
+                                            <p style="color: red;"><?php echo $error; ?></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input class="form-control" type="password" name="password" placeholder="Password">
+                                        <input class="form-control" type="password" id="password" name="password" placeholder="Mật khẩu">
+                                        <span id="passwordError" style="color: red;"></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <div class="form-group">
+                                        <input class="form-control" type="password" id="ConfirmPassword" name="password" placeholder="Nhập lại mật khẩu">
+                                        <span id="confirmPasswordError" style="color: red;"></span>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 text-center">
@@ -60,3 +71,4 @@
         </div>
     </div>
 </div>
+<script src="views/client/pages/register/register.js"></script>

@@ -18,10 +18,24 @@
                     <input type="text" class="form-control" id="capacity" name="capacity" placeholder="Tối đa 4 người / phòng">
                     <span id="capacityError" style="color: red;"></span>
                 </div>
+                <!-- <div class="form-group">
+                    <label>Hình ảnh</label>
+                    <input type="file" name="img[]" class="file-upload-default">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-append custom_image">
+                            <div id="img-previews"></div>
+                            <input style="display: none;" value="1" type="file" class="form-control-file" id="imageInput" name="imageInput" accept="image/*" onchange="changeImg(this,event)">
+                            <button id="uploadImage" class="btn btn-upload" type="button" style="border: 2px dashed #d9d9d9; padding: 38px 21px;">
+                                + Upload
+                            </button>
+                        </span>
+
+                    </div>
+                </div> -->
                 <!-- Hiển thị thông tin từ bảng roomType -->
                 <div class="form-group">
                     <label for="roomTypeSelect">Loại phòng</label>
-                    <select id="roomTypeSelect" name="room_type_id">
+                    <select class="custom-select" id="roomTypeSelect" name="room_type_id">
                         <option value="2" selected disabled>Tất cả</option>
                         <?php foreach ($roomType as $value) : ?>
                             <option value="<?= $value->id ?>"><?= $value->name ?></option>
@@ -32,7 +46,7 @@
                 <!-- Hiển thị thông tin từ bảng facilities -->
                 <div class="form-group">
                     <label for="facilitySelect">Cơ Sở</label>
-                    <select id="facilitySelect" name="facility_id">
+                    <select class="custom-select" id="facilitySelect" name="facility_id">
                         <option value="0" selected disabled>Tất cả</option>
                         <?php foreach ($facility as $value) : ?>
                             <option value="<?php echo $value->id ?>"><?php echo $value->name ?></option>

@@ -9,7 +9,7 @@
                                 <img src="views/client/assets/img/logos/footer-logo2.png" alt="Images">
                             </a>
                         </div>
-                        
+
                         <p>
                             Aenean finibus convallis nisl sit amet
                             hendrerit. Etiam blandit velit non lorem
@@ -210,7 +210,7 @@
 
 <script src="views/client/assets/js/form-validator.min.js"></script>
 
-<script src="views/client/assets/js/contact-form-script.js"></script>
+<!-- <script src="views/client/assets/js/contact-form-script.js"></script> -->
 
 <script src="views/client/assets/js/custom.js"></script>
 </body>

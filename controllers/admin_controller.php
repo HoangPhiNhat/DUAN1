@@ -144,7 +144,7 @@ class AdminController extends BaseController
     {
         $facility = Facility::getAllData();
         $roomType = roomType::getAllData();
-        
+
         $data = array('facility' => $facility, 'roomType' => $roomType);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -153,8 +153,11 @@ class AdminController extends BaseController
             $capacity = $_POST['capacity'];
             $facility_id = $_POST['facility_id'];
             $room_type_id = $_POST['room_type_id'];
-
-            Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id);
+            $image = $_FILES['imageInput']['name'];
+            $target_dir = "../upload/";
+            $target_file = $target_dir . basename($_FILES['image']['name']);
+            move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+            Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image);
             $message = "Dữ liệu đã được thêm thành công";
             $data = array('message' => $message);
             $this->folder = 'roomTypes';

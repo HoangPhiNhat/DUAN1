@@ -99,4 +99,13 @@ class roomType
 
         return $result ? $result['name'] : null;
     }
+    static function getDescriptionById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT description FROM room_types WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['description'] : null;
+    }
 }

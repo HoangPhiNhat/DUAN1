@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Purple Admin</title>
     <!-- plugins:css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="views/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="views/admin/assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
@@ -16,9 +17,14 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="views/admin/assets/css/style.css">
-    <link rel="stylesheet" href="views/admin/assets/css/re-style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="views/admin/assets/images/favicon.ico" />
+    <style>
+        #img-previews>img {
+            margin: 0 10px;
+        }
+
+    </style>
 </head>
 
 <body>

@@ -24,11 +24,11 @@
                             <span class="sp-color">Sign In</span>
                             <h2>Sign In to Your Account!</h2>
                         </div>
-                        <form id="contactForm">
+                        <form action="/DUAN1/index.php?controller=client&action=signIn" method="POST" id="contactForm">
                             <div class="row">
                                 <div class="col-lg-12 ">
                                     <div class="form-group">
-                                        <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your Username or Email" placeholder="Username or Email">
+                                        <input type="email" name="email" id="email" class="form-control" required data-error="Please enter your Username or Email" placeholder="Username or Email">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -36,6 +36,10 @@
                                         <input class="form-control" type="password" name="password" placeholder="Password">
                                     </div>
                                 </div>
+                                <?php if (isset($error)) : ?>
+                                    <p style="color: red;"><?php echo $error; ?></p>
+                                <?php endif; ?>
+
                                 <div class="col-lg-6 col-sm-6 form-condition">
                                     <div class="agree-label">
                                         <input type="checkbox" id="chb1">
@@ -55,7 +59,7 @@
                                 <div class="col-12">
                                     <p class="account-desc">
                                         Not a Member?
-                                        <a href="sign-up.html">Sign Up</a>
+                                        <a href="index.php?controller=client&action=register">Sign Up</a>
                                     </p>
                                 </div>
                             </div>

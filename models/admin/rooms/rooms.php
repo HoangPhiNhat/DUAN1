@@ -94,13 +94,13 @@ class Rooms
         $stmt->execute();
     }
 
-    static function addData($name, $price_per_night, $capacity, $facility_id, $room_type_id)
+    static function addData($name, $price_per_night, $capacity, $facility_id, $room_type_id, $image)
     {
         $db = DB::getInstance();
 
         // Thực hiện truy vấn INSERT INTO
-        $query = 'INSERT INTO rooms (name, price_per_night, capacity, facility_id, room_type_id, created_date, updated_date)
-        VALUES (:name, :price_per_night, :capacity, :facility_id, :room_type_id, NOW(), NOW())';
+        $query = 'INSERT INTO rooms (name, price_per_night, capacity, facility_id, image_path, room_type_id, created_date, updated_date)
+        VALUES (:name, :price_per_night, :capacity, :facility_id, :image, :room_type_id, NOW(), NOW())';
 
         $stmt = $db->prepare($query);
 
@@ -108,11 +108,12 @@ class Rooms
         $stmt->bindParam(':price_per_night', $price_per_night);
         $stmt->bindParam(':capacity', $capacity);
         $stmt->bindParam(':facility_id', $facility_id);
+        $stmt->bindParam(':image', $image);
         $stmt->bindParam(':room_type_id', $room_type_id);
 
         // Thực hiện truy vấn
         $stmt->execute();
     }
-    
+
 
 }

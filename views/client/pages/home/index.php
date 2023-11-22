@@ -122,70 +122,26 @@
             <h2>Our Rooms & Rates</h2>
         </div>
         <div class="room-slider owl-carousel owl-theme pt-45">
+            <?php
+            foreach ($lists as $value) :
+            ?>
             <div class="room-item">
                 <a href="room-details.html">
                     <img src="views/client/assets/img/room/room-img7.jpg" alt="Images">
                 </a>
                 <div class="content">
-                    <h3><a href="room-details.html">Double Room</a></h3>
-                    <p>You can easily reserve a hotel room with a double
-                        bed as you want. This will give you a very good
-                        feeling.</p>
+                    <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
+                    <p>
+                    <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
+                    </p>
                     <ul>
-                        <li>320</li>
+                        <li> <?php echo $value->price_per_night ?></li>
                         <li><span>Per Night</span></li>
                     </ul>
-                    <a href="book.html" class="book-btn">Book Now</a>
+                    <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>
                 </div>
             </div>
-            <div class="room-item">
-                <a href="room-details.html">
-                    <img src="views/client/assets/img/room/room-img2.jpg" alt="Images">
-                </a>
-                <div class="content">
-                    <h3><a href="room-details.html">Single Room</a></h3>
-                    <p>You can easily reserve a hotel room with a double
-                        bed as you want. This will give you a very good
-                        feeling.</p>
-                    <ul>
-                        <li>300</li>
-                        <li><span>Per Night</span></li>
-                    </ul>
-                    <a href="book.html" class="book-btn">Book Now</a>
-                </div>
-            </div>
-            <div class="room-item">
-                <a href="room-details.html">
-                    <img src="views/client/assets/img/room/room-img8.jpg" alt="Images">
-                </a>
-                <div class="content">
-                    <h3><a href="room-details.html">Deluxe Room</a></h3>
-                    <p>You can easily reserve a hotel room with a double
-                        bed as you want. This will give you a very good
-                        feeling.</p>
-                    <ul>
-                        <li>340</li>
-                        <li><span>Per Night</span></li>
-                    </ul>
-                    <a href="book.html" class="book-btn">Book Now</a>
-                </div>
-            </div>
-            <div class="room-item">
-                <a href="room-details.html">
-                    <img src="views/client/assets/img/room/room-img4.jpg" alt="Images">
-                </a>
-                <div class="content">
-                    <h3><a href="room-details.html">Family Room</a></h3>
-                    <p>You can easily reserve a hotel room with a double
-                        bed as you want. This will give you a very good
-                        feeling.</p>
-                    <ul>
-                        <li>360</li>
-                        <li><span>Per Night</span></li>
-                    </ul>
-                    <a href="book.html" class="book-btn">Book Now</a>
-                </div>
-            </div>
+            <?php endforeach ?>
         </div>
     </div>
 </div>
