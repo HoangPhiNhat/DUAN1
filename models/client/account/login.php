@@ -1,6 +1,7 @@
 <?php
 
-class login {
+class login
+{
     public $name;
     public $email;
     public $phone_number;
@@ -18,26 +19,25 @@ class login {
         $this->password = $password;
     }
     static function checkLogin($email, $password)
-{
-    $db = DB::getInstance();
+    {
+        $db = DB::getInstance();
 
-    // Lấy thông tin người dùng từ CSDL
-    $query = 'SELECT * FROM customers WHERE email = :email';
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Lấy thông tin người dùng từ CSDL
+        $query = 'SELECT * FROM customers WHERE email = :email';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Kiểm tra mật khẩu
-    if ($user && password_verify($password, $user['password'])) {
-        // Mật khẩu đúng, có thể thực hiện các hành động khác
-        // ...
-    } else {
-        // Mật khẩu sai hoặc người dùng không tồn tại
-        throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
+        // Kiểm tra mật khẩu
+        if ($user && password_verify($password, $user['password'])) {
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            header('Location: index.php?controller=client&action=home');
+            exit();
+        } else {
+            throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
+        }
     }
-}
-
-
-
 }

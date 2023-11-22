@@ -9,27 +9,21 @@
                                 <img src="views/client/assets/img/logos/footer-logo2.png" alt="Images">
                             </a>
                         </div>
-
-                        <p>
-                            Aenean finibus convallis nisl sit amet
-                            hendrerit. Etiam blandit velit non lorem
-                            mattis, non ultrices eros bibendum .
-                        </p>
-                        <ul class="footer-list-contact">
-                            <li>
-                                <i class="bx bx-home-alt"></i>
-                                <a href="#">123 Stanton, Virginia, USA</a>
-                            </li>
-                            <li>
-                                <i class="bx bx-phone-call"></i>
-                                <a href="tel:+1-(123)-456-7890">+1 (123)
-                                    456 7890</a>
-                            </li>
-                            <li>
-                                <i class="bx bx-envelope"></i>
-                                <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#90f8f5fcfcffd0f1e4fffcf9bef3fffd"><span class="__cf_email__" data-cfemail="7a121f1616153a1b0e15161354191517">[email&#160;protected]</span></a>
-                            </li>
-                        </ul>
+                        
+                        <?php foreach ($list as $value) : ?>
+                                    <a href="" class="text-md">CƠ SỞ:<?php echo $value->name ?></a><br>
+                             
+                                    <!-- <p class="text-md">Email:<?php echo $value->email ?></p>
+                            
+                                    <p class="text-md">SDT:<?php echo $value->phone_number ?></p>
+                           
+                                    <p class="text-md">Đánh Giá<?php echo $value->starts ?></p>
+                               
+                                    <p class="text-md">Mô tả:<?php echo $value->description ?></p>
+                              
+                                    <p class="text-md">Địa CHỉ:<?php echo $value->address ?></p> -->
+                               
+                                    <?php endforeach ?>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">

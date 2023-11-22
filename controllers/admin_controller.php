@@ -153,14 +153,21 @@ class AdminController extends BaseController
             $capacity = $_POST['capacity'];
             $facility_id = $_POST['facility_id'];
             $room_type_id = $_POST['room_type_id'];
-            $image = $_FILES['imageInput']['name'];
-            $target_dir = "../upload/";
-            $target_file = $target_dir . basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
-            Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image);
+            $image_path = $_FILES['image_path']['name'];
+            $target_dir = "../uploads";
+            $target_file = $target_dir . basename($_FILES['image_path']['name']);
+            if (move_uploaded_file($_FILES['image_path']['tmp_name'], $target_file)) {
+               
+            } else {
+              
+            }
+
+        Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image_path);
+
+            Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image_path);
             $message = "Dữ liệu đã được thêm thành công";
             $data = array('message' => $message);
-            $this->folder = 'roomTypes';
+            $this->folder = 'rooms';
             $this->render('add', $data);
             exit;
         } else {
@@ -176,4 +183,5 @@ class AdminController extends BaseController
         $this->folder = 'rooms';
         $this->render('update', $data);
     }
+    
 }
