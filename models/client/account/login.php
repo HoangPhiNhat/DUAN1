@@ -40,4 +40,18 @@ class login
             throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
         }
     }
+    static function isLoggedIn()
+    {
+        session_start();
+        return isset($_SESSION['user_id']);
+    }
+    static function getNameId($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT name FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['name'] : null;
+    }
 }

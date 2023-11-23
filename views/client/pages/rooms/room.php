@@ -325,17 +325,17 @@
                         <div class="room-card">
                   
                             <a href="room-details.html">
-                                <img src="<?php echo Rooms::getimagepathId($value->image_path); ?>" alt=""  style="height: 300px;">
+                                <img src="<?php echo Rooms::getImagePathId($value->image_path); ?>" alt=""  style="height: 300px;">
                             </a>
                             <div class="content">
-                                <h3> <a href="room-details.html"> Tên Phòng: <?php echo $value->name; ?></a></h3>
+                            <h3><a href="index.php?controller=client&action=room_details&id=<?= $value->id ?>">Tên Phòng: <?php echo $value->name; ?></a></h3>
                                 
                                 <ul>
                                      Số Lượng Người Một Phòng: <?php echo$value->capacity ?><br>
                                      Giá Tiền: <?php echo$value->price_per_night ?> / <span>Per Night</span><br>
                                      Cơ Sở: <?php echo Facility::getNameById($value->facility_id); ?><br>
                                      Loại Phòng: <?php echo RoomType::getNameById($value->room_type_id);  ?><br>
-                                    Mô Tả: <?php echo RoomType::getDescriptionById($value->room_type_id); ?> 
+                                    <!-- Mô Tả: <?php echo RoomType::getDescriptionById($value->room_type_id); ?>  -->
                                 </ul>
                                
                                 <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>

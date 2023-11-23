@@ -119,7 +119,7 @@ class Rooms
         // Thực hiện truy vấn
         $stmt->execute();
     }
-    static function getimagepathId($roomTypeId)
+    static function getImagePathId($roomTypeId)
     {
         $db = DB::getInstance();
         $stmt = $db->prepare('SELECT image_path FROM rooms WHERE id = ?');
@@ -128,24 +128,29 @@ class Rooms
 
         return $result ? $result['image_path'] : null;
     }
-    static function getfacilityidById($roomTypeId)
+    static function getData($roomId)
     {
         $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT facility_id FROM rooms WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $req = $db->prepare('SELECT * FROM rooms WHERE id = :id');
+        $req->execute(['id' => $roomId]);
 
-        return $result ? $result['facility_id'] : null;
-    }
-    static function getroomtypeidById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT room_type_id FROM rooms WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $value = $req->fetch();
 
-        return $result ? $result['room_type_id'] : null;
+        if ($value) {
+            return new Rooms(
+                $value['id'],
+                $value['name'],
+                $value['price_per_night'],
+                $value['capacity'],
+                $value['facility_id'],
+                $value['room_type_id'],
+                $value['image_path'],
+                $value['created_date'],
+                $value['updated_date']
+            );
+        }
+
+        return null;
     }
-    
 
 }

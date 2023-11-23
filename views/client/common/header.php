@@ -62,7 +62,11 @@
                                 </a>
 
                             </li>
-
+                            <li class="nav-item">
+                                <a href="index.php?controller=client&action=rooms" class="nav-link">
+                                    Phòng
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     Nhà hàng
@@ -78,11 +82,7 @@
                                     Blog
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="index.php?controller=client&action=rooms" class="nav-link">
-                                    Phòng
-                                </a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a href="index.php?controller=client&action=aboutUs" class="nav-link">
                                     Gallery
