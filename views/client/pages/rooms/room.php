@@ -325,7 +325,7 @@
                         <div class="room-card">
                   
                             <a href="room-details.html">
-                                <img src="<?php echo Rooms::getImagePathId($value->image_path); ?>" alt=""  style="height: 300px;">
+                            <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
                             </a>
                             <div class="content">
                             <h3><a href="index.php?controller=client&action=room_details&id=<?= $value->id ?>">Tên Phòng: <?php echo $value->name; ?></a></h3>

@@ -127,7 +127,7 @@
             ?>
             <div class="room-item">
                 <a href="room-details.html">
-                <img src="<?php echo Rooms::getImagePathId($value->image_path); ?>" alt=""  style="height: 300px;">
+                <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
                 </a>
                 <div class="content">
                     <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>

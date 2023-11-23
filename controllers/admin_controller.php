@@ -162,7 +162,6 @@ class AdminController extends BaseController
               
             }
 
-        Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image_path);
 
             Rooms::addData($name, $price_per_night, $capacity,  $facility_id, $room_type_id, $image_path);
             $message = "Dữ liệu đã được thêm thành công";

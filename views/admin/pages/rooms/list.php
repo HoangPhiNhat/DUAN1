@@ -48,7 +48,7 @@
                                     <?php echo RoomType::getNameById($value->room_type_id); ?>
                                 </td>
                                 <td>
-                                    <img src="<?php echo $value->image_path; ?>" alt="Image" style="height:88">
+                                    <img src="<?php echo  "./uploads/" . $value->image_path; ?>" alt="" style="height:88">
                                 </td>
                                 <td>
                                     <?php echo $value->created_date ?> 

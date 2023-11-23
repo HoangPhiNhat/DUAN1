@@ -28,6 +28,7 @@ class ClientController extends BaseController
         $this->folder = 'aboutUs';
         $this->render('about');
     }
+    
     public function bookNow()
     {
 
@@ -36,9 +37,10 @@ class ClientController extends BaseController
     }
     public function Contact()
     {
-
+        $list = Facility::getAllData();
+        $data = array('list' => $list);
         $this->folder = 'Contact';
-        $this->render('Contact');
+        $this->render('Contact', $data);
     }
     public function rooms()
     {
@@ -125,6 +127,11 @@ class ClientController extends BaseController
         $this->folder = 'signIn';
         $this->render('sign-in');
     }
+}
+public function logOut()
+{
+    $this->folder = 'signIn';
+    $this->render('logOut');
 }
 
 
