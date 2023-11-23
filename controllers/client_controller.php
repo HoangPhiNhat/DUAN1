@@ -5,6 +5,7 @@ require_once("models/admin/rooms/rooms.php");
 require_once("models/admin/roomTypes/roomType.php");
 require_once("models/client/account/register.php");
 require_once("models/client/account/login.php");
+require_once("models/client/comment/comment.php");
 
 class ClientController extends BaseController
 {
@@ -27,6 +28,7 @@ class ClientController extends BaseController
         $this->folder = 'aboutUs';
         $this->render('about');
     }
+    
     public function bookNow()
     {
 
@@ -35,9 +37,10 @@ class ClientController extends BaseController
     }
     public function Contact()
     {
-
+        $list = Facility::getAllData();
+        $data = array('list' => $list);
         $this->folder = 'Contact';
-        $this->render('Contact');
+        $this->render('Contact', $data);
     }
     public function rooms()
     {
@@ -47,6 +50,35 @@ class ClientController extends BaseController
         $this->folder = 'rooms';
         $this->render('room', $data);
     }
+   
+    public function room_details()
+{
+    // Verify if 'id' parameter is set in the URL
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        
+        // Get room details based on the room ID
+        $roomDetails = Rooms::findData($id);
+       
+
+        if ($roomDetails) {
+            // Pass the room details to the view
+           
+            $data = ['roomDetails' => $roomDetails];
+            $this->folder = 'rooms';
+            $this->render('room_details', $data);
+        } else {
+            // Handle the case when room details are not found
+            echo "Room details not found.";
+        }
+    } else {
+        // Handle the case when 'id' parameter is not set
+        echo "Room ID not provided.";
+    }
+}
+
+
+
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
@@ -95,6 +127,11 @@ class ClientController extends BaseController
         $this->folder = 'signIn';
         $this->render('sign-in');
     }
+}
+public function logOut()
+{
+    $this->folder = 'signIn';
+    $this->render('logOut');
 }
 
 

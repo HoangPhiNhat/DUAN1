@@ -13,15 +13,15 @@
                         <?php foreach ($list as $value) : ?>
                                     <a href="" class="text-md">CƠ SỞ:<?php echo $value->name ?></a><br>
                              
-                                    <!-- <p class="text-md">Email:<?php echo $value->email ?></p>
+                                    <p class="text-md">Email:<?php echo $value->email ?></p>
                             
-                                    <p class="text-md">SDT:<?php echo $value->phone_number ?></p>
+                                    <p class="text-md" href="tel: "><?php echo $value->phone_number ?></p>
                            
                                     <p class="text-md">Đánh Giá<?php echo $value->starts ?></p>
                                
                                     <p class="text-md">Mô tả:<?php echo $value->description ?></p>
                               
-                                    <p class="text-md">Địa CHỉ:<?php echo $value->address ?></p> -->
+                                    <p class="text-md">Địa CHỉ:<?php echo $value->address ?></p>
                                
                                     <?php endforeach ?>
                     </div>

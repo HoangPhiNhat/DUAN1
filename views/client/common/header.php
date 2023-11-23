@@ -62,7 +62,11 @@
                                 </a>
 
                             </li>
-
+                            <li class="nav-item">
+                                <a href="index.php?controller=client&action=rooms" class="nav-link">
+                                    Phòng
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     Nhà hàng
@@ -78,11 +82,7 @@
                                     Blog
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="index.php?controller=client&action=rooms" class="nav-link">
-                                    Phòng
-                                </a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a href="index.php?controller=client&action=aboutUs" class="nav-link">
                                     Gallery
@@ -95,19 +95,32 @@
                             </li>
                         </ul>
                         <div class="other-option">
-                            <!-- <div class="option-item d-line">
-                                <div class="language-nav-list">
-                                    <select class="language-list-item">
-                                        <option>Việt Nam</option>
-                                        <option>English</option>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="option-item d-line">
                                 <div class="account-nav-list">
                                     <span class="account-btn">
                                         <?php if (isset($_SESSION['user_name'])) : ?>
-                                            <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>
+                                            <div class="nice-select form-control" tabindex="0">
+                                                <span class="current">
+                                                    <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>
+                                                </span>
+                                                <ul class="list">
+                                                    <li class="option">
+                                                        <a href="blog-1.html" class="nav-link">
+                                                            Lịch sử đặt phòng
+                                                        </a>
+                                                    </li>
+                                                    <li class="option">
+                                                        <a href="blog-1.html" class="nav-link">
+                                                            Cài đặt
+                                                        </a>
+                                                    </li>
+                                                    <li class="option">
+                                                        <a href="index.php?controller=client&action=logOut" class="nav-link">
+                                                           Đăng xuất
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         <?php else : ?>
                                             <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập / Đăng ký</a>
                                         <?php endif; ?>
