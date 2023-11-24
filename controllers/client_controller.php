@@ -17,8 +17,7 @@ class ClientController extends BaseController
     public function home()
     {
         $lists = Rooms::getAllData();
-        $list = Facility::getAllData();
-        $data = array('lists' => $lists, 'list' => $list);
+        $data = array('lists' => $lists);
         $this->folder = 'home';
         $this->render('index', $data);
     }
@@ -32,20 +31,6 @@ class ClientController extends BaseController
 
         $this->folder = 'bookingRoom';
         $this->render('book');
-    }
-    public function Contact()
-    {
-
-        $this->folder = 'Contact';
-        $this->render('Contact');
-    }
-    public function rooms()
-    {
-        $lists = Rooms::getAllData();
-        
-        $data = array('lists' => $lists);
-        $this->folder = 'rooms';
-        $this->render('room', $data);
     }
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -82,7 +67,7 @@ class ClientController extends BaseController
         $password = $_POST['password'];
 
         try {
-            login::checkLogin($email, $password);
+            Login::checkLogin($email, $password);
             header('Location: index.php?controller=client&action=home');
             exit();
         } catch (Exception $e) {
@@ -97,12 +82,16 @@ class ClientController extends BaseController
     }
 }
 
-
+public function logOut()
+{
+    $this->folder = 'signIn';
+    $this->render('logout');
+}
     public function error()
     {
         $data = array('is404' => true);
         $this->folder = 'error_404';
         $this->render('404', $data);
     }
-   
+
 }

@@ -7,7 +7,6 @@ class Rooms
     public $capacity;
     public $facility_id;
     public $room_type_id;
-    public $image_path;
     public $created_date;
     public $updated_date;
 
@@ -18,7 +17,6 @@ class Rooms
         $capacity,
         $facility_id,
         $room_type_id,
-        $image_path,
         $created_date,
         $updated_date
     ) {
@@ -28,7 +26,6 @@ class Rooms
         $this->capacity = $capacity;
         $this->facility_id = $facility_id;
         $this->room_type_id = $room_type_id;
-        $this->image_path = $image_path;
         $this->created_date = $created_date;
         $this->updated_date = $updated_date;
     }
@@ -47,7 +44,6 @@ class Rooms
                 $value['capacity'],
                 $value['facility_id'],
                 $value['room_type_id'],
-                $value['image_path'],
                 $value['created_date'],
                 $value['updated_date']
             );
@@ -70,7 +66,6 @@ class Rooms
                 $value['capacity'],
                 $value['facility_id'],
                 $value['room_type_id'],
-                $value['image_path'],
                 $value['created_date'],
                 $value['updated_date']
             );
@@ -99,13 +94,13 @@ class Rooms
         $stmt->execute();
     }
 
-    static function addData($name, $price_per_night, $capacity, $facility_id, $room_type_id, $image_path)
+    static function addData($name, $price_per_night, $capacity, $facility_id, $room_type_id, $image)
     {
         $db = DB::getInstance();
 
         // Thực hiện truy vấn INSERT INTO
         $query = 'INSERT INTO rooms (name, price_per_night, capacity, facility_id, image_path, room_type_id, created_date, updated_date)
-        VALUES (:name, :price_per_night, :capacity, :facility_id, :image_path, :room_type_id, NOW(), NOW())';
+        VALUES (:name, :price_per_night, :capacity, :facility_id, :image, :room_type_id, NOW(), NOW())';
 
         $stmt = $db->prepare($query);
 
@@ -113,39 +108,12 @@ class Rooms
         $stmt->bindParam(':price_per_night', $price_per_night);
         $stmt->bindParam(':capacity', $capacity);
         $stmt->bindParam(':facility_id', $facility_id);
-        $stmt->bindParam(':image_path', $image_path);
+        $stmt->bindParam(':image', $image);
         $stmt->bindParam(':room_type_id', $room_type_id);
 
         // Thực hiện truy vấn
         $stmt->execute();
     }
-    static function getimagepathId($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT image_path FROM rooms WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $result ? $result['image_path'] : null;
-    }
-    static function getfacilityidById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT facility_id FROM rooms WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['facility_id'] : null;
-    }
-    static function getroomtypeidById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT room_type_id FROM rooms WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['room_type_id'] : null;
-    }
-    
 
 }

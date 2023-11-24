@@ -47,22 +47,20 @@
                                 <div class="form-group">
                                     <label>Check in</label>
                                     <div class="input-group date">
-                                        <input id="datetimepicker" type="text" class="form-control" placeholder="09/29/2020">
-                                        <span class="input-group-addon"></span>
+                                        <input id="checkInDatePicker" type="date" class="form-control" min="<?php echo date('Y-m-d'); ?>">
                                     </div>
-                                    <i class="bx bxs-calendar"></i>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Check Out</label>
                                     <div class="input-group">
-                                        <input id="datetimepicker-check" type="text" class="form-control" placeholder="09/29/2020">
-                                        <span class="input-group-addon"></span>
+                                        <input id="checkOutDatePicker" type="date" class="form-control" min="<?php echo date('Y-m-d'); ?>">
                                     </div>
-                                    <i class="bx bxs-calendar"></i>
                                 </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Numbers of Persons</label>
@@ -99,3 +97,4 @@
         </div>
     </div>
 </div>
+<script src="views/client/pages/bookingRoom/book.js"></script>

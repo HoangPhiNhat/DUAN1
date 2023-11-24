@@ -1,6 +1,6 @@
 <?php
 
-class login
+class Login
 {
     public $name;
     public $email;

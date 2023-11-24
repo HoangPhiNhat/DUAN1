@@ -108,5 +108,4 @@ class roomType
 
         return $result ? $result['description'] : null;
     }
-    
 }

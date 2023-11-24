@@ -11,7 +11,6 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
-                    
                     <thead>
                         <tr>
                             <th> ID </th>
@@ -27,7 +26,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <?php foreach ($lists as $value) : ?>
                             <tr>
                                 <td>

@@ -19,7 +19,6 @@
                             <th> Số Lượng Người Một Phòng </th>
                             <th> Cơ Sở </th>
                             <th> Loại Phòng </th>
-                            <th> Ảnh Phòng </th>
                             <th> Ngày tạo </th>
                             <th> Ngày chỉnh sửa </th>
                             <th> Chức Năng </th>
@@ -48,10 +47,7 @@
                                     <?php echo RoomType::getNameById($value->room_type_id); ?>
                                 </td>
                                 <td>
-                                    <img src="<?php echo $value->image_path; ?>" alt="Image" style="height:88">
-                                </td>
-                                <td>
-                                    <?php echo $value->created_date ?> 
+                                    <?php echo $value->created_date ?>
                                 </td>
                                 <td>
                                     <?php echo $value->updated_date ?>
