@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm phòng</h4>
-            <form action="/DUAN1/index.php?controller=admin&action=addRoom" method="POST" class="forms-sample">
+            <form action="/DUAN1/index.php?controller=admin&action=addRoom" method="POST" class="forms-sample" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="Name">Tên Phòng</label>
                     <input type="text" class="form-control" id="Name" name="name" placeholder="Nhập tên phòng">
@@ -18,20 +18,25 @@
                     <input type="text" class="form-control" id="capacity" name="capacity" placeholder="Tối đa 4 người / phòng">
                     <span id="capacityError" style="color: red;"></span>
                 </div>
-                <!-- <div class="form-group">
-                    <label>Hình ảnh</label>
-                    <input type="file" name="img[]" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <span class="input-group-append custom_image">
-                            <div id="img-previews"></div>
-                            <input style="display: none;" value="1" type="file" class="form-control-file" id="imageInput" name="imageInput" accept="image/*" onchange="changeImg(this,event)">
-                            <button id="uploadImage" class="btn btn-upload" type="button" style="border: 2px dashed #d9d9d9; padding: 38px 21px;">
-                                + Upload
-                            </button>
-                        </span>
-
-                    </div>
-                </div> -->
+                <div class="form-group">
+                <!-- <label>Hình ảnh</label>
+<input type="file" name="image_path" class="file-upload-default">
+<div class="input-group col-xs-12">
+    <span class="input-group-append custom_image">
+        <div id="img-previews"></div>
+        <input style="display: none;" value="1" type="file" class="form-control-file" id="image_path" name="image_path" accept="image/*" onchange="changeImg(this, event)">
+        <button id="uploadImage" class="btn btn-upload" type="button" style="border: 2px dashed #d9d9d9; padding: 38px 21px;">
+            + Upload
+        </button>
+    </span>
+</div> -->
+                <label>Hình ảnh</label>
+                <span class="input-group-append custom_image">
+                <button name="image_path id="uploadImage" class="btn btn-upload" type="button" style="border: 2px dashed #d9d9d9; padding: 38px 21px;">
+                <input type="file" name="image_path" >
+                </button>
+                </span>
+                </div>
                 <!-- Hiển thị thông tin từ bảng roomType -->
                 <div class="form-group">
                     <label for="roomTypeSelect">Loại phòng</label>

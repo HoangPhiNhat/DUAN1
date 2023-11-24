@@ -2,7 +2,7 @@
 
 <?php
 $controllers = array(
-    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'logOut', 'error',
+    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','logOut'
     ],
     'admin' => ['dashboard', 'facilityList', 'addFacility', 'findFacility', 'updateFacility',
     'roomList', 'addRoom', 'showRoomsAndFacilities',

@@ -72,9 +72,12 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="form-group">
                                         <label>Check in</label>
+                                        <?php
+                                        // Đặt ngày hiện tại
+                                        $currentDate = date("m/d/Y");
+                                        ?>
                                         <div class="input-group">
-                                            <input id="datetimepicker" type="text" class="form-control" placeholder="09/29/2020">
-                                            <span class="input-group-addon"></span>
+                                            <input id="checkInDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
                                         </div>
                                         <i class="bx bxs-calendar"></i>
                                     </div>
@@ -87,7 +90,6 @@
                                             <option>02</option>
                                             <option>03</option>
                                             <option>04</option>
-                                            <option>05</option>
                                         </select>
                                     </div>
                                 </div>
@@ -95,8 +97,7 @@
                                     <div class="form-group">
                                         <label>Check Out</label>
                                         <div class="input-group">
-                                            <input id="datetimepicker-check" type="text" class="form-control" placeholder="09/29/2020">
-                                            <span class="input-group-addon"></span>
+                                            <input id="checkOutDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
                                         </div>
                                         <i class="bx bxs-calendar"></i>
                                     </div>
@@ -124,22 +125,22 @@
             <?php
             foreach ($lists as $value) :
             ?>
-            <div class="room-item">
-                <a href="room-details.html">
-                    <img src="views/client/assets/img/room/room-img7.jpg" alt="Images">
-                </a>
-                <div class="content">
-                    <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
-                    <p>
-                    <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
-                    </p>
-                    <ul>
-                        <li> <?php echo $value->price_per_night ?></li>
-                        <li><span>Per Night</span></li>
-                    </ul>
-                    <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>
+                <div class="room-item">
+                    <a href="room-details.html">
+                        <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
+                    </a>
+                    <div class="content">
+                        <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
+                        <p>
+                            <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
+                        </p>
+                        <ul>
+                            <li> <?php echo $value->price_per_night ?></li>
+                            <li><span>Per Night</span></li>
+                        </ul>
+                        <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>
+                    </div>
                 </div>
-            </div>
             <?php endforeach ?>
         </div>
     </div>
@@ -542,3 +543,16 @@
         </div>
     </div>
 </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Thêm thư viện jQuery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        // Thiết lập datepicker với ngày hiện tại là ngày tối thiểu
+        $(document).ready(function() {
+            $("#checkInDatePicker, #checkOutDatePicker").datepicker({
+                minDate: "<?php echo $currentDate; ?>"
+            });
+        });
+    </script>

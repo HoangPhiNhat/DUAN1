@@ -1,6 +1,6 @@
 <?php
 
-class Login
+class login
 {
     public $name;
     public $email;
@@ -34,10 +34,13 @@ class Login
             session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['phone_number'] = $user['phone'];
             header('Location: index.php?controller=client&action=home');
             exit();
         } else {
             throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
         }
     }
+
 }

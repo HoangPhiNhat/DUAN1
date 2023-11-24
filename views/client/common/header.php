@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="vn">
 
@@ -7,6 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
     <link rel="stylesheet" href="views/client/assets/css/bootstrap.min.css">
 
@@ -62,7 +61,11 @@
                                 </a>
 
                             </li>
-
+                            <li class="nav-item">
+                                <a href="index.php?controller=client&action=rooms" class="nav-link">
+                                    Phòng
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     Nhà hàng
@@ -78,18 +81,14 @@
                                     Blog
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Phòng
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a href="index.php?controller=client&action=aboutUs" class="nav-link">
                                     Gallery
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="contact.html" class="nav-link">
+                                <a href="index.php?controller=client&action=Contact" class="nav-link">
                                     Liên hệ
                                 </a>
                             </li>
@@ -98,7 +97,7 @@
                             <div class="option-item d-line">
                                 <div class="account-nav-list">
                                     <span class="account-btn">
-                                        <?php if (isset($_SESSION['user_name'])) : ?>
+                                        <?php  if (isset($_SESSION['user_name'])) : ?>
                                             <div class="nice-select form-control" tabindex="0">
                                                 <span class="current">
                                                     <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>

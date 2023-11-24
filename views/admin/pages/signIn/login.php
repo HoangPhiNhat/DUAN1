@@ -1,20 +1,4 @@
-<div class="inner-banner inner-bg9">
-    <div class="container">
-        <div class="inner-title">
-            <ul>
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-                <li><i class="bx bx-chevron-right"></i></li>
-                <li>Sign In</li>
-            </ul>
-            <h3>Sign In</h3>
-        </div>
-    </div>
-</div>
-
-
-<div class="sign-in-area pt-100 pb-70">
+iv class="sign-in-area pt-100 pb-70">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -28,7 +12,7 @@
                             <div class="row">
                                 <div class="col-lg-12 ">
                                     <div class="form-group">
-                                        <input type="text" name="email" id="email" class="form-control" required data-error="Please enter your Username or Email" placeholder="Username or Email">
+                                        <input type="email" name="email" id="email" class="form-control" required data-error="Please enter your Username or Email" placeholder="Username or Email">
                                     </div>
                                 </div>
                                 <div class="col-12">
