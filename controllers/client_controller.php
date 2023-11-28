@@ -25,6 +25,7 @@ class ClientController extends BaseController
         $this->folder = 'home';
         $this->render('index', $data);
     }
+
     public function aboutUs()
     {
         $this->folder = 'aboutUs';
@@ -38,7 +39,7 @@ class ClientController extends BaseController
             $InfoUser['name'] = $_SESSION['user_name'];
             $InfoUser['email'] = $_SESSION['email'];
             $InfoUser['phone'] = isset($_SESSION['user_phone']) ? $_SESSION['user_phone'] : '';
-         } else {
+        } else {
             $InfoUser['name'] = '';
             $InfoUser['email'] = '';
             $InfoUser['phone'] = '';
@@ -67,34 +68,41 @@ class ClientController extends BaseController
     }
 
     public function room_details()
-{
-    // Verify if 'id' parameter is set in the URL
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    {
+     
+            $id = $_GET['id'];
+            $Value = Rooms::findALLData($id);
+            $roomDetails = Rooms::getRoomDetailsById($id);
+            $comments = Comment::getCommentsByRoomId($id);
+            $data = array(
+                'Value' => $Value, 'roomDetails' => $roomDetails, 'comments' => $comments);
 
-        // Get room details based on the room ID
-        $roomDetails = Rooms::findData($id);
-
-
-        if ($roomDetails) {
-            // Pass the room details to the view
-
-            $data = ['roomDetails' => $roomDetails];
             $this->folder = 'rooms';
             $this->render('room_details', $data);
-        } else {
-            // Handle the case when room details are not found
-            echo "Room details not found.";
-        }
-    } else {
-        // Handle the case when 'id' parameter is not set
-        echo "Room ID not provided.";
+        
     }
-}
 
 
+    // public function findComments()
+    // {
+    //     // Lấy thông tin chi tiết của phòng
+    //     $roomDetails = Rooms::getRoomDetailsById($_GET['id']);
+    //     if (!$roomDetails) {
+    //         // Xử lý trường hợp không tìm thấy thông tin phòng
+    //         echo "Không tìm thấy thông tin về phòng.";
+    //         return;
+    //     }
+    //     $comments = Comment::getCommentsByRoomId($roomDetails->$_GET['id']);
 
-    public function register() {
+    //     // Chuyển dữ liệu bình luận và thông tin phòng cho view
+    //     $data = array('roomDetails' => $roomDetails, 'comments' => $comments);
+    //     $this->folder = 'rooms';
+    //     $this->render('room_details', $data);
+    // }
+
+
+    public function register()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
             $email = $_POST['email'];
@@ -124,37 +132,115 @@ class ClientController extends BaseController
 
     public function signIn()
     {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
-        try {
-            login::checkLogin($email, $password);
-            header('Location: index.php?controller=client&action=home');
-            exit();
-        } catch (Exception $e) {
-            $errorMessage = $e->getMessage();
-            $data = array('error' => $errorMessage);
+            try {
+                login::checkLogin($email, $password);
+                header('Location: index.php?controller=client&action=home');
+                exit();
+            } catch (Exception $e) {
+                $errorMessage = $e->getMessage();
+                $data = array('error' => $errorMessage);
+                $this->folder = 'signIn';
+                $this->render('sign-in', $data);
+            }
+        } else {
             $this->folder = 'signIn';
-            $this->render('sign-in', $data);
+            $this->render('sign-in');
         }
-    } else {
-        $this->folder = 'signIn';
-        $this->render('sign-in');
     }
-}
-public function logOut()
-{
-    $this->folder = 'signIn';
-    $this->render('logOut');
-}
+    public function logOut()
+    {
+        $this->folder = 'signIn';
+        $this->render('logOut');
+    }
+    public function profile()
+    {
+        $this->folder = 'Setting';
+        $this->render('profile');
+    }
+    public function booking_history()
+    {
+        $this->folder = 'booking_history';
+        $this->render('booking_history');
+    }
 
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Lấy các dữ liệu từ form
+            $id = $_SESSION['user_id'];
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $phone_number = $_POST['phone_number'];
+            $password = $_POST['password'];
+            $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
+            $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : null;
+            $address = $_POST['address'];
+            login::updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id);
 
+            // Cập nhật session với thông tin mới
+            $_SESSION['user_name'] = $name;
+            $message = "Dữ liệu đã được sửa thành công";
+            $data = array('message' => $message);
+            $this->folder = 'Setting';
+            $this->render('update');
+            echo "Cập nhật thành công!";
+            header('Location: index.php?controller=client&action=profile');
+            exit();
+        }
+    }
+
+    public function findProfile()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $value = login::findData($id);
+            if ($value) {
+                $data = array('value' => $value);
+                $this->folder = 'Setting';
+                $this->render('update', $data);
+            } else {
+                echo "Không tìm thấy dữ liệu!";
+            }
+        } else {
+            echo "Thiếu tham số 'id' trên URL!";
+        }
+    }
+    public function addComment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_SESSION['user_id'])) {
+                $customer_id = $_SESSION['user_id'];
+                $comment_text = $_POST['comment_text'];
+                if (isset($_POST['room_id'])) {
+                    $room_id = $_POST['room_id'];
+                    $success = login::addComment($room_id, $customer_id, $comment_text);
+                    if ($success) {
+                        echo "Bình luận đã được thêm vào cơ sở dữ liệu.";
+                    } else {
+                        echo "Có lỗi xảy ra khi thêm bình luận.";
+                    }
+                    header("Location: index.php?controller=client&action=room_details&id=" . $room_id);
+                    exit();
+                } else {
+                    echo "Không có thông tin về phòng.";
+                }
+            } else {
+                echo "Bạn cần đăng nhập để thêm bình luận.";
+            }
+        }
+        $this->folder = 'rooms';
+        $this->render('room_details');
+    }
+    
+    
     public function error()
     {
         $data = array('is404' => true);
         $this->folder = 'error_404';
         $this->render('404', $data);
     }
-
 }

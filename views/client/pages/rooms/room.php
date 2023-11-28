@@ -81,7 +81,7 @@
                                 <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="Images">
                             </a>
                             <div class="content">
-                                <h3><a href="room-details.html"><?php echo RoomType::getNameById($value->room_type_id);  ?></a></h3>
+                                <h3><a href="index.php?controller=client&action=room_details&id=<?=$value->id ?>"><?php echo RoomType::getNameById($value->room_type_id);  ?></a></h3>
                                 <ul>
                                     <li class="text-color"><?php echo $value->price_per_night ?></li>
                                     <li class="text-color">Per Night</li>

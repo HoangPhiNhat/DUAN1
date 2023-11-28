@@ -3,6 +3,9 @@ require_once('controllers/base_controller.php');
 require_once("models/admin/facilities/facility.php");
 require_once("models/admin/rooms/rooms.php");
 require_once("models/admin/roomTypes/roomType.php");
+require_once("models/client/comment/comment.php");
+require_once("models/client/account/login.php");
+
 
 class AdminController extends BaseController
 {
@@ -156,7 +159,7 @@ class AdminController extends BaseController
             $room_type_id = $_POST['room_type_id'];
             $image_path = $_FILES['image_path']['name'];
             $target_dir = "../uploads";
-            $target_file = $target_dir . basename($_FILES['image_path']['name']);
+            $target_file = $target_dir ." /". basename($_FILES['image_path']['name']);
             if (move_uploaded_file($_FILES['image_path']['tmp_name'], $target_file)) {
 
             } else {
@@ -169,7 +172,8 @@ class AdminController extends BaseController
             $data = array('message' => $message);
             $this->folder = 'rooms';
             $this->render('add', $data);
-            exit;
+            echo '<script>window.location.href = "index.php?controller=admin&action=roomList";</script>';
+            exit();
         } else {
             $this->folder = 'rooms';
             $this->render('add', $data);
@@ -182,6 +186,29 @@ class AdminController extends BaseController
         $data = array('value' => $value);
         $this->folder = 'rooms';
         $this->render('update', $data);
+    }
+    public function commentsList()
+    {
+        $lists = Comment::getAllData();
+        $data = array('lists' => $lists);
+        $this->folder = 'comments';
+        $this->render('list', $data);
+    }
+    public function deleteComment()
+{
+    if (isset($_GET['id'])) {
+        $commentId = $_GET['id'];
+        Comment::deleteCommentById($commentId);
+        echo '<script>window.location.href = "index.php?controller=admin&action=commentsList";</script>';
+        exit();
+    }
+}
+public function customersList()
+    {
+        $lists = login::getAllData();
+        $data = array('lists' => $lists);
+        $this->folder = 'customers';
+        $this->render('list', $data);
     }
 
 }
