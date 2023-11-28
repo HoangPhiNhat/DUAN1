@@ -131,9 +131,9 @@
                     </a>
                     <div class="content">
                         <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
-                        <p>
+                        <!-- <p>
                             <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
-                        </p>
+                        </p> -->
                         <ul>
                             <li> <?php echo $value->price_per_night ?></li>
                             <li><span>Per Night</span></li>

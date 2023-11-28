@@ -110,12 +110,12 @@
                                                 </span>
                                                 <ul class="list">
                                                     <li class="option">
-                                                        <a href="blog-1.html" class="nav-link">
+                                                        <a href="index.php?controller=client&action=booking_history" class="nav-link">
                                                             Lịch sử đặt phòng
                                                         </a>
                                                     </li>
                                                     <li class="option">
-                                                        <a href="blog-1.html" class="nav-link">
+                                                        <a href="index.php?controller=client&action=profile" class="nav-link">
                                                             Cài đặt
                                                         </a>
                                                     </li>
