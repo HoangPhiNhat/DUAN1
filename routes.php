@@ -2,8 +2,8 @@
 
 <?php
 $controllers = array(
-    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','logOut'
-    ],
+    'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','logOut',
+    'booking_history','profile','getUserInfoByID','update','findProfile'],
     'admin' => ['dashboard', 'facilityList', 'addFacility', 'findFacility', 'updateFacility',
     'roomList', 'addRoom', 'showRoomsAndFacilities',
     'roomTypeList', 'findRoomType', 'updateRoomType', 'addRoomType']

@@ -156,7 +156,7 @@ class AdminController extends BaseController
             $room_type_id = $_POST['room_type_id'];
             $image_path = $_FILES['image_path']['name'];
             $target_dir = "../uploads";
-            $target_file = $target_dir . basename($_FILES['image_path']['name']);
+            $target_file = $target_dir ." /". basename($_FILES['image_path']['name']);
             if (move_uploaded_file($_FILES['image_path']['tmp_name'], $target_file)) {
 
             } else {
@@ -169,7 +169,8 @@ class AdminController extends BaseController
             $data = array('message' => $message);
             $this->folder = 'rooms';
             $this->render('add', $data);
-            exit;
+            echo '<script>window.location.href = "index.php?controller=admin&action=roomList";</script>';
+            exit();
         } else {
             $this->folder = 'rooms';
             $this->render('add', $data);
