@@ -20,7 +20,7 @@ class register {
     static function addUser($name, $email, $password) {
         $db = DB::getInstance();
         if (self::userExists($email)) {
-            throw new Exception("Email đã ");
+            throw new Exception("Email đã có người sử dụng, vui lòng nhập email khác.");
         } else {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 

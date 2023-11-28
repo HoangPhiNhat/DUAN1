@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="views/client/assets/css/bootstrap.min.css">
 
@@ -34,6 +35,11 @@
 
     <link rel="icon" type="image/png" href="views/client/assets/img/favicon.png">
     <title>Atoli - Hotel & Resorts HTML Template</title>
+    <style>
+        button {
+            border: none;
+        }
+    </style>
 </head>
 
 <body>

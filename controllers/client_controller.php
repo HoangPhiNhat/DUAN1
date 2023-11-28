@@ -68,30 +68,70 @@ class ClientController extends BaseController
 
     public function room_details()
 {
-    // Verify if 'id' parameter is set in the URL
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-
-        // Get room details based on the room ID
         $roomDetails = Rooms::findData($id);
-
-
         if ($roomDetails) {
-            // Pass the room details to the view
-
             $data = ['roomDetails' => $roomDetails];
             $this->folder = 'rooms';
             $this->render('room_details', $data);
         } else {
-            // Handle the case when room details are not found
             echo "Room details not found.";
         }
     } else {
-        // Handle the case when 'id' parameter is not set
         echo "Room ID not provided.";
     }
 }
+public function roomSelection()
+{
+    $selectedPerson = isset($_GET['person']) ? $_GET['person'] : 1;
+    $checkinDate = isset($_GET['checkin_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkin_date'])->format('Y-m-d') : null;
+    $checkoutDate = isset($_GET['checkout_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkout_date'])->format('Y-m-d') : null;
 
+
+    try {
+        $availableRooms = Booking::getAvailableRooms($selectedPerson, $checkinDate, $checkoutDate);
+        $list = Facility::getAllData();
+        $data = array('list' => $list, 'availableRooms' => $availableRooms);
+        $this->folder = 'secureBooking';
+        $this->render('roomSelection', $data);
+
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+public function secureBooking()
+{
+
+    $InfoUser = array();
+        if (isset($_SESSION['user_id'])) {
+            $InfoUser['id'] =  $_SESSION['user_id'];
+            $InfoUser['name'] = $_SESSION['user_name'];
+            $InfoUser['email'] = $_SESSION['email'];
+            $InfoUser['phone'] = isset($_SESSION['user_phone']) ? $_SESSION['user_phone'] : '';
+         } else {
+            $InfoUser['name'] = '';
+            $InfoUser['email'] = '';
+            $InfoUser['phone'] = '';
+        }
+        $roomID = isset($_GET['bookRoom']) ? $_GET['bookRoom'] : null;
+        $room = Booking::getRoomById($roomID);
+
+        // Kiểm tra xem $room có tồn tại và có giá trị hợp lệ hay không
+        if ($room) {
+            echo "Room Name: " . $room->name;
+            // ...
+        } else {
+            echo "Không tìm thấy thông tin phòng hoặc thông tin không hợp lệ.";
+        }
+
+
+        $data = array('room' => $room, 'InfoUser' => $InfoUser);
+        $this->folder = 'secureBooking';
+        $this->render('secureBooking', $data);
+
+}
 
 
     public function register() {

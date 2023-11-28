@@ -6146,3 +6146,26 @@ img {
         border-radius: 46% 54% 50% 50%/35% 61% 39% 65%
     }
 }
+
+.infoHotel {
+    display: flex;
+    justify-content: space-between;
+}
+.item  {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+.room_details, .room_details_left {
+    display: flex;
+    text-align: right;
+    align-items: center;
+    justify-content: space-between;
+}
+.fb-results-ratekeys {
+    margin: 0 10px;
+}
+.fb-gray-bg {
+    border-bottom: 1px dashed;
+    margin-bottom: 22px;
+}
