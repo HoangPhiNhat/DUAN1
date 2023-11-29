@@ -117,13 +117,33 @@ document.addEventListener('DOMContentLoaded', function() {
         var checkinDate = document.getElementById('checkInDatePicker').value;
         var checkoutDate = document.getElementById('checkOutDatePicker').value;
 
-        redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate);
-        });
-    });
+        // Kiểm tra nếu ngày trả phòng không hợp lệ
+        if (!isValidCheckoutDate(checkinDate, checkoutDate)) {
+            alert("Ngày trả phòng phải lớn hơn ngày hiện tại ít nhất 1 ngày!");
+            return;
+        }
 
-    function redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate) {
-        window.location.href = "index.php?controller=client&action=roomSelection&checkin_date=" + checkinDate + "&checkout_date=" + checkoutDate + "&person=" + selectedPerson;
-    }
-;
+        redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate);
+    });
+});
+
+function isValidCheckoutDate(checkinDate, checkoutDate) {
+    var currentDate = new Date();
+    var checkin = parseDate(checkinDate);
+    var checkout = parseDate(checkoutDate);
+
+    // Kiểm tra nếu ngày trả phòng không hợp lệ
+    return checkout > currentDate && checkout > checkin;
+}
+
+function parseDate(dateString) {
+    var parts = dateString.split("/");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+}
+
+function redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate) {
+    window.location.href = "index.php?controller=client&action=roomSelection&checkin_date=" + checkinDate + "&checkout_date=" + checkoutDate + "&person=" + selectedPerson;
+}
 
     </script>
+

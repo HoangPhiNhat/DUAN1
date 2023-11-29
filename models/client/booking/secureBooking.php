@@ -31,5 +31,5 @@ class Booking
         $stmt->execute();
         return $db->lastInsertId();
     }
-
+    
 }

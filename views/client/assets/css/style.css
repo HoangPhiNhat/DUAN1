@@ -6157,17 +6157,12 @@ img {
         border-radius: 46% 54% 50% 50%/35% 61% 39% 65%
     }
 }
-<<<<<<< HEAD
 
 .infoHotel {
     display: flex;
     justify-content: space-between;
 }
-.item  {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-}
+
 .room_details, .room_details_left {
     display: flex;
     text-align: right;
@@ -6180,10 +6175,4 @@ img {
 .fb-gray-bg {
     border-bottom: 1px dashed;
     margin-bottom: 22px;
-=======
-.left-sidebar {
-    background-color: #f2f2f2; /* Màu xám nhạt */
-    height: 100vh; /* Chiều cao là 100% của chiều cao của màn hình */
-    /* Các thuộc tính khác tùy ý của bạn */
->>>>>>> c18b1c170fb57473a38638f9e66379b48ebd527f
 }

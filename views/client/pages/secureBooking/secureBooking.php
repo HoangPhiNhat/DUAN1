@@ -12,6 +12,7 @@ $numberOfNights = $checkinDate->diff($checkoutDate)->days;
 $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
 
 $formattedPrice = number_format($totalPrice, 0, ',', '.');
+
 ?>
 
 
@@ -31,7 +32,7 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
 </div>
 <section class="checkout-area pt-100 pb-70">
     <div class="container">
-        <form action="" method="POST">
+    <form id="paymentForm" action="./vnpay_php/vnpay_create_payment.php" method="post" onsubmit="return prepareAndRedirect()">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="billing-details">
@@ -126,7 +127,7 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                                                 </dt>
                                                 <dd>
                                                     <span class="fb-time" data-value="12:00">
-                                                        <?php echo $room->price_per_night ?> ₫
+                                                        <?php echo $priceString ?> ₫
                                                 </dd>
                                             </div>
                                             <div class="infoHotel">
@@ -150,8 +151,8 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                                                 <dt class="fb-dark-gray">
                                                    Tổng
                                                 </dt>
-                                                <dd>
-                                                <?php echo $formattedPrice ?> ₫
+                                                <dd >
+                                               <p name="amount" value="<?php echo $totalPrice ?>"><?php echo $formattedPrice ?> ₫</p>
                                                 </dd>
                                             </div>
                                         </dl>
@@ -180,7 +181,7 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                             <div class="col-lg-12 col-md-12">
                                 <div class="payment-box">
                                     <div class="payment-method">
-                                        <p>
+                                        <!-- <p>
                                             <input type="radio" id="direct-bank-transfer" name="radio-group" checked="">
                                             <label for="direct-bank-transfer">Chuyển khoản trực tiếp</label>
                                             Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi.
@@ -190,13 +191,15 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                                         <p>
                                             <input type="radio" id="paypal" name="radio-group">
                                             <label for="paypal">PayPal</label>
-                                        </p>
+                                        </p> -->
+                                        <input type="hidden" name="language" value="BIDV">
+
                                         <p>
-                                            <input type="radio" id="cash-on-delivery" name="radio-group">
-                                            <label for="cash-on-delivery">Thanh toán khi giao hàng</label>
+                                            <input type="radio" id="cash-on-delivery" name="bankCode" value="Thanh toán VNPAY">
+                                            <label for="cash-on-delivery">Thanh toán VNPAY</label>
                                         </p>
                                     </div>
-                                    <button class="order-btn three">
+                                    <button type="submit" class="order-btn three" name="redirect">
                                         Đặt phòng
                                     </button>
                                 </div>
@@ -205,3 +208,26 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
         </form>
     </div>
 </section>
+<script>
+    function prepareAndRedirect() {
+        // Lấy giá trị từ các trường form
+        var invMobile = document.getElementById("txt_inv_mobile").value;
+        var invEmail = document.getElementById("txt_inv_email").value;
+        // Lấy các giá trị khác nếu cần thiết
+
+        // Xử lý dữ liệu nếu cần
+        // ...
+
+        // Tạo URL thanh toán với dữ liệu từ form
+        var paymentUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?";
+        paymentUrl += "vnp_Amount=100000&"; // Thay thế bằng cách lấy giá trị thực tế từ form
+        paymentUrl += "vnp_BankCode=BIDV&"; // Thay thế bằng cách lấy giá trị thực tế từ form
+        // Thêm các tham số khác từ dữ liệu form
+
+        // Chuyển hướng người dùng đến trang thanh toán
+        window.location.href = paymentUrl;
+
+        // Ngăn chặn form submit mặc định
+        return false;
+    }
+</script>

@@ -103,7 +103,18 @@ public function roomSelection()
 
 public function secureBooking()
 {
+$serviceCharge = 109.918;
+$VAT = 271.204;
+$priceString = $_GET['price'];
+$checkinDateString = $_GET['checkin_date'];
+$checkoutDateString = $_GET['checkout_date'];
+$price = intval(str_replace('.', '', $priceString));
+$checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
+$checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
 
+$numberOfNights = $checkinDate->diff($checkoutDate)->days;
+$totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
+    $amount=$totalPrice;
     $InfoUser = array();
         if (isset($_SESSION['user_id'])) {
             $InfoUser['id'] =  $_SESSION['user_id'];
@@ -126,14 +137,123 @@ public function secureBooking()
             echo "Không tìm thấy thông tin phòng hoặc thông tin không hợp lệ.";
         }
 
-
+        $this->paymentGateways($amount);
         $data = array('room' => $room, 'InfoUser' => $InfoUser);
         $this->folder = 'secureBooking';
         $this->render('secureBooking', $data);
 
 }
 
+public function paymentGateways($amount)
+    {
 
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = "http://localhost/DUAN1/index.php?controller=client&action=home";
+        $vnp_TmnCode = "CGXZLS0Z"; //Mã website tại VNPAY
+        $vnp_HashSecret = "XNBCJFAKAZQSGTARRLGCHVZWCIOIGSHN"; //Chuỗi bí mật
+
+        $vnp_TxnRef = rand(00,9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = "Nội dung thanh toán";
+        $vnp_OrderType = "vnpay";
+        $vnp_Amount = $amount;
+        $vnp_Locale = "vn";
+        $vnp_BankCode = "BIDV";
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        //Add Params of 2.0.1 Version
+       // $vnp_ExpireDate = $_POST['txtexpire'];
+        // //Billing
+        // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
+        // $vnp_Bill_Email = $_POST['txt_billing_email'];
+        // $fullName = trim($_POST['txt_billing_fullname']);
+        // if (isset($fullName) && trim($fullName) != '') {
+        //     $name = explode(' ', $fullName);
+        //     $vnp_Bill_FirstName = array_shift($name);
+        //     $vnp_Bill_LastName = array_pop($name);
+        // }
+        // $vnp_Bill_Address = $_POST['txt_inv_addr1'];
+        // $vnp_Bill_City = $_POST['txt_bill_city'];
+        // $vnp_Bill_Country = $_POST['txt_bill_country'];
+        // $vnp_Bill_State = $_POST['txt_bill_state'];
+        // Invoice
+        // $vnp_Inv_Phone = $_POST['txt_inv_mobile'];
+        // $vnp_Inv_Email = $_POST['txt_inv_email'];
+        // $vnp_Inv_Customer = $_POST['txt_inv_customer'];
+        // $vnp_Inv_Address = $_POST['txt_inv_addr1'];
+        // $vnp_Inv_Company = $_POST['txt_inv_company'];
+        // $vnp_Inv_Taxcode = $_POST['txt_inv_taxcode'];
+        // $vnp_Inv_Type = $_POST['cbo_inv_type'];
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+            // "vnp_ExpireDate" => $vnp_ExpireDate,
+            // "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
+            // "vnp_Bill_Email" => $vnp_Bill_Email,
+            // "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
+            // "vnp_Bill_LastName" => $vnp_Bill_LastName,
+            // "vnp_Bill_Address" => $vnp_Bill_Address,
+            // "vnp_Bill_City" => $vnp_Bill_City,
+            // "vnp_Bill_Country" => $vnp_Bill_Country,
+            // "vnp_Inv_Phone" => $vnp_Inv_Phone,
+            // "vnp_Inv_Email" => $vnp_Inv_Email,
+            // "vnp_Inv_Customer" => $vnp_Inv_Customer,
+            // "vnp_Inv_Address" => $vnp_Inv_Address,
+            // "vnp_Inv_Company" => $vnp_Inv_Company,
+            // "vnp_Inv_Taxcode" => $vnp_Inv_Taxcode,
+            // "vnp_Inv_Type" => $vnp_Inv_Type
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array(
+            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+        );
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
+        // vui lòng tham khảo thêm tại code demo
+
+    }
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
@@ -201,21 +321,20 @@ public function booking_history()
 
 public function update() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Lấy các dữ liệu từ form
         $id = $_SESSION['user_id'];
         $name = $_POST['name'];
         $email = $_POST['email'];
         $phone_number = $_POST['phone_number'];
-        
+
         // Kiểm tra xem 'gender' có tồn tại trong $_POST không
         $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
-        
+
         // Kiểm tra xem 'new_password' có tồn tại trong $_POST không
         $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
 
         // Kiểm tra xem 'roles_id' có tồn tại trong $_POST không
         $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : null;
-        
+
         $address = $_POST['address'];
 
         // Nếu người dùng nhập mật khẩu mới, thì hash nó
@@ -223,7 +342,7 @@ public function update() {
 
         // Thực hiện cập nhật thông tin tài khoản
         login::updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id);
-        
+
         // Cập nhật session với thông tin mới
         $_SESSION['user_name'] = $name;
         $message = "Dữ liệu đã được sửa thành công";
@@ -245,10 +364,10 @@ public function findProfile()
     // Kiểm tra xem có tham số 'id' trên URL không
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        
+
         // Gọi hàm findData để lấy dữ liệu cần thiết
         $value = login::findData($id);
-        
+
         // Kiểm tra xem có dữ liệu trả về không
         if ($value) {
             // Chuyển hướng sang trang update với dữ liệu
