@@ -111,7 +111,6 @@ $checkoutDateString = $_GET['checkout_date'];
 $price = intval(str_replace('.', '', $priceString));
 $checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
 $checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
-
 $numberOfNights = $checkinDate->diff($checkoutDate)->days;
 $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
     $amount=$totalPrice;
@@ -158,9 +157,9 @@ public function paymentGateways($amount)
         $vnp_TxnRef = rand(00,9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Nội dung thanh toán";
         $vnp_OrderType = "vnpay";
-        $vnp_Amount = $amount;
+        $vnp_Amount = $amount * 100;
         $vnp_Locale = "vn";
-        $vnp_BankCode = "BIDV";
+        $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         //Add Params of 2.0.1 Version
        // $vnp_ExpireDate = $_POST['txtexpire'];
@@ -243,15 +242,14 @@ public function paymentGateways($amount)
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         $returnData = array(
-            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+            'data' => $vnp_Url
         );
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
         } else {
-            echo json_encode($returnData);
+            echo "<p id='displayedURL' style ='display:none'>$vnp_Url</p>";
         }
-        // vui lòng tham khảo thêm tại code demo
 
     }
     public function register() {

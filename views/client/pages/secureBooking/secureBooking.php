@@ -14,8 +14,28 @@ $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCha
 $formattedPrice = number_format($totalPrice, 0, ',', '.');
 
 ?>
+<script>
+    function redirectToDisplayedURL() {
+        // Lấy giá trị từ trường hiển thị
+        var displayedURL = document.getElementById("displayedURL").innerText;
 
+        // Chuyển hướng trình duyệt đến URL
+        window.location.href = displayedURL;
+    }
+</script>
+<script>
+// Lấy thẻ p
+var dataElement = document.getElementById("dataToInclude");
 
+// Lấy nội dung từ thẻ p
+var dataToInclude = dataElement.innerText;
+
+// Lấy form
+var form = document.getElementById("myForm");
+
+// Gán nội dung vào action của form
+form.action = dataToInclude;
+</script>
 <div class="inner-banner inner-bg7">
     <div class="container">
         <div class="inner-title">
@@ -32,7 +52,7 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
 </div>
 <section class="checkout-area pt-100 pb-70">
     <div class="container">
-    <form id="paymentForm" action="./vnpay_php/vnpay_create_payment.php" method="post" onsubmit="return prepareAndRedirect()">
+        <form action="" method="post" id="myForm">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="billing-details">
@@ -144,15 +164,15 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                                                     Thuế VAT
                                                 </dt>
                                                 <dd>
-                                                <?php echo $VAT ?> ₫
+                                                    <?php echo $VAT ?> ₫
                                                 </dd>
                                             </div>
                                             <div class="infoHotel">
                                                 <dt class="fb-dark-gray">
-                                                   Tổng
+                                                    Tổng
                                                 </dt>
-                                                <dd >
-                                               <p name="amount" value="<?php echo $totalPrice ?>"><?php echo $formattedPrice ?> ₫</p>
+                                                <dd>
+                                                    <p name="amount" value="<?php echo $totalPrice ?>"></p><?php echo $formattedPrice ?> ₫
                                                 </dd>
                                             </div>
                                         </dl>
@@ -192,14 +212,12 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
                                             <input type="radio" id="paypal" name="radio-group">
                                             <label for="paypal">PayPal</label>
                                         </p> -->
-                                        <input type="hidden" name="language" value="BIDV">
-
                                         <p>
-                                            <input type="radio" id="cash-on-delivery" name="bankCode" value="Thanh toán VNPAY">
+                                            <input type="radio" id="cash-on-delivery" name="language" value="Thanh toán VNPAY">
                                             <label for="cash-on-delivery">Thanh toán VNPAY</label>
                                         </p>
                                     </div>
-                                    <button type="submit" class="order-btn three" name="redirect">
+                                    <button type="submit" class="order-btn three" name="redirect" onclick="redirectToDisplayedURL()">
                                         Đặt phòng
                                     </button>
                                 </div>
@@ -208,26 +226,3 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
         </form>
     </div>
 </section>
-<script>
-    function prepareAndRedirect() {
-        // Lấy giá trị từ các trường form
-        var invMobile = document.getElementById("txt_inv_mobile").value;
-        var invEmail = document.getElementById("txt_inv_email").value;
-        // Lấy các giá trị khác nếu cần thiết
-
-        // Xử lý dữ liệu nếu cần
-        // ...
-
-        // Tạo URL thanh toán với dữ liệu từ form
-        var paymentUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?";
-        paymentUrl += "vnp_Amount=100000&"; // Thay thế bằng cách lấy giá trị thực tế từ form
-        paymentUrl += "vnp_BankCode=BIDV&"; // Thay thế bằng cách lấy giá trị thực tế từ form
-        // Thêm các tham số khác từ dữ liệu form
-
-        // Chuyển hướng người dùng đến trang thanh toán
-        window.location.href = paymentUrl;
-
-        // Ngăn chặn form submit mặc định
-        return false;
-    }
-</script>
