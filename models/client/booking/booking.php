@@ -80,7 +80,7 @@ class Booking
         $roomData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (empty($roomData)) {
-            throw new Exception("message.");
+            throw new Exception("Rất tiếc là không còn phòng trống cho tiêu chí tìm kiếm của bạn.");
         }
 
         $roomObjects = [];

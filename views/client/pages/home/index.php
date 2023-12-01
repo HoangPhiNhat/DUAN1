@@ -1,3 +1,6 @@
+
+
+<?= !empty($successScript) ? $successScript : '' ?>
 <div class="preloader">
     <div class="d-table">
         <div class="d-table-cell">
@@ -10,9 +13,6 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="banner-area-two">
     <div class="container-fluid">
         <div class="row align-items-center">
