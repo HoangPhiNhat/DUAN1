@@ -168,5 +168,21 @@ class login
 
         return $result ? $result['name'] : null;
     }
-
+    static function getNameId($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result ? $result['name'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
 }

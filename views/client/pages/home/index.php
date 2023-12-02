@@ -1,3 +1,6 @@
+
+
+<?= !empty($successScript) ? $successScript : '' ?>
 <div class="preloader">
     <div class="d-table">
         <div class="d-table-cell">
@@ -10,9 +13,6 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="banner-area-two">
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -130,7 +130,7 @@
                         <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
                     </a>
                     <div class="content">
-                        <h3><a href="index.php?controller=client&action=room_details&id=<?=$value->id ?>"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
+                        <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
                         <!-- <p>
                             <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
                         </p> -->
@@ -545,11 +545,9 @@
 </div>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- Thêm thư viện jQuery UI -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        // Thiết lập datepicker với ngày hiện tại là ngày tối thiểu
         $(document).ready(function() {
             $("#checkInDatePicker, #checkOutDatePicker").datepicker({
                 minDate: "<?php echo $currentDate; ?>"

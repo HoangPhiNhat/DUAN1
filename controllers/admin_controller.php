@@ -3,6 +3,7 @@ require_once('controllers/base_controller.php');
 require_once("models/admin/facilities/facility.php");
 require_once("models/admin/rooms/rooms.php");
 require_once("models/admin/roomTypes/roomType.php");
+require_once("models/admin/roomReservations/roomReservations.php");
 require_once("models/client/comment/comment.php");
 require_once("models/client/account/login.php");
 
@@ -210,5 +211,52 @@ public function customersList()
         $this->folder = 'customers';
         $this->render('list', $data);
     }
+    public function ReservationsList()
+    {
+        $lists = roomReservation::getAllData();
+        $data = array('lists' => $lists);
+        $this->folder = 'roomReservations';
+        $this->render('list', $data);
+    }
+    public function findReservations()
+    {
+        $value = roomReservation::findData($_GET['id']);
+        $data = array('value' => $value);
+        $this->folder = 'roomReservations';
+        $this->render('update', $data);
+    }
+    public function updateReservations()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $customer_id = $_POST['customer_id'];
+            $room_id = $_POST['room_id'];
+            $status = $_POST['status']; // Assuming the status is coming from the form
+            $total_amount = $_POST['total_amount'];
+    
+            // Validate or sanitize the status input if necessary
+    
+            // Set the default status if the provided status is empty
+            if (empty($status)) {
+                $status = 'Chờ xác nhận'; // Set your default status here
+            }
+    
+            // Update the status in the database
+            roomReservation::updateData($id, $customer_id, $room_id, $status, $total_amount);
+    
+            // Display a success message
+            $message = "Dữ liệu đã được sửa thành công";
+            $data = array('message' => $message);
+            $this->folder = 'roomReservations';
+            $this->render('update', $data);
+    
+            // Redirect the user
+            echo '<script>window.location.href = "index.php?controller=admin&action=ReservationsList";</script>';
+            exit();
+        }
+    }
+  
+    
+    
 
 }

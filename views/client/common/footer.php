@@ -9,21 +9,25 @@
                                 <img src="views/client/assets/img/logos/footer-logo2.png" alt="Images">
                             </a>
                         </div>
-
                         <?php foreach ($list as $value) : ?>
-                                    <a href="" class="text-md">CƠ SỞ:<?php echo $value->name ?></a><br>
-
-                                    <p class="text-md">Email:<?php echo $value->email ?></p>
-
-                                    <p class="text-md" href="tel: "><?php echo $value->phone_number ?></p>
-
-                                    <p class="text-md">Đánh Giá<?php echo $value->starts ?></p>
-
-                                    <p class="text-md">Mô tả:<?php echo $value->description ?></p>
-
-                                    <p class="text-md">Địa CHỉ:<?php echo $value->address ?></p>
-
-                                    <?php endforeach ?>
+                            <p>
+                                <?php echo $value->description ?>
+                            </p>
+                            <ul class="footer-list-contact">
+                                <li>
+                                    <i class="bx bx-home-alt"></i>
+                                    <a href="#"><?php echo $value->address ?></a>
+                                </li>
+                                <li>
+                                    <i class="bx bx-phone-call"></i>
+                                    <a href="tel:<?php echo $value->phone_number ?>"><?php echo $value->phone_number ?></a>
+                                </li>
+                                <li>
+                                    <i class="bx bx-envelope"></i>
+                                    <a href="mailto:<?php echo $value->email ?>"><?php echo $value->email ?></a>
+                                </li>
+                            </ul>
+                        <?php endforeach ?>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">

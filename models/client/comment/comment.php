@@ -41,54 +41,36 @@ class Comment
         $stmt = $db->prepare('SELECT customer_id FROM customers WHERE id = ?');
         $stmt->execute([$customerId]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
         return $result ? $result['customer_id'] : null;
     }
     static function getAllComments()
     {
-        $db = DB::getInstance(); // DB::getInstance() làm việc với cơ sở dữ liệu của bạn, thay thế nó bằng cách phù hợp
-
-        // Thực hiện truy vấn
+        $db = DB::getInstance();
         $query = "SELECT * FROM comments";
         $statement = $db->query($query);
 
-        // Lấy kết quả và trả về một mảng các đối tượng Comment
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
-    static function getCommentsByRoomId($roomId) {
+    static function getCommentsByRoomId($roomId)
+    {
+        
         $db = DB::getInstance();
         $query = "SELECT * FROM comments WHERE room_id = :room_id ORDER BY created_at DESC";
         $statement = $db->prepare($query);
         $statement->bindParam(':room_id', $roomId, PDO::PARAM_INT);
-        
- 
-$statement->execute();
-
+        $statement->execute();
         $commentData = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        
-
-        
-// Lặp qua kết quả và tạo mảng các đối tượng Comment
+        // Lặp qua kết quả và tạo mảng các đối tượng Comment
         $comments = [];
         foreach ($commentData as $commentItem) {
             $comment = new Comment(
                 $commentItem['comment_id'],
-                
-  
-$commentItem['room_id'],
-                
-                
-$commentItem['customer_id'],
+                $commentItem['room_id'],
+                $commentItem['customer_id'],
                 $commentItem['comment_text'],
-                
-          
-$commentItem['created_at']
+                $commentItem['created_at']
             );
-            
-            
-        
-$comments[] = $comment;
+            $comments[] = $comment;
         }
 
         return $comments;

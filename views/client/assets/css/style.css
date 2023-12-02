@@ -4430,8 +4430,8 @@ img {
     margin-bottom: 20px;
     padding-left: 20px;
     border-radius: 50px;
-    background-color: #b56952;
-    color: #fff
+    background-color: #fff;
+    color: #000
 }
 
 .booking-form .nice-select .list {
@@ -6162,4 +6162,22 @@ img {
     background-color: #f2f2f2; /* Màu xám nhạt */
     height: 100vh; /* Chiều cao là 100% của chiều cao của màn hình */
     /* Các thuộc tính khác tùy ý của bạn */
+}
+.infoHotel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.room_details, .room_details_left {
+    display: flex;
+    text-align: right;
+    align-items: center;
+    justify-content: space-between;
+}
+.fb-results-ratekeys {
+    margin: 0 10px;
+}
+.fb-gray-bg {
+    border-bottom: 1px dashed;
+    margin-bottom: 22px;
 }
