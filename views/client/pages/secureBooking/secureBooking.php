@@ -7,10 +7,8 @@ $checkoutDateString = $_GET['checkout_date'];
 $price = intval(str_replace('.', '', $priceString));
 $checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
 $checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
-
 $numberOfNights = $checkinDate->diff($checkoutDate)->days;
 $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
-
 $formattedPrice = number_format($totalPrice, 0, ',', '.');
 
 ?>
