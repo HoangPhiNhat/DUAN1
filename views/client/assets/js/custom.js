@@ -148,6 +148,10 @@
       $(".accordion-content").not($(this).next()).slideUp("fast");
       $(".accordion-title").not($(this)).removeClass("active");
     });
+  $("#datetimepicker").datepicker();
+  $("#datetimepicker-check").datepicker();
+  new WOW().init();
+  $("select").niceSelect();
   $("body").append(
     '<div id="toTop" class="top-btn"><i class="bx bx-chevrons-up"></i></div>'
   );

@@ -2,6 +2,7 @@
 
 class login
 {
+    public $id;
     public $name;
     public $email;
     public $phone_number;
@@ -11,6 +12,7 @@ class login
     public $gender;
 
     function __construct(
+        $id,
         $name,
         $email,
         $phone_number,
@@ -19,6 +21,7 @@ class login
         $gender,
         $password
     ) {
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->phone_number = $phone_number;
@@ -53,13 +56,13 @@ class login
         }
     }
    
-    public static function updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id)
+    public static function updateData($id, $name, $email, $phone_number, $gender, $address, $roles_id)
     {
         $db = DB::getInstance();
     
         // Xây dựng câu lệnh SQL UPDATE
         $query = 'UPDATE customers 
-                  SET name = :name, email = :email, password = :password,
+                  SET name = :name, email = :email,
                       phone_number = IFNULL(:phone_number, phone_number),
                       gender = IFNULL(:gender, gender),
                       address = IFNULL(:address, address),
@@ -71,7 +74,7 @@ class login
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
+        
         $stmt->bindParam(':phone_number', $phone_number);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':address', $address);
@@ -79,7 +82,28 @@ class login
     
         $stmt->execute();
     }
-    
+    static function getAllData()
+    {
+        $list = [];
+        $db = DB::getInstance();
+        $req = $db->query('SELECT * FROM customers ORDER BY id desc');
+
+        foreach ($req->fetchAll() as $value) {
+            $list[] = new login(
+                $value['id'],
+                $value['name'],
+                $value['email'],
+                $value['phone_number'],
+                $value['password'],
+                $value['gender'],
+                $value['address'],
+                $value['roles_id']
+            );
+        }
+
+        return $list;
+    }
+
     static function findData($id)
     {
         $db = DB::getInstance();
@@ -94,8 +118,9 @@ class login
                 $value['email'],
                 $value['phone_number'],
                 $value['password'],
-                $value['gender'],
                 $value['address'],
+                $value['gender'],
+                
                 $value['roles_id']
             );
         }
@@ -114,5 +139,50 @@ class login
     
         return $user_info;
     }
+    static function addComment($room_id, $customer_id, $comment_text)
+    {
+        $db = DB::getInstance(); 
+        $customer_id = $_SESSION['user_id'];
+        if (!isset($customer_id )) {
+           echo 'vui lòng đăng nhập để bình luận';
+            return false;
+        }
 
+        $query = "INSERT INTO comments (room_id, customer_id, comment_text) VALUES (:room_id, :customer_id, :comment_text)";
+        $statement = $db->prepare($query);
+        $statement->bindParam(':room_id', $room_id, PDO::PARAM_INT);
+        $statement->bindParam(':customer_id', $customer_id , PDO::PARAM_INT);
+        $statement->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
+
+        // Thực hiện truy vấn
+        $success = $statement->execute();
+
+        return $success;
+    }
+    static function getNameById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT name FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['name'] : null;
+    }
+    static function getNameId($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result ? $result['name'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
 }

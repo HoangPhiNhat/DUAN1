@@ -125,4 +125,3 @@ function redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate) {
 }
 
     </script>
-

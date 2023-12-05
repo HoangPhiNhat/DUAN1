@@ -67,7 +67,7 @@ class Booking
         $query = 'SELECT rooms.*
                   FROM rooms
                   LEFT JOIN room_reservations ON rooms.id = room_reservations.room_id
-                  WHERE rooms.capacity = :capacity
+                  WHERE rooms.capacity >= :capacity
                     AND (room_reservations.checkin_date IS NULL
                          OR :checkout_date <= room_reservations.checkin_date
                          OR :checkin_date >= room_reservations.checkout_date)';
@@ -103,4 +103,3 @@ class Booking
 
 
 }
-

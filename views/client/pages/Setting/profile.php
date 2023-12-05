@@ -39,13 +39,7 @@ $user_info = login::getUserInfoByID($_SESSION['user_id']);
             <label for="phone_number">Số Điện Thoại:</label>
             <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $user_info['phone_number']; ?>">
         </div>
-        <div class="form-group">
-            <label for="gender">Giới tính:</label>
-            <input type="radio" id="male" name="gender" value="male" <?php if ($user_info['gender'] == 'male') echo 'checked'; ?>>
-            <label for="male">Nam</label>
-            <input type="radio" id="female" name="gender" value="female" <?php if ($user_info['gender'] == 'female') echo 'checked'; ?>>
-            <label for="female">Nữ</label>
-        </div>
+      
         <div class="form-group">
             <label for="address">Địa chỉ:</label>
             <input type="text" class="form-control" id="address" name="address" value="<?php echo $user_info['address']; ?>">

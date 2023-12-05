@@ -16,10 +16,10 @@
                             <th> ID </th>
                             <th> Tên Phòng </th>
                             <th> Giá Tiền Một Đêm </th>
-                            <th> Số Lượng Người Một Phòng </th>
+                            <th> Số Lượng Người</th>
                             <th> Cơ Sở </th>
                             <th> Loại Phòng </th>
-                            <th> Ảnh Phòng </th>
+                            <th> Ảnh Phòng  </th>
                             <th> Ngày tạo </th>
                             <th> Ngày chỉnh sửa </th>
                             <th> Chức Năng </th>
@@ -48,10 +48,10 @@
                                     <?php echo RoomType::getNameById($value->room_type_id); ?>
                                 </td>
                                 <td>
-                                    <img src="<?php echo  "./uploads/" . $value->image_path; ?>" alt="" style="height:88">
+                                    <img src="<?php echo  "./uploads/" . $value->image_path; ?>" alt="" style="width: 100%; height: 100%; border-radius:0% !important">
                                 </td>
                                 <td>
-                                    <?php echo $value->created_date ?> 
+                                    <?php echo $value->created_date ?>
                                 </td>
                                 <td>
                                     <?php echo $value->updated_date ?>

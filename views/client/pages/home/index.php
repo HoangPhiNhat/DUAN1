@@ -1,3 +1,5 @@
+
+
 <?= !empty($successScript) ? $successScript : '' ?>
 <div class="preloader">
     <div class="d-table">
@@ -41,78 +43,6 @@
         </div>
     </div>
 </div>
-<div class="about-area pt-100 pb-70">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="about-img-2">
-                    <img src="views/client/assets/img/about/about-img2.png" alt="Images">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="about-content">
-                    <div class="section-title">
-                        <h2>We Are the Best in All-time & So Please Get
-                            a Quick Booking</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Sed tincidunt ante tellus,
-                            sit amet rhoncus massa aliquam sit amet.
-                            Cras porttitor mauris quis mattis ornare.
-                            In efficitur at sem quis pretium. Aenean sit
-                            amet neque ut dolor lacinia rutrum.
-                            In vulputate pellentesque turpis et porta.
-                        </p>
-                    </div>
-                    <div class="about-form">
-                        <form>
-                            <div class="row align-items-center">
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Check in</label>
-                                        <?php
-                                        // Đặt ngày hiện tại
-                                        $currentDate = date("m/d/Y");
-                                        ?>
-                                        <div class="input-group">
-                                            <input id="checkInDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
-                                        </div>
-                                        <i class="bx bxs-calendar"></i>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Persons</label>
-                                        <select class="form-control">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                            <option>04</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Check Out</label>
-                                        <div class="input-group">
-                                            <input id="checkOutDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
-                                        </div>
-                                        <i class="bx bxs-calendar"></i>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <button type="submit" class="default-btn btn-bg-two border-radius-50">
-                                        Check Availability
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="room-area-two pb-70">
     <div class="container">
@@ -120,26 +50,32 @@
             <h2>Our Rooms & Rates</h2>
         </div>
         <div class="room-slider owl-carousel owl-theme pt-45">
-            <?php
-            foreach ($lists as $value) :
-            ?>
-                <div class="room-item">
-                    <a href="room-details.html">
-                        <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
-                    </a>
-                    <div class="content">
-                        <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
-                        <!-- <p>
-                            <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
-                        </p> -->
-                        <ul>
-                            <li> <?php echo $value->price_per_night ?></li>
-                            <li><span>Per Night</span></li>
+        <?php
+           $displayedTypes = array();
+
+           foreach ($lists as $value) :
+               $roomTypeId = $value->room_type_id;
+               if (!in_array($roomTypeId, $displayedTypes)) :
+                   ?>
+                   <div class="room-item">
+                       <a href="room-details.html">
+                           <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
+                       </a>
+                       <div class="content">
+                           <h3><a href="room-details.html"> <?php echo RoomType::getNameById($roomTypeId); ?></a></h3>
+                           <p>
+                               <?php echo RoomType::getDescriptionById($roomTypeId); ?>
+                           </p>
+                           <ul>
+                            <li> <?php echo $value->price_per_night ?> VNĐ</li>
                         </ul>
-                        <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>
-                    </div>
-                </div>
-            <?php endforeach ?>
+                       </div>
+                   </div>
+                   <?php
+                   $displayedTypes[] = $roomTypeId;
+               endif;
+           endforeach;
+           ?>
         </div>
     </div>
 </div>

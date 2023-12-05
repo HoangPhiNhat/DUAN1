@@ -9,6 +9,8 @@ require_once("models/client/account/login.php");
 require_once("models/client/comment/comment.php");
 require_once("models/client/booking/booking.php");
 require_once("models/client/booking/secureBooking.php");
+require_once("models/admin/roomReservations/roomReservations.php");
+
 
 class ClientController extends BaseController
 {
@@ -17,7 +19,6 @@ class ClientController extends BaseController
         $this->parentFolder = 'client';
         $this->subFolder = 'pages';
     }
-
     public function home()
     {
         $response_code = isset($_GET['vnp_ResponseCode']) ? $_GET['vnp_ResponseCode'] : 'null';
@@ -26,33 +27,47 @@ class ClientController extends BaseController
         if ($response_code == '00') {
             $successScript = "<script>swal({
                 title: 'Thanh toán thành công',
-                icon: 'success',
+                icon: 'success'
             });
             </script>";
-            $customer_id = $_SESSION['user_id']; // Thay thế bằng cách nhận giá trị từ form hoặc request
-            $room_id = $_GET['bookRoom'];
-            $checkin_date_input = $_GET['checkin_date'];
-            $checkin_date = DateTime::createFromFormat('d/m/Y', $checkin_date_input)->format('Y-m-d');
-            $checkout_date_input = $_GET['checkout_date'];
-            $checkout_date = DateTime::createFromFormat('d/m/Y', $checkout_date_input)->format('Y-m-d');
-            $total_amount_trimmed = $_GET['vnp_Amount'];
-            $total_amount = substr($total_amount_trimmed, 0, -2);
-        try {
-            $bookingId = SecureBooking::reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount);
-           // echo "Đặt phòng thành công. Mã đặt phòng: " . $bookingId;
-        } catch (\Exception $e) {
-            echo "Đặt phòng thất bại. Lỗi: " . $e->getMessage();
-        }
-    }
+            $customer_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+            $room_id = isset($_GET['bookRoom']) ? $_GET['bookRoom'] : null;
+            $checkin_date_input = isset($_GET['checkin_date']) ? $_GET['checkin_date'] : null;
+            $checkout_date_input = isset($_GET['checkout_date']) ? $_GET['checkout_date'] : null;
+            $total_amount_trimmed = isset($_GET['vnp_Amount']) ? $_GET['vnp_Amount'] : null;
 
+            if ($customer_id && $room_id && $checkin_date_input && $checkout_date_input && $total_amount_trimmed) {
+                try {
+                    // Chuyển định dạng ngày tháng
+                    $checkin_date = DateTime::createFromFormat('d/m/Y', $checkin_date_input)->format('Y-m-d');
+                    $checkout_date = DateTime::createFromFormat('d/m/Y', $checkout_date_input)->format('Y-m-d');
+
+                    // Loại bỏ các ký tự không mong muốn từ giá trị total_amount
+                    $total_amount = preg_replace("/[^0-9]/", "", $total_amount_trimmed);
+
+                    // Gọi hàm để đặt phòng
+                    $bookingId = SecureBooking::reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount);
+                    // Nếu cần, bạn có thể in ra thông báo đặt phòng thành công ở đây
+                } catch (\Exception $e) {
+                    // Xử lý lỗi khi đặt phòng thất bại
+                    echo "Đặt phòng thất bại. Lỗi: " . $e->getMessage();
+                }
+            }
+
+            // Chuyển hướng về trang chủ sau khi xử lý thanh toán thành công
+            header("Location: index.php?controller=client&action=home");
+            exit();
+        }
 
         $lists = Rooms::getAllData();
         $list = Facility::getAllData();
         $data = array('lists' => $lists, 'list' => $list, 'successScript' => $successScript);
         $this->folder = 'home';
         $this->render('index', $data);
+    }
 
-}
+
+
     public function aboutUs()
     {
         $this->folder = 'aboutUs';
@@ -77,27 +92,36 @@ class ClientController extends BaseController
     public function rooms()
     {
         $lists = Rooms::getAllData();
-
-        $data = array('lists' => $lists);
+        $list = Facility::getAllData();
+        $data = array('lists' => $lists, 'list' => $list);
         $this->folder = 'rooms';
         $this->render('room', $data);
     }
 
     public function room_details()
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $roomDetails = Rooms::findData($id);
-            if ($roomDetails) {
-                $data = ['roomDetails' => $roomDetails];
-                $this->folder = 'rooms';
-                $this->render('room_details', $data);
-            } else {
-                echo "Room details not found.";
-            }
-        } else {
-            echo "Room ID not provided.";
-        }
+
+        $id = $_GET['id'];
+        $Value = Rooms::findALLData($id);
+        $roomDetails = Rooms::getRoomDetailsById($id);
+        $comments = Comment::getCommentsByRoomId($id);
+        $list = Facility::getAllData();
+        $data = array(
+            'Value' => $Value, 'roomDetails' => $roomDetails, 'comments' => $comments, 'list' => $list
+        );
+
+        $this->folder = 'rooms';
+        $this->render('room_details', $data);
+    }
+
+    public function booking_history()
+    {
+        $user_name = $_SESSION['user_name'];
+        $bookingHistory = roomReservation::getBookingHistory($user_name);
+        $list = Facility::getAllData();
+        $data = array('bookingHistory' => $bookingHistory, 'list' => $list);
+        $this->folder = 'booking_history';
+        $this->render('booking_history', $data);
     }
     public function roomSelection()
     {
@@ -115,8 +139,6 @@ class ClientController extends BaseController
                 // Có phòng trống, tiếp tục xử lý
                 $error = null;
             }
-
-            // Tiếp tục xử lý và truyền thông báo lỗi vào mảng $data
             $list = Facility::getAllData();
             $data = array('list' => $list, 'availableRooms' => $availableRooms, 'error' => $error);
             $this->folder = 'secureBooking';
@@ -129,7 +151,6 @@ class ClientController extends BaseController
             $this->render('roomSelection', $data);
         }
     }
-
 
     public function secureBooking()
     {
@@ -172,6 +193,7 @@ class ClientController extends BaseController
         $this->folder = 'secureBooking';
         $this->render('secureBooking', $data);
     }
+
 
     public function paymentGateways($amount, $checkinDateString, $checkoutDateString, $bookRoom)
     {
@@ -338,38 +360,26 @@ class ClientController extends BaseController
     }
     public function profile()
     {
+        $list = Facility::getAllData();
+        $data = array('list' => $list);
         $this->folder = 'Setting';
-        $this->render('profile');
+        $this->render('profile', $data);
     }
-    public function booking_history()
-    {
-        $this->folder = 'booking_history';
-        $this->render('booking_history');
-    }
+
+
 
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Lấy các dữ liệu từ form
             $id = $_SESSION['user_id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
             $phone_number = $_POST['phone_number'];
-
-            // Kiểm tra xem 'gender' có tồn tại trong $_POST không
+            $password = $_POST['password'];
             $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
-
-            // Kiểm tra xem 'new_password' có tồn tại trong $_POST không
-            $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
-
-            // Kiểm tra xem 'roles_id' có tồn tại trong $_POST không
             $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : null;
-
             $address = $_POST['address'];
-
-            // Nếu người dùng nhập mật khẩu mới, thì hash nó
-            $password = empty($new_password) ? null : password_hash($new_password, PASSWORD_DEFAULT);
-
-            // Thực hiện cập nhật thông tin tài khoản
             login::updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id);
 
             // Cập nhật session với thông tin mới
@@ -378,39 +388,53 @@ class ClientController extends BaseController
             $data = array('message' => $message);
             $this->folder = 'Setting';
             $this->render('update');
-            // Chuyển hướng hoặc hiển thị thông báo cập nhật thành công
-            // Ở đây, bạn có thể chuyển hướng đến trang profile hoặc hiển thị thông báo thành công.
-            // Ví dụ: header('Location: index.php?controller=client&action=profile');
-            // echo '<script>window.location.href = "index.php?controller=client&action=profile";</script>';
             echo "Cập nhật thành công!";
+            header('Location: index.php?controller=client&action=profile');
             exit();
         }
     }
 
-
     public function findProfile()
     {
-        // Kiểm tra xem có tham số 'id' trên URL không
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-
-            // Gọi hàm findData để lấy dữ liệu cần thiết
             $value = login::findData($id);
-
-            // Kiểm tra xem có dữ liệu trả về không
             if ($value) {
-                // Chuyển hướng sang trang update với dữ liệu
                 $data = array('value' => $value);
                 $this->folder = 'Setting';
                 $this->render('update', $data);
             } else {
-                // Xử lý trường hợp không tìm thấy dữ liệu
                 echo "Không tìm thấy dữ liệu!";
             }
         } else {
-            // Xử lý trường hợp không có tham số 'id' trên URL
             echo "Thiếu tham số 'id' trên URL!";
         }
+    }
+    public function addComment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_SESSION['user_id'])) {
+                $customer_id = $_SESSION['user_id'];
+                $comment_text = $_POST['comment_text'];
+                if (isset($_POST['room_id'])) {
+                    $room_id = $_POST['room_id'];
+                    $success = login::addComment($room_id, $customer_id, $comment_text);
+                    if ($success) {
+                        echo "Bình luận đã được thêm vào cơ sở dữ liệu.";
+                    } else {
+                        echo "Có lỗi xảy ra khi thêm bình luận.";
+                    }
+                    header("Location: index.php?controller=client&action=room_details&id=" . $room_id);
+                    exit();
+                } else {
+                    echo "Không có thông tin về phòng.";
+                }
+            } else {
+                echo "Bạn cần đăng nhập để thêm bình luận.";
+            }
+        }
+        $this->folder = 'rooms';
+        $this->render('room_details');
     }
 
     public function error()
