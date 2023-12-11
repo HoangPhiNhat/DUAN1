@@ -1,6 +1,7 @@
 <?php
 require_once('controllers/base_controller.php');
 require_once("models/admin/facilities/facility.php");
+require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/rooms/rooms.php");
 require_once("models/admin/roomTypes/roomType.php");
 require_once("models/admin/roomReservations/roomReservations.php");
@@ -19,8 +20,12 @@ class AdminController extends BaseController
 
     public function dashboard()
     {
+        $calculateTotal = Dashboard::calculateTotal();
+        $totalRooms = Dashboard::totalRooms();
+        $totalRoomReservations = Dashboard::totalRoomReservations();
+        $data = array('calculateTotal' => $calculateTotal, 'totalRooms' => $totalRooms, 'totalRoomReservations' => $totalRoomReservations);
         $this->folder = 'dashboard';
-        $this->render('dashboard');
+        $this->render('dashboard', $data);
     }
     public function addFacility()
     {
@@ -91,10 +96,31 @@ class AdminController extends BaseController
 
     public function roomTypeList()
     {
-        $lists = roomType::getAllData();
-        $data = array('lists' => $lists);
-        $this->folder = 'roomTypes';
-        $this->render('list', $data);
+        
+            $lists = roomType::getAllData();
+    
+            // Kiểm tra xem có danh sách hay không
+            if (empty($lists)) {
+                echo "No room types found.";
+                return;
+            }
+            $roomTypeId = roomType::getAllData();
+            // Gọi hàm để lấy kết quả đếm
+            $countResult = roomType::updateRoomCountInDatabase($roomTypeId);
+    
+            // Kiểm tra xem có kết quả đếm hay không
+            if ($countResult !== false && is_array($countResult)) {
+                $totalRoomCount = array_sum(array_column($countResult, 'room_count'));
+    
+                // Chuyển dữ liệu sang view để hiển thị
+                $data = array('lists' => $lists, 'totalRoomCount' => $totalRoomCount);
+                $this->folder = 'roomTypes';
+                $this->render('list', $data);
+            } 
+            $data = array('lists' => $lists, 'totalRoomCount' => $totalRoomCount);
+            $this->folder = 'roomTypes';
+            $this->render('list', $data);
+        
     }
     public function addRoomType()
     {

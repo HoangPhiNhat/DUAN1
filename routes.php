@@ -4,7 +4,8 @@
 $controllers = array(
 
     'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','roomDetails','logOut',
-    'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer'],
+    'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer',
+    'roomSame','roomAvailabilityAction'],
 
     // 'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms',
     // 'room_details','logOut', 'roomSelection', 'secureBooking' ],

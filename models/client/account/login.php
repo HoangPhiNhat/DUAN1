@@ -120,7 +120,6 @@ class login
                 $value['password'],
                 $value['address'],
                 $value['gender'],
-                
                 $value['roles_id']
             );
         }
@@ -139,7 +138,7 @@ class login
     
         return $user_info;
     }
-    static function addComment($room_id, $customer_id, $comment_text)
+    static function addComment($room_id, $customer_id, $rating, $comment_text)
     {
         $db = DB::getInstance(); 
         $customer_id = $_SESSION['user_id'];
@@ -148,10 +147,11 @@ class login
             return false;
         }
 
-        $query = "INSERT INTO comments (room_id, customer_id, comment_text) VALUES (:room_id, :customer_id, :comment_text)";
+        $query = "INSERT INTO comments (room_id, customer_id, rating, comment_text) VALUES (:room_id, :customer_id, :rating, :comment_text)";
         $statement = $db->prepare($query);
         $statement->bindParam(':room_id', $room_id, PDO::PARAM_INT);
         $statement->bindParam(':customer_id', $customer_id , PDO::PARAM_INT);
+        $statement->bindParam(':rating', $rating , PDO::PARAM_INT);
         $statement->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
 
         // Thực hiện truy vấn
@@ -167,6 +167,24 @@ class login
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result ? $result['name'] : null;
+    }
+    static function getPhoneById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['phone_number'] : null;
+    }
+    static function getAddressById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT address FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['address'] : null;
     }
     static function getNameId($customerId)
     {

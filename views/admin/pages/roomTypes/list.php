@@ -16,6 +16,7 @@
                             <th> ID </th>
                             <th> Loại phòng </th>
                             <th> Mô tả </th>
+                            <th> Số lượng phòng </th>
                             <th> Ngày tạo </th>
                             <th> Ngày chỉnh sửa </th>
                             <th> Chức Năng </th>
@@ -33,6 +34,9 @@
                                 </td>
                                 <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->description ?>">
                                     <?php echo $value->description ?>
+                                </td>
+                                <td>
+                                <?php echo $value->total_quantity ?>
                                 </td>
                                 <td>
                                     <?php echo $value->created_date ?>

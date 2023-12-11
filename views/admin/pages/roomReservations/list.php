@@ -17,6 +17,8 @@
                             <th> Trạng thái</th>
                             <th> ID </th>
                             <th> Tên Người Đặt </th>
+                            <th> SDT </th>
+                            <th> Địa chỉ </th>
                             <th> Tên Phòng </th>
                             <th> Checkin </th>
                             <th> Checkout </th>
@@ -33,8 +35,8 @@
                                     flex-wrap: wrap;
                                     justify-content: center;
                                     align-items: center;">
-                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a href="<?php echo "index.php?controller=admin&action=findReservations&id=$value->id" ?>" style="padding: 0; color: #fff;" class="nav-link">Sửa</a></button>
-                                    <button class="btn btn-gradient-primary "><a href=<?php echo "c" ?> style="padding: 0; color: #fff;" class="nav-link">Xóa</a></button>
+                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a href="<?php echo "index.php?controller=admin&action=findReservations&id=$value->id" ?>" style="padding: 0; color: #fff;" class="nav-link">Cập Nhật</a></button>
+                                    <!-- <button class="btn btn-gradient-primary "><a href=<?php echo "c" ?> style="padding: 0; color: #fff;" class="nav-link">Xóa</a></button> -->
                                 </td>
                                 <td>
                                     <?php echo $value->status ?>
@@ -46,6 +48,16 @@
                                 <td>
                                     <!-- <?php echo $value->customer_id ?> -->
                                     <?php echo login::getNameById($value->customer_id); ?>
+
+                                </td>
+                                <td>
+                                    <!-- <?php echo $value->customer_id ?> -->
+                                    <?php echo login::getPhoneById($value->customer_id); ?>
+
+                                </td>
+                                <td>
+                                    <!-- <?php echo $value->customer_id ?> -->
+                                    <?php echo login::getAddressById($value->customer_id); ?>
 
                                 </td>
                                 <td>

@@ -59,7 +59,10 @@ $personSelect = $_GET['person'];
                                 <div class="owl-dots disabled"></div>
                             </div>
                             <div class="room-details-title">
-                                <h2><?php echo RoomType::getNameById($value->room_type_id); ?></h2>
+                            <h2><?php echo RoomType::getNameById($value->room_type_id); ?></h2>
+<p>
+    - Số lượng phòng còn lại: <?php echo $remainingQuantities[$value->room_type_id]; ?>
+</p>
                                 <div class="room_details">
                                     <div class="room_details_left">
                                         <div class="fb-results-ratekeys">
