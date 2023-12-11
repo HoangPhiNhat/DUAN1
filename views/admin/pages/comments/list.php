@@ -52,7 +52,6 @@
                                     </form>
                                 </td>
                             </tr>
-
                         <?php endforeach ?>
                     </tbody>
                 </table>

@@ -1,5 +1,6 @@
 <?php
 require_once('controllers/base_controller.php');
+require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/facilities/facility.php");
 require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/rooms/rooms.php");
