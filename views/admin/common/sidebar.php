@@ -34,5 +34,21 @@
                 <span class="menu-title">Quản lý các loại phòng</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=customersList">
+                <span class="menu-title">Quản lý Người Dùng</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=commentsList">
+                <span class="menu-title">Quản lý Bình Luận</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=ReservationsList">
+                <span class="menu-title">Quản lý Danh Sách Đơn Đặt phòng</span>
+            </a>
+        </li>
+       
     </ul>
 </nav>

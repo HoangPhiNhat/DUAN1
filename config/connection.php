@@ -7,9 +7,9 @@ class DB
     {
         if (!isset(self::$instance)) {
             try {
-                self::$instance = new PDO('mysql:host=localhost;dbname=hotel_reservation_system', 'root', 'root');
+                self::$instance = new PDO('mysql:host=localhost;dbname=hotel_reservation_system', 'root', '');
                 self::$instance->exec("SET NAMES 'utf8'");
-                 echo "vc hehe";
+                //  echo "vc hehe";
             } catch (PDOException $ex) {
                 die($ex->getMessage());
             }

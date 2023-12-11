@@ -14,26 +14,17 @@ $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCha
 $formattedPrice = number_format($totalPrice, 0, ',', '.');
 
 ?>
+
 <script>
     function redirectToDisplayedURL() {
-        // Lấy giá trị từ trường hiển thị
-        var displayedURL = document.getElementById("displayedURL").innerText;
-
-        // Chuyển hướng trình duyệt đến URL
+        let displayedURL = document.getElementById("displayedURL").innerText;
         window.location.href = displayedURL;
     }
 </script>
 <script>
-// Lấy thẻ p
-var dataElement = document.getElementById("dataToInclude");
-
-// Lấy nội dung từ thẻ p
-var dataToInclude = dataElement.innerText;
-
-// Lấy form
-var form = document.getElementById("myForm");
-
-// Gán nội dung vào action của form
+let dataElement = document.getElementById("dataToInclude");
+let dataToInclude = dataElement.innerText;
+let form = document.getElementById("myForm");
 form.action = dataToInclude;
 </script>
 <div class="inner-banner inner-bg7">

@@ -1,7 +1,7 @@
 <?php
-    $checkInDatePicker = $_GET['checkin_date'];
-    $checkOutDatePicker = $_GET['checkout_date'];
-    $personSelect = $_GET['person'];
+$checkInDatePicker = $_GET['checkin_date'];
+$checkOutDatePicker = $_GET['checkout_date'];
+$personSelect = $_GET['person'];
 ?>
 <div class="preloader" style="display: none;">
     <div class="d-table">
@@ -35,72 +35,79 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <?php foreach ($availableRooms as $value) : ?>
-                    <div class="room-details-article">
-                        <div class="room-details-slider owl-carousel owl-theme owl-loaded owl-drag">
-                            <div class="owl-stage-outer">
-                                <div class="owl-stage" style="transform: translate3d(-1932px, 0px, 0px); transition: all 0.25s ease 0s; width: 6763px;">
-                                    <div class="owl-item cloned" style="width: 936.008px; margin-right: 30px;">
-                                        <div class="room-details-item">
-                                            <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="Images">
+                <?php if (isset($availableRooms) && !empty($availableRooms)) : ?>
+                    <?php foreach ($availableRooms as $value) : ?>
+                        <div class="room-details-article">
+                            <div class="room-details-slider owl-carousel owl-theme owl-loaded owl-drag">
+                                <div class="owl-stage-outer">
+                                    <div class="owl-stage" style="transform: translate3d(-1932px, 0px, 0px); transition: all 0.25s ease 0s; width: 6763px;">
+                                        <div class="owl-item cloned" style="width: 936.008px; margin-right: 30px;">
+                                            <div class="room-details-item">
+                                                <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="Images">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="owl-nav">
-                                <button type="button" role="presentation" class="owl-prev">
-                                    <i class="bx bx-chevron-left"></i>
-                                </button>
-                                <button type="button" role="presentation" class="owl-next">
-                                    <i class="bx bx-chevron-right"></i>
-                                </button>
-                            </div>
-                            <div class="owl-dots disabled"></div>
-                        </div>
-                        <div class="room-details-title">
-                            <h2><?php echo RoomType::getNameById($value->room_type_id); ?></h2>
-                            <div class="room_details">
-                                <div class="room_details_left">
-                                    <div class="fb-results-ratekeys">
-                                        <div class="item ">
-                                            <img src="https://www.book-secure.com/images/pictos/icon-package-mealplan-breakfast.png" border="0" style="padding-left: 6px;">
-                                            <span class="fb-translate">Bao gồm bữa sáng</span>
-                                        </div>
-
-                                    </div>
-                                    <div class="fb-results-ratekeys">
-                                        <div class="item  ">
-                                            <img src="https://www.book-secure.com/images/pictos/icon-package-salesterms-cross.png" border="0">
-                                            <span class="fb-translate">Không thể hủy, sửa đổi</span>
-                                        </div>
-                                    </div>
-                                    <div class="fb-results-ratekeys">
-                                        <div class="item">
-                                            <img src="https://www.book-secure.com/images/pictos/icon-package-salesterms-payment-checkout.png" border="0">
-                                            <span class="fb-translate">Thanh toán sau</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="room_details_right">
-                                    <p style="display: block; margin: 0;">
-                                        1 đêm / <?php echo $value->capacity ?> người
-                                    </p>
-                                    <p>
-                                    <h2> <?php echo $value->price_per_night ?> VNĐ</h2>
-                                    </p>
-                                    <button type="button" class="default-btn btn-bg-three" data-room="<?php echo $value->id; ?>" data-price="<?php echo $value->price_per_night ?>" data-checkin="<?php echo $checkInDatePicker; ?>" data-checkout="<?php echo $checkOutDatePicker; ?>">
-                                        Chọn
+                                <div class="owl-nav">
+                                    <button type="button" role="presentation" class="owl-prev">
+                                        <i class="bx bx-chevron-left"></i>
+                                    </button>
+                                    <button type="button" role="presentation" class="owl-next">
+                                        <i class="bx bx-chevron-right"></i>
                                     </button>
                                 </div>
+                                <div class="owl-dots disabled"></div>
+                            </div>
+                            <div class="room-details-title">
+                            <h2><?php echo RoomType::getNameById($value->room_type_id); ?></h2>
+<p>
+    - Số lượng phòng còn lại: <?php echo $remainingQuantities[$value->room_type_id]; ?>
+</p>
+                                <div class="room_details">
+                                    <div class="room_details_left">
+                                        <div class="fb-results-ratekeys">
+                                            <div class="item ">
+                                                <img src="https://www.book-secure.com/images/pictos/icon-package-mealplan-breakfast.png" border="0" style="padding-left: 6px;">
+                                                <span class="fb-translate">Bao gồm bữa sáng</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="fb-results-ratekeys">
+                                            <div class="item  ">
+                                                <img src="https://www.book-secure.com/images/pictos/icon-package-salesterms-cross.png" border="0">
+                                                <span class="fb-translate">Không thể hủy, sửa đổi</span>
+                                            </div>
+                                        </div>
+                                        <div class="fb-results-ratekeys">
+                                            <div class="item">
+                                                <img src="https://www.book-secure.com/images/pictos/icon-package-salesterms-payment-checkout.png" border="0">
+                                                <span class="fb-translate">Thanh toán sau</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="room_details_right">
+                                        <p style="display: block; margin: 0;">
+                                            1 đêm / <?php echo $value->capacity ?> người
+                                        </p>
+                                        <p>
+                                        <h2> <?php echo $value->price_per_night ?> VNĐ</h2>
+                                        </p>
+                                        <button type="button" class="default-btn btn-bg-three" data-room="<?php echo $value->id; ?>" data-price="<?php echo $value->price_per_night ?>" data-checkin="<?php echo $checkInDatePicker; ?>" data-checkout="<?php echo $checkOutDatePicker; ?>">
+                                            Chọn
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="room-details-content">
-                        <p>
-                            <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
-                        </p>
-                    </div>
-                <?php endforeach; ?>
+                        <div class="room-details-content">
+                            <p>
+                                <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>Không có phòng trống cho thời gian và số người đã chọn.</p>
+                <?php endif; ?>
             </div>
             <div class="col-lg-4">
                 <div class="room-details-side">
@@ -146,23 +153,22 @@
     </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    let paymentButtons = document.querySelectorAll('.default-btn.btn-bg-three');
+    document.addEventListener('DOMContentLoaded', function() {
+        let paymentButtons = document.querySelectorAll('.default-btn.btn-bg-three');
 
-    paymentButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            let roomTypeId = this.getAttribute('data-room');
-            let price = this.getAttribute('data-price');
-            let checkinDate = this.getAttribute('data-checkin');
-            let checkoutDate = this.getAttribute('data-checkout');
+        paymentButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                let roomTypeId = this.getAttribute('data-room');
+                let price = this.getAttribute('data-price');
+                let checkinDate = this.getAttribute('data-checkin');
+                let checkoutDate = this.getAttribute('data-checkout');
 
-            redirectToPaymentPage(roomTypeId, price, checkinDate, checkoutDate);
+                redirectToPaymentPage(roomTypeId, price, checkinDate, checkoutDate);
+            });
         });
+
+        function redirectToPaymentPage(roomTypeId, price, checkinDate, checkoutDate) {
+            window.location.href = "index.php?controller=client&action=secureBooking&checkin_date=" + checkinDate + "&checkout_date=" + checkoutDate + "&bookRoom=" + roomTypeId + "&price=" + price;
+        }
     });
-
-    function redirectToPaymentPage(roomTypeId, price, checkinDate, checkoutDate) {
-        window.location.href = "index.php?controller=client&action=secureBooking&checkin_date=" + checkinDate + "&checkout_date=" + checkoutDate + "&bookRoom=" + roomTypeId + "&price=" +price;
-    }
-});
-
 </script>

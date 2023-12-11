@@ -128,6 +128,15 @@ class Rooms
 
         return $result ? $result['image_path'] : null;
     }
+    static function getNameById($roomId)
+{
+    $db = DB::getInstance();
+    $stmt = $db->prepare('SELECT name FROM rooms WHERE id = ?');
+    $stmt->execute([$roomId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['name'] : null;
+}
     static function getData($roomId)
     {
         $db = DB::getInstance();
@@ -152,5 +161,56 @@ class Rooms
 
         return null;
     }
+    static function findALLData($id)
+    {
+        $db = DB::getInstance();
+        $statement = $db->prepare('SELECT * FROM rooms WHERE id = :id');
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $roomDetails = $statement->fetch(PDO::FETCH_OBJ);
+
+        return $roomDetails;
+    }
+    static function getRoomDetailsById($roomId)
+    {
+        $db = DB::getInstance();
+        $query = "SELECT * FROM rooms WHERE id = :id";
+        $statement = $db->prepare($query);
+        $statement->bindParam(':id', $roomId, PDO::PARAM_INT);
+        $statement->execute();
+        if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $room = new Rooms(
+                $row['id'],
+                $row['name'],
+                $row['price_per_night'],
+                $row['capacity'],
+                $row['facility_id'],
+                $row['room_type_id'],
+                $row['image_path'],
+                $row['created_date'],
+                $row['updated_date']
+            );
+            return $room;
+        } else {
+            return null;
+        }
+    }
+    static function getRoomInfoById($roomId)
+{
+    try {
+        $db = DB::getInstance();
+        $query = 'SELECT * FROM rooms WHERE id = :roomId';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+        $stmt->execute();
+        $roomInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $roomInfo;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+
 
 }

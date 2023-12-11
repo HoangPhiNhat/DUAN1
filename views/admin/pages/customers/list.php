@@ -2,27 +2,26 @@
     <div class="card">
         <div class="card-body ">
             <div class="page-header">
-                <h4 class="card-title">Danh sách loại phòng</h4>
-                <span>
+                <h4 class="card-title">Danh sách Người Dùng</h4>
+                <!-- <span>
                     <a class="nav-link" href="index.php?controller=admin&action=addRoomType">
                         Thêm loại phòng
                     </a>
-                </span>
+                </span> -->
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th> ID </th>
-                            <th> Loại phòng </th>
-                            <th> Mô tả </th>
-                            <th> Số lượng phòng </th>
-                            <th> Ngày tạo </th>
-                            <th> Ngày chỉnh sửa </th>
-                            <th> Chức Năng </th>
+                            <th> Tên Người dùng </th>
+                            <th> Email </th>
+                            <th> SDT </th>
+                            <th> Địa Chỉ </th>
                         </tr>
                     </thead>
                     <tbody>
+                    
                         <?php foreach ($lists as $value) :
                         ?>
                             <tr>
@@ -30,27 +29,27 @@
                                     <?php echo $value->id ?>
                                 </td>
                                 <td>
+                                    <!-- <?php echo Rooms::getNameById($value->room_id); ?> -->
                                     <?php echo $value->name ?>
                                 </td>
-                                <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->description ?>">
-                                    <?php echo $value->description ?>
+                                <td>
+                                    <!-- <?php echo login::getNameById($value->customer_id); ?> -->
+                                    <?php echo $value->email ?>
                                 </td>
                                 <td>
-                                <?php echo $value->total_quantity ?>
+                                    <?php echo $value->phone_number ?>
                                 </td>
+
                                 <td>
-                                    <?php echo $value->created_date ?>
+                                <?php echo $value->gender ?>
                                 </td>
-                                <td>
-                                    <?php echo $value->updated_date ?>
-                                </td>
-                                <td>
-                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;">
-                                            <a href='<?php echo "index.php?controller=admin&action=findRoomType&id=$value->id"?>' style="padding: 0; color: #fff;" >
-                                                Sửa
-                                            </a>
-                                    </button>
-                                </td>
+                                <!-- <td>
+                                    <form method="POST" action="index.php?controller=admin&action=deleteComment&id=<?php echo $value->comment_id; ?>">
+                                        <button type="submit" class="btn btn-gradient-primary" style="margin-bottom: 5px;">
+                                            Xóa
+                                        </button>
+                                    </form>
+                                </td> -->
                             </tr>
                         <?php endforeach ?>
                     </tbody>

@@ -1,51 +1,48 @@
 <!-- Include your header and navigation if necessary -->
+<div class="container">
+    <div>
+        <h2 class="card-title" style="padding: 10px;margin-top: 65px;background-color: rgba(0, 0, 0, .03);border: 1px solid #ccc; border-radius: 5px;">Thông Tin Đặt Phòng</h2>
+    </div>
+    <?php if (!empty($bookingHistory)) : ?>
+        <?php foreach ($bookingHistory as $booking) : ?>
 
+            <div class="card mb-3">
 
+                <div class="card-header">
+                    <h5 class="card-title">Hóa Đơn #<?php echo $booking['id']; ?></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="card-subtitle mb-2 text-muted">Tên Người Đặt</h6>
+                            <p class="card-text"><?php echo isset($booking['customer_id']) ? roomReservation::getNameById($booking['customer_id']) : ''; ?></p>
 
+                            <h6 class="card-subtitle mb-2 text-muted">Email</h6>
+                            <p class="card-text"><?php echo isset($booking['customer_id']) ? roomReservation::getEmailById($booking['customer_id']) : ''; ?></p>
 
-<div class="sign-in-area pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2 ">
-                <ul class="navbar-nav">
-                    <li class="nav-item" >
-                        <a class="nav-link" href="index.php?controller=client&action=profile">Profile</a>
-                    </li>
-                    <li class="nav-item" >
-                        <a class="nav-link" href="index.php?controller=client&action=booking_history">Booking History</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-10 left-sidebar">
+                            <h6 class="card-subtitle mb-2 text-muted">Số Điện thoại</h6>
+                            <p class="card-text"><?php echo isset($booking['customer_id']) ? roomReservation::getPhoneById($booking['customer_id']) : ''; ?></p>
+                            <h6 class="card-subtitle mb-2 text-muted">Địa Chỉ</h6>
+                            <p class="card-text"><?php echo isset($booking['customer_id']) ? roomReservation::getAddressById($booking['customer_id']) : ''; ?></p>
 
-                <div class="user-all-form">
-                    <div class="contact-forms">
-                        <div class="section-title text-center">
-                            <span class="sp-color">Register</span>
-                            <h2>Create an Account</h2>
                         </div>
-                        <form action="/DUAN1/index.php?controller=client&action=register" method="POST" id="registerForm">
-                            <!-- Your registration form fields go here -->
+                        <div class="col-md-6">
+                            <h6 class="card-subtitle mb-2 text-muted">Loại Phòng Đặt</h6>
+                            <p class="card-text"><?php echo isset($booking['room_id']) ? Rooms::getNameById($booking['room_id']) : ''; ?></p>
+                            <h6 class="card-subtitle mb-2 text-muted">Giá Tiền</h6>
+                            <p class="card-text"><?php echo number_format($booking['total_amount'], 0, ',', '.'); ?> VND</p>
 
-                            <div class="col-lg-12 col-md-12 text-center">
-                                <button type="submit" class="default-btn btn-bg-three border-radius-5">
-                                    Register Now
-                                </button>
-                            </div>
-                            <div class="col-12">
-                                <p class="account-desc">
-                                    Already a Member?
-                                    <a href="index.php?controller=client&action=signIn">Sign In</a>
-                                </p>
-                            </div>
-                        </form>
+                            <h6 class="card-subtitle mb-2 text-muted">Thời Gian Đặt Phòng</h6>
+                            <p class="card-text">Checkin: <?php echo $booking['checkin_date']; ?> - Checkout: <?php echo $booking['checkout_date']; ?></p>
+
+                            <h6 class="card-subtitle mb-2 text-muted">Trạng Thái</h6>
+                            <p class="card-text"><?php echo $booking['status']; ?></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <p class="alert alert-info">Không có lịch sử đặt phòng.</p>
+    <?php endif; ?>
 </div>
-
-
-
-<!-- Include your footer if necessary -->

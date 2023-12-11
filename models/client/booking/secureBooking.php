@@ -1,5 +1,5 @@
 <?php
-class Booking
+class SecureBooking
 {
     public $id;
     public $customer_id;
@@ -20,16 +20,38 @@ class Booking
     public static function reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount)
     {
         $db = DB::getInstance();
-        $query = "INSERT INTO room_reservations (customer_id, room_id, checkin_date, checkout_date, total_amount)
-                  VALUES (:customer_id, :room_id, :checkin_date, :checkout_date, :total_amount)";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':customer_id', $customer_id);
-        $stmt->bindParam(':room_id', $room_id);
-        $stmt->bindParam(':checkin_date', $checkin_date);
-        $stmt->bindParam(':checkout_date', $checkout_date);
-        $stmt->bindParam(':total_amount', $total_amount);
-        $stmt->execute();
-        return $db->lastInsertId();
+
+        $db->beginTransaction();
+
+        try {
+            $queryRoomReservations = "INSERT INTO room_reservations (customer_id, room_id, checkin_date, checkout_date, total_amount, created_date, updated_date)
+                                    VALUES (:customer_id, :room_id, :checkin_date, :checkout_date, :total_amount, NOW(), NOW())";
+            $stmtRoomReservations = $db->prepare($queryRoomReservations);
+            $stmtRoomReservations->bindValue(':customer_id', $customer_id);
+            $stmtRoomReservations->bindValue(':room_id', $room_id);
+            $stmtRoomReservations->bindValue(':checkin_date', $checkin_date);
+            $stmtRoomReservations->bindValue(':checkout_date', $checkout_date);
+            $stmtRoomReservations->bindValue(':total_amount', $total_amount);
+            $stmtRoomReservations->execute();
+
+            $bookingId = $db->lastInsertId();
+            $queryHotelPayment = "INSERT INTO hotel_payment (transaction_date, confirmation_code, customer_id, price, message, status)
+                                VALUES (NOW(), :confirmation_code, :customer_id, :price, :message, :status)";
+            $stmtHotelPayment = $db->prepare($queryHotelPayment);
+            $stmtHotelPayment->bindValue(':confirmation_code', $bookingId . time()); // Điều chỉnh cách tạo confirmation_code
+            $stmtHotelPayment->bindValue(':customer_id', $customer_id);
+            $stmtHotelPayment->bindValue(':price', $total_amount);
+            $stmtHotelPayment->bindValue(':message', 1); // Chưa rõ cách xử lý message
+            $stmtHotelPayment->bindValue(':status', 'success'); // Chưa rõ cách xử lý status
+            $stmtHotelPayment->execute();
+
+
+            $db->commit();
+
+            return $bookingId;
+        } catch (\Exception $e) {
+            $db->rollBack();
+            throw $e; // Hoặc xử lý lỗi theo cách bạn muốn
+        }
     }
-    
 }

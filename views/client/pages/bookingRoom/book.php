@@ -34,28 +34,7 @@ $currentDate = date("d/m/Y");
                     <h3>Tìm phòng </h3>
                     <form action="index.php?controller=client&action=roomSelection" method="POST">
                         <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Họ và tên</label>
-                                    <input type="text" name="name" class="form-control" required placeholder="Nhập họ và tên của bạn" value="<?= $InfoUser['name'] ?>">
-                                    <i class="bx bx-user"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" required placeholder="Nhập email của bạn" value="<?= $InfoUser['email'] ?>">
-                                    <i class="bx bx-mail-send"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Số điện thoại</label>
-                                    <input type="text" name="phone" id="phone" class="form-control" required placeholder="Nhập số điện thoại của bạn" value="<?= $InfoUser['phone'] ?>">
-                                    <i class="bx bx-phone"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Số người </label>
                                     <select class="custom-select" id="personSelect" name="personSelect">
@@ -66,7 +45,7 @@ $currentDate = date("d/m/Y");
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Ngày đặt phòng</label>
                                     <div class="input-group date">
@@ -76,7 +55,7 @@ $currentDate = date("d/m/Y");
                                     <i class="bx bxs-calendar"></i>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Ngày trả phòng</label>
                                     <div class="input-group">
@@ -146,4 +125,3 @@ function redirectToRoomTypePage(selectedPerson, checkinDate, checkoutDate) {
 }
 
     </script>
-

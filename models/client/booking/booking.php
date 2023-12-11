@@ -25,41 +25,41 @@ class Booking
     }
 
     public static function getRoomById($room_id)
-{
-    $db = DB::getInstance();
-    $query = 'SELECT * FROM rooms WHERE id = :room_id';
+    {
+        $db = DB::getInstance();
+        $query = 'SELECT * FROM rooms WHERE id = :room_id';
 
-    try {
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':room_id', $room_id);
-        $stmt->execute();
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':room_id', $room_id);
+            $stmt->execute();
 
-        // Sử dụng fetch để lấy dữ liệu dưới dạng mảng kết hợp
-        $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Sử dụng fetch để lấy dữ liệu dưới dạng mảng kết hợp
+            $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($roomData) {
-            // Tạo đối tượng Booking từ dữ liệu
-            $roomObject = new Booking(
-                $roomData['id'],
-                $roomData['name'],
-                $roomData['price_per_night'],
-                $roomData['capacity'],
-                $roomData['facility_id'],
-                $roomData['room_type_id'],
-                $roomData['created_date'],
-                $roomData['updated_date'],
-                $roomData['image_path']
-            );
+            if ($roomData) {
+                // Tạo đối tượng Booking từ dữ liệu
+                $roomObject = new Booking(
+                    $roomData['id'],
+                    $roomData['name'],
+                    $roomData['price_per_night'],
+                    $roomData['capacity'],
+                    $roomData['facility_id'],
+                    $roomData['room_type_id'],
+                    $roomData['created_date'],
+                    $roomData['updated_date'],
+                    $roomData['image_path']
+                );
 
-            return $roomObject;
-        } else {
-            return null; // Trả về null nếu không tìm thấy phòng
+                return $roomObject;
+            } else {
+                return null; // Trả về null nếu không tìm thấy phòng
+            }
+        } catch (PDOException $e) {
+            // Xử lý lỗi, có thể log lỗi hoặc trả về giá trị mặc định
+            return null;
         }
-    } catch (PDOException $e) {
-        // Xử lý lỗi, có thể log lỗi hoặc trả về giá trị mặc định
-        return null;
     }
-}
 
     public static function getAvailableRooms($selectedPerson, $checkinDate, $checkoutDate)
     {
@@ -67,7 +67,7 @@ class Booking
         $query = 'SELECT rooms.*
                   FROM rooms
                   LEFT JOIN room_reservations ON rooms.id = room_reservations.room_id
-                  WHERE rooms.capacity = :capacity
+                  WHERE rooms.capacity <= :capacity
                     AND (room_reservations.checkin_date IS NULL
                          OR :checkout_date <= room_reservations.checkin_date
                          OR :checkin_date >= room_reservations.checkout_date)';
@@ -80,7 +80,7 @@ class Booking
         $roomData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (empty($roomData)) {
-            throw new Exception("message.");
+            throw new Exception("Rất tiếc là không còn phòng trống cho tiêu chí tìm kiếm của bạn.");
         }
 
         $roomObjects = [];
@@ -101,6 +101,4 @@ class Booking
         return $roomObjects;
     }
 
-
 }
-

@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="views/client/assets/css/theme-dark.css">
 
     <link rel="icon" type="image/png" href="views/client/assets/img/favicon.png">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Atoli - Hotel & Resorts HTML Template</title>
     <style>
         button {
