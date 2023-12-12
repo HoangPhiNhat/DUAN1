@@ -119,6 +119,8 @@ class login
                 $value['phone_number'],
                 $value['password'],
                 $value['address'],
+                $value['gender'],
+                
                 $value['roles_id']
             );
         }
@@ -137,5 +139,68 @@ class login
     
         return $user_info;
     }
+    static function addComment($room_id, $customer_id, $comment_text)
+    {
+        $db = DB::getInstance(); 
+        $customer_id = $_SESSION['user_id'];
+        if (!isset($customer_id )) {
+           echo 'vui lòng đăng nhập để bình luận';
+            return false;
+        }
 
+        $query = "INSERT INTO comments (room_id, customer_id, comment_text) VALUES (:room_id, :customer_id, :comment_text)";
+        $statement = $db->prepare($query);
+        $statement->bindParam(':room_id', $room_id, PDO::PARAM_INT);
+        $statement->bindParam(':customer_id', $customer_id , PDO::PARAM_INT);
+        $statement->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
+
+        // Thực hiện truy vấn
+        $success = $statement->execute();
+
+        return $success;
+    }
+    static function getNameById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT name FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['name'] : null;
+    }
+    static function getPhoneById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['phone_number'] : null;
+    }
+    static function getAddressById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT address FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['address'] : null;
+    }
+    static function getNameId($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $result ? $result['name'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
 }

@@ -29,7 +29,7 @@
                             <label for="preparingStatus">Phòng Đang được chuẩn bị</label>
 
                             <input type="radio" id="preparedStatus" name="status" value="Phòng Đã chuẩn bị song">
-                            <label for="preparedStatus">Phòng Đã chuẩn bị song</label>
+                            <label for="preparedStatus">Phòng Đã chuẩn bị xong</label>
                         </div>
                     </div>
 

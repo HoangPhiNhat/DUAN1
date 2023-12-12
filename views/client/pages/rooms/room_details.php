@@ -2,7 +2,7 @@
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     // echo "ID from URL: $id";
-    $Value = Rooms::findALLData($id);
+    $Value = Rooms::getAllData($id);
 
     if (!$Value) {
         echo "Room not found.";
