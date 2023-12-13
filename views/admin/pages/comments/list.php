@@ -49,6 +49,11 @@
                                         <button type="submit" class="btn btn-gradient-primary" style="margin-bottom: 5px;">
                                             Xóa
                                         </button>
+                                        <button class="btn btn-gradient-primary" style="margin-bottom: 5px;">
+                                            <a href='<?php echo "index.php?controller=admin&action=findFacility&id=$value->id"?>' style="padding: 0; color: #fff;" >
+                                                Sửa
+                                            </a>
+                                    </button>
                                     </form>
                                 </td>
                             </tr>
