@@ -33,6 +33,10 @@
 
     <link rel="stylesheet" href="views/client/assets/css/theme-dark.css">
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <link rel="icon" type="image/png" href="views/client/assets/img/favicon.png">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Atoli - Hotel & Resorts HTML Template</title>
@@ -104,33 +108,48 @@
                             <div class="option-item d-line">
                                 <div class="account-nav-list">
                                     <span class="account-btn">
-                                        <?php  if (isset($_SESSION['user_name'])) : ?>
-                                            <div class="nice-select form-control" tabindex="0">
-                                                <span class="current">
-                                                    <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>
-                                                </span>
-                                                <ul class="list">
-                                                    <li class="option">
-                                                        <a href="index.php?controller=client&action=booking_history" class="nav-link">
-                                                            Lịch sử đặt phòng
-                                                        </a>
-                                                    </li>
-                                                    <li class="option">
-                                                        <a href="index.php?controller=client&action=profile" class="nav-link">
-                                                            Cài đặt
-                                                        </a>
-                                                    </li>
-                                                    <li class="option">
-                                                        <a href="index.php?controller=client&action=logOut" class="nav-link">
-                                                           Đăng xuất
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <?php if (isset($_SESSION['user_name'])) : ?>
+                                            <?php
+                                            $customerId = $_SESSION['user_id'];
+                                            $rolesData = roles::getRolesForCustomer($customerId);
+
+                                            // Check if rolesData is not empty and has both 'roles_id' and 'name'
+                                            if (!empty($rolesData) && isset($rolesData['roles_id']) && isset($rolesData['name'])) {
+                                                $isAdmin = $rolesData['roles_id'] == 1;
+                                                $isUser = $rolesData['roles_id'] == 2;
+                                            ?>
+
+                                                <div class="nice-select form-control" tabindex="0">
+                                                    <span class="current">
+                                                        <?php echo "Xin chào, " . $_SESSION['user_name'] . "!"; ?>
+                                                    </span>
+                                                    <ul class="list">
+                                                        <?php if ($isAdmin) : ?>
+                                                            <!-- Admin actions here -->
+                                                            <li class="option">
+                                                                <a href="index.php?controller=admin&action=dashboard" class="nav-link">Admin</a>
+                                                            </li>
+                                                            <li class="option">
+                                                                <a href="index.php?controller=client&action=logOut" class="nav-link">Đăng xuất</a>
+                                                            </li>
+                                                        <?php elseif ($isUser) : ?>
+                                                            <!-- User actions here -->
+                                                            <li class="option">
+                                                                <a href="index.php?controller=client&action=booking_history" class="nav-link">Lịch sử đặt phòng</a>
+                                                            </li>
+                                                            <li class="option">
+                                                                <a href="index.php?controller=client&action=profile" class="nav-link">Cài đặt</a>
+                                                            </li>
+                                                            <li class="option">
+                                                                <a href="index.php?controller=client&action=logOut" class="nav-link">Đăng xuất</a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                </div>
+                                            <?php } ?>
                                         <?php else : ?>
                                             <a href="index.php?controller=client&action=register" class="nav-link">Đăng nhập / Đăng ký</a>
                                         <?php endif; ?>
-
                                     </span>
                                 </div>
                             </div>
@@ -146,6 +165,7 @@
                 </nav>
             </div>
         </div>
+
         <div class="side-nav-responsive">
             <div class="container">
                 <div class="dot-menu">

@@ -4,15 +4,16 @@
 $controllers = array(
 
     'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','roomDetails','logOut',
-    'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer'],
+    'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer',
+    'roomSame','roomAvailabilityAction', 'redirect'],
 
     // 'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms',
     // 'room_details','logOut', 'roomSelection', 'secureBooking' ],
 
     'admin' => ['dashboard', 'facilityList', 'addFacility', 'findFacility', 'updateFacility',
-    'roomList', 'addRoom', 'showRoomsAndFacilities','customersList',
+    'roomList', 'addRoom','findRoom', 'updateRoom', 'showRoomsAndFacilities','customersList',
     'roomTypeList', 'findRoomType', 'updateRoomType', 'addRoomType','commentsList' ,'deleteComment',
-    'ReservationsList','updateReservations','findReservations']
+    'ReservationsList','updateReservations','findReservations','addroles','rolesListAdmin','findPermission','updatePermission']
 ); // Các controllers trong hệ thống và các action có thể gọi ra từ controller đó.
 
 // Nếu các tham số nhận được từ URL không hợp lệ (không thuộc list controller và action có thể gọi

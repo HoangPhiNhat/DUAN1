@@ -77,23 +77,18 @@ class Rooms
         }
         return null;
     }
-    static function updateData($id, $name, $price_per_night, $capacity, $facility_id, $room_type_id)
+    static function updateData($id,  $price_per_night,)
     {
         $db = DB::getInstance();
 
         // Thực hiện truy vấn UPDATE
-        $query = 'UPDATE rooms SET name = :name, price_per_night = :price_per_night, capacity = :capacity,
-                  facility_id = :facility_id, room_type_id = :room_type_id, updated_date = NOW()
+        $query = 'UPDATE rooms SET price_per_night = :price_per_night, updated_date = NOW()
                   WHERE id = :id';
 
         $stmt = $db->prepare($query);
 
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':name', $name);
         $stmt->bindParam(':price_per_night', $price_per_night);
-        $stmt->bindParam(':capacity', $capacity);
-        $stmt->bindParam(':facility_id', $facility_id);
-        $stmt->bindParam(':room_type_id', $room_type_id);
 
         // Thực hiện truy vấn
         $stmt->execute();
@@ -174,16 +169,11 @@ class Rooms
     static function getRoomDetailsById($roomId)
     {
         $db = DB::getInstance();
-
-        // Lấy thông tin phòng từ CSDL dựa trên room_id
         $query = "SELECT * FROM rooms WHERE id = :id";
         $statement = $db->prepare($query);
         $statement->bindParam(':id', $roomId, PDO::PARAM_INT);
         $statement->execute();
-
-        // Kiểm tra xem có kết quả hay không
         if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            // Tạo đối tượng Room và trả về
             $room = new Rooms(
                 $row['id'],
                 $row['name'],
@@ -194,17 +184,65 @@ class Rooms
                 $row['image_path'],
                 $row['created_date'],
                 $row['updated_date']
-                // ... (Thêm các thuộc tính khác của phòng)
             );
             return $room;
         } else {
-            // Nếu không có kết quả, trả về null hoặc thông báo lỗi tùy bạn
             return null;
         }
     }
+    static function getRoomsByCapacity($currentRoomCapacity)
+    {
+        $db = DB::getInstance();
+        $query = "SELECT * FROM rooms WHERE capacity = :capacity";
+        $statement = $db->prepare($query);
+        $statement->bindParam(':capacity', $currentRoomCapacity, PDO::PARAM_INT);
+        $statement->execute();
 
-    //lấy thông tin phòng giống với phong đang hiện
-   
+        $rooms = array();
 
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $room = new Rooms(
+                $row['id'],
+                $row['name'],
+                $row['price_per_night'],
+                $row['capacity'],
+                $row['facility_id'],
+                $row['room_type_id'],
+                $row['image_path'],
+                $row['created_date'],
+                $row['updated_date']
+            );
+            $rooms[] = $room;
+        }
 
+        return $rooms;
+    }
+    //
+    static function hideReservedRooms()
+    {
+        try {
+            $db = DB::getInstance();
+
+            $query = "UPDATE rooms r
+                    SET r.available_date = (
+                        SELECT MAX(checkout_date)
+                        FROM room_reservations
+                        WHERE room_id = r.id AND status = 'Chờ Xác Nhận'
+                    )
+                    WHERE r.id IN (
+                        SELECT room_id
+                        FROM room_reservations
+                        WHERE status = 'Chờ Xác Nhận'
+                    )";
+
+            $statement = $db->prepare($query);
+            $statement->execute();
+        } catch (PDOException $e) {
+            error_log("Error hiding reserved rooms: " . $e->getMessage());
+            throw new Exception("Error hiding reserved rooms: " . $e->getMessage());
+        }
+
+        return $statement;
+    }
 }
+

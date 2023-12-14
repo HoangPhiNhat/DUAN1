@@ -14,6 +14,7 @@
                     <thead>
                         <tr>
                             <th> ID </th>
+                            <th> Vai Trò </th>
                             <th> Tên Người dùng </th>
                             <th> Email </th>
                             <th> SDT </th>
@@ -21,12 +22,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+                    <!-- <?php var_dump($lists) ?> -->
                         <?php foreach ($lists as $value) :
                         ?>
                             <tr>
                                 <td>
                                     <?php echo $value->id ?>
+                                </td>
+                                <td>
+                                    <?php echo roles::getNameById($value->roles_id); ?>
+                                    <!-- <?php echo $value->roles_id ?> -->
                                 </td>
                                 <td>
                                     <!-- <?php echo Rooms::getNameById($value->room_id); ?> -->

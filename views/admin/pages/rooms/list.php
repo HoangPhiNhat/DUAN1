@@ -60,7 +60,7 @@
                         flex-wrap: wrap;
                         justify-content: center;
                         align-items: center;">
-                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a style="padding: 0; color: #fff;" class="nav-link">Sửa</a></button>
+                                    <button class="btn btn-gradient-primary" style="margin-bottom: 5px;"><a href='<?php echo "index.php?controller=admin&action=findRoom&id=$value->id"?>'style="padding: 0; color: #fff;" class="nav-link">Sửa</a></button>
                                     <button class="btn btn-gradient-primary "><a href=<?php echo "c" ?> style="padding: 0; color: #fff;" class="nav-link">Xóa</a></button>
                                 </td>
                             </tr>

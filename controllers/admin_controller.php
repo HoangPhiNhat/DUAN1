@@ -1,7 +1,9 @@
 <?php
 require_once('controllers/base_controller.php');
 require_once("models/admin/facilities/facility.php");
+require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/rooms/rooms.php");
+require_once("models/admin/roles/roles.php");
 require_once("models/admin/roomTypes/roomType.php");
 require_once("models/admin/roomReservations/roomReservations.php");
 require_once("models/client/comment/comment.php");
@@ -15,13 +17,16 @@ class AdminController extends BaseController
         $this->parentFolder = 'admin';
         $this->subFolder = 'pages';
     }
-
-
     public function dashboard()
     {
+        $calculateTotal = Dashboard::calculateTotal();
+        $totalRooms = Dashboard::totalRooms();
+        $totalRoomReservations = Dashboard::totalRoomReservations();
+        $data = array('calculateTotal' => $calculateTotal, 'totalRooms' => $totalRooms, 'totalRoomReservations' => $totalRoomReservations);
         $this->folder = 'dashboard';
-        $this->render('dashboard');
+        $this->render('dashboard', $data);
     }
+    
     public function addFacility()
     {
         // Xử lý thêm dữ liệu
@@ -88,13 +93,30 @@ class AdminController extends BaseController
         $this->folder = 'facilities';
         $this->render('list', $data);
     }
-
     public function roomTypeList()
     {
-        $lists = roomType::getAllData();
-        $data = array('lists' => $lists);
-        $this->folder = 'roomTypes';
-        $this->render('list', $data);
+        try {
+            // Bước 1: Lấy số lượng phòng cho mỗi loại phòng
+            $roomCounts = RoomType::getRoomCounts();
+
+            // Bước 2: Cập nhật bảng room_types với thông tin đếm
+            foreach ($roomCounts as $roomCount) {
+                $roomTypeId = $roomCount['id'];
+                $totalQuantity = $roomCount['room_count'];
+
+                RoomType::updateTotalQuantity($roomTypeId, $totalQuantity);
+            }
+            $lists = RoomType::getAllData();
+
+            // Chuyển dữ liệu sang view để hiển thị
+            $data = array('lists' => $lists);
+            $this->folder = 'roomTypes';
+            $this->render('list', $data);
+            echo "Room counts updated successfully.";
+        } catch (Exception $e) {
+            // Xử lý lỗi
+            echo "Error: " . $e->getMessage();
+        }
     }
     public function addRoomType()
     {
@@ -120,7 +142,6 @@ class AdminController extends BaseController
         $this->folder = 'roomTypes';
         $this->render('update', $data);
     }
-
     public function updateRoomType()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -188,6 +209,26 @@ class AdminController extends BaseController
         $this->folder = 'rooms';
         $this->render('update', $data);
     }
+    public function updateRoom()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $price_per_night = $_POST['price_per_night'];
+            Rooms::updateData($id, $price_per_night);
+            // Hiển thị thông báo
+            $message = "Dữ liệu đã được sửa thành công";
+            $data = array('message' => $message);
+            $this->folder = 'rooms';
+            $this->render('update',$data);
+            // Chuyển hướng người dùng
+            echo '<script>window.location.href = "index.php?controller=admin&action=roomList";</script>';
+            exit();
+        } else {
+            $this->folder = 'rooms';
+            $this->render('update');
+        }
+    }
+    
     public function commentsList()
     {
         $lists = Comment::getAllData();
@@ -196,21 +237,22 @@ class AdminController extends BaseController
         $this->render('list', $data);
     }
     public function deleteComment()
-{
+    {
     if (isset($_GET['id'])) {
         $commentId = $_GET['id'];
         Comment::deleteCommentById($commentId);
         echo '<script>window.location.href = "index.php?controller=admin&action=commentsList";</script>';
         exit();
     }
-}
-public function customersList()
+    }
+    public function customersList()
     {
         $lists = login::getAllData();
         $data = array('lists' => $lists);
         $this->folder = 'customers';
         $this->render('list', $data);
     }
+    
     public function ReservationsList()
     {
         $lists = roomReservation::getAllData();
@@ -228,35 +270,115 @@ public function customersList()
     public function updateReservations()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            $customer_id = $_POST['customer_id'];
-            $room_id = $_POST['room_id'];
-            $status = $_POST['status']; // Assuming the status is coming from the form
-            $total_amount = $_POST['total_amount'];
+            try {
+                if (isset($_POST['submitupdateReservations'])) {
+                    // Handle the form submission for updating status
+                    $id = $_POST['id'];
+                    $status = $_POST['status'];
     
-            // Validate or sanitize the status input if necessary
+                    // Thực hiện cập nhật trạng thái đơn đặt phòng
+                    roomReservation::updateStatus($id, $status);
     
-            // Set the default status if the provided status is empty
-            if (empty($status)) {
-                $status = 'Chờ xác nhận'; // Set your default status here
+                    // Redirect hoặc xử lý tiếp theo
+                    header('Location: index.php?controller=admin&action=ReservationsList');
+                    exit();
+                } else {
+                    // Handle the form submission for updating data
+                    $id = $_POST['id'];
+                    $customer_id = $_POST['customer_id'];
+                    $room_id = $_POST['room_id'];
+                    $status = $_POST['status'];
+                    $total_amount = $_POST['total_amount'];
+    
+                    // Validate or sanitize the status input if necessary
+    
+                    // Set the default status if the provided status is empty
+                    if (empty($status)) {
+                        $status = 'Chờ Xác Nhận';
+                    }
+    
+                    // Update the data in the model
+                    roomReservation::updateData($id, $customer_id, $room_id, $status, $total_amount);
+    
+                    // Redirect the user
+                    header('Location: index.php?controller=admin&action=ReservationsList');
+                    exit();
+                }
+            } catch (Exception $e) {
+                // Handle the exception gracefully
+                $errorMessage = $e->getMessage();
+                $data = array('error_message' => $errorMessage);
+    
+                // Render the update view with error message
+                $this->folder = 'roomReservations';
+                $this->render('update', $data);
+                exit(); // Ensure to exit after rendering the view
             }
-    
-            // Update the status in the database
-            roomReservation::updateData($id, $customer_id, $room_id, $status, $total_amount);
-    
-            // Display a success message
-            $message = "Dữ liệu đã được sửa thành công";
-            $data = array('message' => $message);
-            $this->folder = 'roomReservations';
-            $this->render('update', $data);
-    
-            // Redirect the user
-            echo '<script>window.location.href = "index.php?controller=admin&action=ReservationsList";</script>';
-            exit();
         }
     }
-  
     
-    
+    public function rolesListAdmin()
+    {
+        $list = login::getAllData();
+            $lists = roles::getAllData();
+            $data = array('lists' => $lists, 'list' => $list);
+            $this->folder = 'decentralization';
+            $this->render('listAdmin', $data);
+    }
+   
+    public function addroles()
+    {
+        // Xử lý thêm dữ liệu
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            roles::addData($name);
+            // Hiển thị thông báo
+            $message = "Dữ liệu đã được thêm thành công";
+            $data = array('message' => $message);
+            $this->folder = 'decentralization';
+            $this->render('add', $data);
+            echo '<script>window.location.href = "index.php?controller=admin&action=rolesListAdmin";</script>';
+            exit();
+        } else {
+            $this->folder = 'decentralization';
+            $this->render('add');
+        }
+        
+    }
+    public function findPermission()
+    {  
+        $roles = roles::getAllData();
+        $value = roles::findData($_GET['id']);
+        $data = array('value' => $value, 'roles' => $roles);
+        $this->folder = 'decentralization';
+        $this->render('update', $data);
+    }
 
+    public function updatePermission()
+{
+    // Assuming roles::getAllData() returns an array of roles
+  
+   
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $email = $_POST['Email']; // Update to match the input name in the form
+        $phone_number = $_POST['description']; // Update to match the input name in the form
+        $roles_id = $_POST['roles_id'];
+
+        roles::updateData($id, $name, $email, $phone_number, $roles_id);
+
+        // Hiển thị thông báo
+        $message = "Dữ liệu đã được sửa thành công";
+        $data['message'] = $message;
+        
+        $this->folder = 'decentralization';
+        $this->render('update', $data);
+        echo '<script>window.location.href = "index.php?controller=admin&action=rolesListAdmin";</script>';
+            exit();
+    } else {
+        $this->folder = 'decentralization';
+        $this->render('update');
+    }
+}
 }

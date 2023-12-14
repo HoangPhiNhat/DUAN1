@@ -1,18 +1,17 @@
 <?php
 $serviceCharge = 109.918;
 $VAT = 271.204;
-$priceString = $_GET['price'];
+$price1 = isset($_GET['price1']) ? intval(str_replace('.', '', $_GET['price1'])) : 0;
+$price2 = isset($_GET['price2']) ? intval(str_replace('.', '', $_GET['price2'])) : 0;
+$price3 = isset($_GET['price3']) ? intval(str_replace('.', '', $_GET['price3'])) : 0;
 $checkinDateString = $_GET['checkin_date'];
 $checkoutDateString = $_GET['checkout_date'];
-$price = intval(str_replace('.', '', $priceString));
 $checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
 $checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
-
 $numberOfNights = $checkinDate->diff($checkoutDate)->days;
-$totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
+$totalPrice = ($price1 + $price2 + $price3) * $numberOfNights + intval(str_replace('.', '', $serviceCharge)) + intval(str_replace('.', '', $VAT));
 
 $formattedPrice = number_format($totalPrice, 0, ',', '.');
-
 ?>
 
 <script>
@@ -22,10 +21,10 @@ $formattedPrice = number_format($totalPrice, 0, ',', '.');
     }
 </script>
 <script>
-let dataElement = document.getElementById("dataToInclude");
-let dataToInclude = dataElement.innerText;
-let form = document.getElementById("myForm");
-form.action = dataToInclude;
+    let dataElement = document.getElementById("dataToInclude");
+    let dataToInclude = dataElement.innerText;
+    let form = document.getElementById("myForm");
+    form.action = dataToInclude;
 </script>
 <div class="inner-banner inner-bg7">
     <div class="container">
@@ -109,14 +108,6 @@ form.action = dataToInclude;
                                         <dl class="col-xs-12 dl-horizontal">
                                             <div class="infoHotel">
                                                 <dt class="fb-dark-gray">
-                                                    Loại phòng
-                                                </dt>
-                                                <dd>
-                                                    <?php echo RoomType::getNameById($room->room_type_id); ?>
-                                                </dd>
-                                            </div>
-                                            <div class="infoHotel">
-                                                <dt class="fb-dark-gray">
                                                     Nhận phòng
                                                 </dt>
                                                 <dd>
@@ -134,13 +125,74 @@ form.action = dataToInclude;
                                             </div>
                                             <div class="infoHotel">
                                                 <dt class="fb-dark-gray">
+                                                    Phòng 1
+                                                </dt>
+                                                <dd>
+                                                    <?php echo RoomType::getNameById($room1->room_type_id); ?>
+                                                </dd>
+                                            </div>
+                                            <div class="infoHotel">
+                                                <dt class="fb-dark-gray">
                                                     Giá phòng
                                                 </dt>
                                                 <dd>
                                                     <span class="fb-time" data-value="12:00">
-                                                        <?php echo $priceString ?> ₫
+                                                        <?php if(isset($_GET['price1'])) { echo $_GET['price1']; } else NULL ?> ₫
                                                 </dd>
                                             </div>
+                                            <?php
+                                            if (isset($_GET['Room2'])) {
+                                            ?>
+                                                <div class="infoHotel">
+                                                    <dt class="fb-dark-gray">
+                                                        Phòng 2
+                                                    </dt>
+                                                    <dd>
+                                                        <?php echo RoomType::getNameById($room2->room_type_id); ?>
+                                                    </dd>
+                                                </div>
+                                                <div class="infoHotel">
+                                                    <dt class="fb-dark-gray">
+                                                        Giá phòng
+                                                    </dt>
+                                                    <dd>
+                                                        <span class="fb-time" data-value="12:00">
+                                                        <?php if(isset($_GET['price2'])) { echo $_GET['price2']; } else NULL ?> ₫
+
+                                                        </span>
+                                                    </dd>
+                                                </div>
+                                            <?php
+                                            } else {
+                                                null;
+                                            }
+                                            if (isset($_GET['Room3'])) {
+                                                ?>
+                                                    <div class="infoHotel">
+                                                        <dt class="fb-dark-gray">
+                                                            Phòng 3
+                                                        </dt>
+                                                        <dd>
+                                                            <?php echo RoomType::getNameById($room3->room_type_id); ?>
+                                                        </dd>
+                                                    </div>
+                                                    <div class="infoHotel">
+                                                        <dt class="fb-dark-gray">
+                                                            Giá phòng
+                                                        </dt>
+                                                        <dd>
+                                                            <span class="fb-time" data-value="12:00">
+                                                            <?php if(isset($_GET['price3'])) { echo $_GET['price3']; } else NULL ?> ₫
+
+                                                            </span>
+                                                        </dd>
+                                                    </div>
+                                                <?php
+                                                } else {
+                                                    null;
+                                                }
+                                            ?>
+
                                             <div class="infoHotel">
                                                 <dt class="fb-dark-gray">
                                                     <span>
@@ -203,13 +255,13 @@ form.action = dataToInclude;
                                             <input type="radio" id="paypal" name="radio-group">
                                             <label for="paypal">PayPal</label>
                                         </p> -->
-                                        <p>
+                                        <p style="display: none">
                                             <input type="radio" id="cash-on-delivery" name="language" value="Thanh toán VNPAY">
                                             <label for="cash-on-delivery">Thanh toán VNPAY</label>
                                         </p>
                                     </div>
                                     <button type="submit" class="order-btn three" name="redirect" onclick="redirectToDisplayedURL()">
-                                        Đặt phòng
+                                        Thanh toán VNPAY
                                     </button>
                                 </div>
                             </div>

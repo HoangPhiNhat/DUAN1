@@ -1,5 +1,4 @@
 
-
 <?= !empty($successScript) ? $successScript : '' ?>
 <div class="preloader">
     <div class="d-table">
@@ -18,13 +17,12 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="banner-another">
-                    <h1>Atoli Resort, That is the Latest Dimension on
-                        Luxury</h1>
+                    <h1>Atoli Resort, Đó là chiều hướng mới nhất về sự sang trọng</h1>
                     <p>
-                        The hotel and resort business is one of the best
-                        and loyal business in the global market.
-                        We are the agency that helps to book you a good
-                        room in a suitable palace at a reasonable price.
+                    Kinh doanh khách sạn, khu nghỉ dưỡng là một trong những ngành tốt nhất
+                         và kinh doanh trung thành trên thị trường toàn cầu.
+                         Chúng tôi là đại lý giúp bạn đặt chỗ tốt
+                         phòng trong một cung điện phù hợp với giá cả hợp lý.
                     </p>
                     <div class="banner-btn">
                         <a href="#" class="default-btn btn-bg-two border-radius-50">Book
@@ -43,105 +41,39 @@
         </div>
     </div>
 </div>
-<div class="about-area pt-100 pb-70">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="about-img-2">
-                    <img src="views/client/assets/img/about/about-img2.png" alt="Images">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="about-content">
-                    <div class="section-title">
-                        <h2>We Are the Best in All-time & So Please Get
-                            a Quick Booking</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Sed tincidunt ante tellus,
-                            sit amet rhoncus massa aliquam sit amet.
-                            Cras porttitor mauris quis mattis ornare.
-                            In efficitur at sem quis pretium. Aenean sit
-                            amet neque ut dolor lacinia rutrum.
-                            In vulputate pellentesque turpis et porta.
-                        </p>
-                    </div>
-                    <div class="about-form">
-                        <form>
-                            <div class="row align-items-center">
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Check in</label>
-                                        <?php
-                                        // Đặt ngày hiện tại
-                                        $currentDate = date("m/d/Y");
-                                        ?>
-                                        <div class="input-group">
-                                            <input id="checkInDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
-                                        </div>
-                                        <i class="bx bxs-calendar"></i>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Persons</label>
-                                        <select class="form-control">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                            <option>04</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4">
-                                    <div class="form-group">
-                                        <label>Check Out</label>
-                                        <div class="input-group">
-                                            <input id="checkOutDatePicker" type="text" class="form-control" value="<?php echo $currentDate ?>">
-                                        </div>
-                                        <i class="bx bxs-calendar"></i>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <button type="submit" class="default-btn btn-bg-two border-radius-50">
-                                        Check Availability
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="room-area-two pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <h2>Our Rooms & Rates</h2>
+            <h2>Phòng & Giá của chúng tôi</h2>
         </div>
         <div class="room-slider owl-carousel owl-theme pt-45">
-            <?php
-            foreach ($lists as $value) :
-            ?>
-                <div class="room-item">
-                    <a href="room-details.html">
-                        <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
-                    </a>
-                    <div class="content">
-                        <h3><a href="room-details.html"> <?php echo RoomType::getNameById($value->room_type_id); ?></a></h3>
-                        <!-- <p>
-                            <?php echo RoomType::getDescriptionById($value->room_type_id); ?>
-                        </p> -->
-                        <ul>
-                            <li> <?php echo $value->price_per_night ?></li>
-                            <li><span>Per Night</span></li>
+        <?php
+           $displayedTypes = array();
+
+           foreach ($lists as $value) :
+               $roomTypeId = $value->room_type_id;
+               if (!in_array($roomTypeId, $displayedTypes)) :
+                   ?>
+                   <div class="room-item">
+                       <a href="room-details.html">
+                           <img src="<?php echo "./uploads/" . $value->image_path ?>" alt="" style="height: 300px;">
+                       </a>
+                       <div class="content">
+                           <h3><a href="room-details.html"> <?php echo RoomType::getNameById($roomTypeId); ?></a></h3>
+                           <p>
+                               <?php echo RoomType::getDescriptionById($roomTypeId); ?>
+                           </p>
+                           <ul>
+                            <li> <?php echo $value->price_per_night ?> VNĐ</li>
                         </ul>
-                        <a href="index.php?controller=client&action=bookNow" class="book-btn">Book Now</a>
-                    </div>
-                </div>
-            <?php endforeach ?>
+                       </div>
+                   </div>
+                   <?php
+                   $displayedTypes[] = $roomTypeId;
+               endif;
+           endforeach;
+           ?>
         </div>
     </div>
 </div>
@@ -149,13 +81,13 @@
 <div class="services-area-two pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <h2>Our Resort Services and All Other Details</h2>
+            <h2>Dịch vụ nghỉ dưỡng của chúng tôi và tất cả các chi tiết khác</h2>
         </div>
         <div class="row pt-45">
             <div class="col-lg-4 col-sm-6">
                 <div class="services-card">
                     <i class="flaticon-wifi-signal-1"></i>
-                    <h3><a href="service-details.html">Wifi Coverage</a></h3>
+                    <h3><a href="service-details.html">Vùng phủ sóng Wifi</a></h3>
                     <p>Lorem ipsum dolor sit amet, consectetur
                         adipiscing elit. Sed tincidunt ante tellus, sit
                         amet rhoncus massa .</p>
