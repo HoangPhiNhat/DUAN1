@@ -9,7 +9,7 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Tên Cở Sở" value="<?php echo $value->name ?>">
                 </div>
                 <div class="form-group">
-                    <label for="description">Mô tả</label>
+                    <label for="description"> Mô tả </label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="Nhập mô tả" value="<?php echo $value->description ?>">
                 </div>
                 <button type="submit" name="submitUpdateRoomType" class="btn btn-gradient-primary me-2">Submit</button>

@@ -1,5 +1,4 @@
 
-
 <?= !empty($successScript) ? $successScript : '' ?>
 <div class="preloader">
     <div class="d-table">

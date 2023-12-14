@@ -2,6 +2,7 @@
 require_once('controllers/base_controller.php');
 require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/facilities/facility.php");
+require_once("models/admin/dashboard/dashboard.php");
 require_once("models/admin/rooms/rooms.php");
 require_once("models/admin/roomTypes/roomType.php");
 require_once("models/admin/roomReservations/roomReservations.php");
@@ -96,10 +97,31 @@ class AdminController extends BaseController
 
     public function roomTypeList()
     {
-        $lists = roomType::getAllData();
-        $data = array('lists' => $lists);
-        $this->folder = 'roomTypes';
-        $this->render('list', $data);
+        
+            $lists = roomType::getAllData();
+    
+            // Kiểm tra xem có danh sách hay không
+            if (empty($lists)) {
+                echo "No room types found.";
+                return;
+            }
+            $roomTypeId = roomType::getAllData();
+            // Gọi hàm để lấy kết quả đếm
+            $countResult = roomType::updateRoomCountInDatabase($roomTypeId);
+    
+            // Kiểm tra xem có kết quả đếm hay không
+            if ($countResult !== false && is_array($countResult)) {
+                $totalRoomCount = array_sum(array_column($countResult, 'room_count'));
+    
+                // Chuyển dữ liệu sang view để hiển thị
+                $data = array('lists' => $lists, 'totalRoomCount' => $totalRoomCount);
+                $this->folder = 'roomTypes';
+                $this->render('list', $data);
+            } 
+            $data = array('lists' => $lists, 'totalRoomCount' => $totalRoomCount);
+            $this->folder = 'roomTypes';
+            $this->render('list', $data);
+        
     }
     public function addRoomType()
     {
@@ -238,30 +260,30 @@ public function customersList()
             $room_id = $_POST['room_id'];
             $status = $_POST['status']; // Assuming the status is coming from the form
             $total_amount = $_POST['total_amount'];
-
+    
             // Validate or sanitize the status input if necessary
-
+    
             // Set the default status if the provided status is empty
             if (empty($status)) {
                 $status = 'Chờ xác nhận'; // Set your default status here
             }
-
+    
             // Update the status in the database
             roomReservation::updateData($id, $customer_id, $room_id, $status, $total_amount);
-
+    
             // Display a success message
             $message = "Dữ liệu đã được sửa thành công";
             $data = array('message' => $message);
             $this->folder = 'roomReservations';
             $this->render('update', $data);
-
+    
             // Redirect the user
             echo '<script>window.location.href = "index.php?controller=admin&action=ReservationsList";</script>';
             exit();
         }
     }
-
-
-
+  
+    
+    
 
 }

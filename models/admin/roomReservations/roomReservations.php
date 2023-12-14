@@ -1,5 +1,6 @@
 <?php
-class roomReservation
+
+class RoomReservation
 {
     public $id;
     public $customer_id;
@@ -11,16 +12,16 @@ class roomReservation
     public $updated_date;
     public $status;
 
-    function __construct(
+    public function __construct(
         $id,
-    $customer_id,
-    $room_id,
-    $checkin_date,
-    $checkout_date,
-    $total_amount,
-    $created_date,
-    $updated_date,
-    $status
+        $customer_id,
+        $room_id,
+        $checkin_date,
+        $checkout_date,
+        $total_amount,
+        $created_date,
+        $updated_date,
+        $status
     ) {
         $this->id = $id;
         $this->customer_id  = $customer_id;
@@ -31,17 +32,16 @@ class roomReservation
         $this->created_date = $created_date;
         $this->updated_date = $updated_date;
         $this->status = $status;
-        
     }
 
-    static function getAllData()
+    public static function getAllData()
     {
         $list = [];
         $db = DB::getInstance();
         $req = $db->query('SELECT * FROM room_reservations ORDER BY id DESC');
 
         foreach ($req->fetchAll() as $value) {
-            $list[] = new roomReservation(
+            $list[] = new RoomReservation(
                 $value['id'],
                 $value['customer_id'],
                 $value['room_id'],
@@ -57,7 +57,7 @@ class roomReservation
         return $list;
     }
 
-    static function findData($id)
+    public static function findData($id)
     {
         $db = DB::getInstance();
         $req = $db->prepare('SELECT * FROM room_reservations WHERE id = :id');
@@ -65,7 +65,7 @@ class roomReservation
 
         $value = $req->fetch();
         if (isset($value['id'])) {
-            return  new roomReservation(
+            return new RoomReservation(
                 $value['id'],
                 $value['customer_id'],
                 $value['room_id'],
@@ -80,7 +80,7 @@ class roomReservation
         return null;
     }
 
-    static function updateData($id, $customer_id, $room_id, $status, $total_amount)
+    public static function updateData($id, $customer_id, $room_id, $status, $total_amount)
     {
         $db = DB::getInstance();
 
@@ -98,7 +98,9 @@ class roomReservation
         // Thực hiện truy vấn
         $stmt->execute();
     }
-    static function getBookingHistory($user_name) {
+
+    public static function getBookingHistory($user_name)
+    {
         $db = DB::getInstance();
 
         // Use a prepared statement to prevent SQL injection
@@ -120,77 +122,92 @@ class roomReservation
 
         return $bookingHistory;
     }
-    static function getNameById($customerId)
+
+    public static function getNameById($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result ? $result['name'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
+
+    public static function getEmailById($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT email FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result ? $result['email'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
+
+    public static function getPhoneById($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result ? $result['phone_number'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
+
+    public static function getAddressById($customerId)
+    {
+        try {
+            $db = DB::getInstance();
+            $stmt = $db->prepare('SELECT address FROM customers WHERE id = :customer_id');
+            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result ? $result['address'] : null;
+        } catch (PDOException $e) {
+            // Log or display the error
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
+    static function getReservationInfo($roomId)
 {
     try {
         $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
-        $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
+        $query = 'SELECT * FROM room_reservations WHERE room_id = :roomId';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
         $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['name'] : null;
+        $reservationInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $reservationInfo;
     } catch (PDOException $e) {
-        // Log or display the error
-        echo 'Error: ' . $e->getMessage();
-        return null;
-    }
-}
-   static function getEmailById($customerId)
-{
-    try {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT email FROM customers WHERE id = :customer_id');
-        $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['email'] : null;
-    } catch (PDOException $e) {
-        // Log or display the error
-        echo 'Error: ' . $e->getMessage();
-        return null;
-    }
-}
-static function getPhoneById($customerId)
-{
-    try {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = :customer_id');
-        $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['phone_number'] : null;
-    } catch (PDOException $e) {
-        // Log or display the error
-        echo 'Error: ' . $e->getMessage();
-        return null;
-    }
-}
-static function getAddressById($customerId)
-{
-    try {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT address FROM customers WHERE id = :customer_id');
-        $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['address'] : null;
-    } catch (PDOException $e) {
-        // Log or display the error
-        echo 'Error: ' . $e->getMessage();
-        return null;
+        echo "Error: " . $e->getMessage();
+        return false;
     }
 }
 
-  
-    
-  
 }
-

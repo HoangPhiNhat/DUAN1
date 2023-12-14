@@ -34,6 +34,7 @@ class ClientController extends BaseController
                     $checkin_date = DateTime::createFromFormat('d/m/Y', $checkin_date_input)->format('Y-m-d');
                     $checkout_date = DateTime::createFromFormat('d/m/Y', $checkout_date_input)->format('Y-m-d');
                     $total_amount = preg_replace("/[^0-9]/", "", $total);
+                    echo  $total_amount;
                     $bookingId = SecureBooking::reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount);
                 } catch (\Exception $e) {
                     // Xử lý lỗi khi đặt phòng thất bại

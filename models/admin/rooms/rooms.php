@@ -161,50 +161,5 @@ class Rooms
 
         return null;
     }
-    static function findALLData($id)
-    {
-        $db = DB::getInstance();
-        $statement = $db->prepare('SELECT * FROM rooms WHERE id = :id');
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-        $roomDetails = $statement->fetch(PDO::FETCH_OBJ);
-
-        return $roomDetails;
-    }
-    static function getRoomDetailsById($roomId)
-    {
-        $db = DB::getInstance();
-
-        // Lấy thông tin phòng từ CSDL dựa trên room_id
-        $query = "SELECT * FROM rooms WHERE id = :id";
-        $statement = $db->prepare($query);
-        $statement->bindParam(':id', $roomId, PDO::PARAM_INT);
-        $statement->execute();
-
-        // Kiểm tra xem có kết quả hay không
-        if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            // Tạo đối tượng Room và trả về
-            $room = new Rooms(
-                $row['id'],
-                $row['name'],
-                $row['price_per_night'],
-                $row['capacity'],
-                $row['facility_id'],
-                $row['room_type_id'],
-                $row['image_path'],
-                $row['created_date'],
-                $row['updated_date']
-                // ... (Thêm các thuộc tính khác của phòng)
-            );
-            return $room;
-        } else {
-            // Nếu không có kết quả, trả về null hoặc thông báo lỗi tùy bạn
-            return null;
-        }
-    }
-
-    //lấy thông tin phòng giống với phong đang hiện
-   
-
 
 }

@@ -17,6 +17,7 @@
                             <th> Tên phòng bình luận </th>
                             <th> Tên Người dùng </th>
                             <th> Nội dung </th>
+                            <th> Đánh Giá </th>
                             <th> Ngày Bình luận </th>
                             <th> Chức Năng </th>
                         </tr>
@@ -30,16 +31,16 @@
                                 </td>
                                 <td>
                                     <?php echo Rooms::getNameById($value->room_id); ?>
-                                    <!-- <?php echo $value->room_id ?> -->
                                 </td>
                                 <td>
                                     <?php echo login::getNameById($value->customer_id); ?>
-                                    <!-- <?php echo $value->customer_id ?> -->
                                 </td>
-                                <td class="text-truncate" style="max-width: 150px;" title="<?php echo $value->comment_text ?>">
+                                <td class="text-truncate" style="max-width: 250px; white-space: pre-line;" title="<?php echo $value->comment_text ?>">
                                     <?php echo $value->comment_text ?>
                                 </td>
-
+                                <td>
+                                    <span style="color: #ef760b;"><?php echo Comment::displayStarRating($value->rating); ?></span>
+                                </td>
                                 <td>
                                     <?php echo $value->created_at ?>
                                 </td>
@@ -48,6 +49,11 @@
                                         <button type="submit" class="btn btn-gradient-primary" style="margin-bottom: 5px;">
                                             Xóa
                                         </button>
+                                        <button class="btn btn-gradient-primary" style="margin-bottom: 5px;">
+                                            <a href='<?php echo "index.php?controller=admin&action=findFacility&id=$value->id"?>' style="padding: 0; color: #fff;" >
+                                                Sửa
+                                            </a>
+                                    </button>
                                     </form>
                                 </td>
                             </tr>

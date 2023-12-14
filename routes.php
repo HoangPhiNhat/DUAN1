@@ -4,7 +4,12 @@
 $controllers = array(
 
     'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms','room_details','roomDetails','logOut',
+<<<<<<< HEAD
     'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer', 'redirect'],
+=======
+    'booking_history','profile','getUserInfoByID','update','findProfile','addComment','findComments',  'roomSelection', 'secureBooking','displayReservationsForCustomer',
+    'roomSame','roomAvailabilityAction'],
+>>>>>>> 7ef0b9ca23bb021be35679b61df42ab1ccc62a98
 
     // 'client' => ['home', 'aboutUs', 'bookNow', 'register', 'signIn', 'error','Contact','rooms',
     // 'room_details','logOut', 'roomSelection', 'secureBooking' ],

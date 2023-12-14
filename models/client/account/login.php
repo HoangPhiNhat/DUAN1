@@ -168,6 +168,24 @@ class login
 
         return $result ? $result['name'] : null;
     }
+    static function getPhoneById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['phone_number'] : null;
+    }
+    static function getAddressById($roomTypeId)
+    {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('SELECT address FROM customers WHERE id = ?');
+        $stmt->execute([$roomTypeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['address'] : null;
+    }
     static function getNameId($customerId)
     {
         try {
