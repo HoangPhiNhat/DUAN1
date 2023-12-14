@@ -112,61 +112,176 @@ if (isset($roomDetails)) {
             <div class="row">
                 <div class="col-lg-4">
                     <div class="room-details-side">
-                        
+
                         <div class="side-bar-plan">
-                            <h3 style="border-bottom: 1px dashed; padding: 10px;">Tiện Nghi</h3>
-                            <ul class="list-unstyled">
+                            <div>
+                                <h3 style="border-bottom: 1px dashed; padding: 10px;">Tiện Nghi</h3>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/182/6077cb18254ca947264346.svg" alt=""> Wi-Fi miễn phí trong phòng
+                                    </li>
+
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/569/6077cb56953b3924040946.svg" alt="">Tivi
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c6/a80/6077c6a8021a7377939554.svg" alt="">Điện thoại bàn
+                                    </li>
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c7/050/6077c7050a282631755660.svg" alt="">Đèn ngủ
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled">
+
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/569/6077bc5697c45900912021.svg" alt="">Tủ lạnh
+                                    </li>
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/d80/6077cad80b752086833352.svg" alt="">Ấm đun nước
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c0/dc8/6077c0dc805e2209555953.svg" alt="">Máy sấy tóc
+                                    </li>
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c0/96e/6077c096e6ab8328651650.svg" alt="">Nệm gấp gọn
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/56b/6077c356b8432428133568.svg" alt="">Hộp khăn giấy
+                                    </li>
+                                    <li>
+                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/38b/6077c338b10e1685649966.svg" alt="">Hộp sơ cứu
+                                    </li>
+                                </ul>
+                                <div id="facilities" style="display: none;">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/6f5/6077c36f52836287661244.svg" alt="">Gương trong phòng tắm
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c5/289/6077c5289ff45278754275.svg" alt="">Ghế
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/a59/6077caa59f7a0758785107.svg" alt="">Áo choàng tắm
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c8/215/6077c821551c0492700039.svg" alt="">Dép trong phòng
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/dd0/6077c3dd0950d892676582.svg" alt="">Gương trang điểm
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/4c9/6077ca4c902f3937627627.svg" alt="">Bàn Làm Việc
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c9/d4e/6077c9d4ea611638738305.svg" alt="">Bồn rửa
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c9/a8d/6077c9a8d6529671154255.svg" alt="">Bồn vệ sinh
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <ul>
+                                    <li> <a href="#" onclick="toggleContent('facilities')">Chi tiết</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style="border-bottom: 1px dashed; border-top: 1px solid; padding: 10px;">Các Loại Dịch Vụ </h3>
+                                <ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/fd7/6077bdfd7489f967133370.svg" alt="">Sân vườn
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/286/6077be286137c112291671.svg" alt="">PINT BEER
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/e4d/6077bce4df775970398996.svg" alt="">The Lobby bar&amp;coffee
+                                        </li>
+
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/e70/6077bee70a82e820551500.svg" alt="">Nhà hàng
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/0ec/6077bd0ec61a1291824577.svg" alt="">Thang máy
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c2/6da/6077c26da910f708923695.svg" alt="">Két an toàn
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/96b/6077bc96b238b626959026.svg" alt="">Trà miễn phí
+                                        </li>
+                                        <li>
+                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/4aa/6077be4aa25e2834096560.svg" alt="">Nước đóng chai miễn phí
+                                        </li>
+                                    </ul>
+                                    <div id="services" style="display: none;">
+                                    <ul class="list-unstyled">
+                                    <li>
+                      <img
+                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/8a7/6077ca8a779fe594121700.svg"
+                        alt="">Bãi đậu xe</li>
                     <li>
                       <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/569/6077bc5697c45900912021.svg"
-                        alt="">Tủ lạnh</li>
+                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c7/fd2/6077c7fd2d73b812800312.svg"
+                        alt="">Dịch vụ đưa đón</li>
                   </ul>
-               
-                               
                   <ul class="list-unstyled">
                     <li>
                       <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c8/215/6077c821551c0492700039.svg"
-                        alt="">Dép trong phòng</li>
+                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/888/6077bd8880954180611559.svg"
+                        alt="">Sân Golf</li>
+                        
+                    <li>
+                      <img
+                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/fd7/6077bdfd7489f967133370.svg"
+                        alt="">Sân vườn</li>
+                 
+                  </ul><ul class="list-unstyled">
+                    
+                    <li>
+                      <img
+                        class="facility-icon" width="30" src="https://cdn2.iconfinder.com/data/icons/medical-healthcare-26/28/Barbell-512.png"
+                        alt="">Phòng GYM</li>
+                        <li>
+                      <img
+                        class="facility-icon" width="30" src="https://cdn0.iconfinder.com/data/icons/summer-and-holiday-line-vol-2/80/dumbbell__fitness__exercise__gym__weight-128.png"
+                        alt="">Bể Bơi</li>
+                 
                   </ul>
-              
-                            <ul class="list-unstyled">
-                                <li>
-                                    <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/569/6077cb56953b3924040946.svg" alt="">Tivi
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/182/6077cb18254ca947264346.svg" alt=""> Wi-Fi miễn phí trong phòng
-                                </li>
-                            </ul>
-                            <p>...</p>
-                            </ul>
-                            <h3 style="border-bottom: 1px dashed; border-top: 1px solid; padding: 10px;">Các Loại Dịch Vụ </h3>
-                            <ul>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c9/7be/6077c97be8e5d014635016.svg" alt="">Bữa sáng
-                                    </li>
+                                    </div>
+                                    <ul>
+        <li><a href="#" onclick="toggleServices()">Chi tiết Dịch Vụ</a></li>
+    </ul>
                                 </ul>
-                                <li><a href="#">Dịch Vụ Giặt Ủi Quần Áo</a></li>
-                                <li><a href="#">Dịch Vụ Spa</a></li>
-                                <li><a href="#">Mini-Bar</a></li>
-                                <li><a href="#">Dịch Vụ Xe Đưa Đón Sân Bay</a></li>
-                                <li><a href="#">Dịch Vụ Hội Họp, Văn Phòng</a></li>
-                                <li><a href="#">Dịch Vụ Thu Đổi Ngoại Tệ</a></li>
-                                <li><a href="#">Fitness Center</a></li>
-                                <li><a href="#">Buffet Dinner</a></li>
-                                <li><a href="#">Dịch Vụ Phục Vụ Phòng 24/24</a></li>
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="room-details-article">
+                        <h2>Thông Tin Phòng</h2>
                         <div class="room-details-slider owl-carousel owl-theme">
                             <div class="room-details-item">
-                                <img src="<?php echo "./uploads/" . $Value->image_path  ?>" alt="Images">
+                                <img src="<?php echo "./uploads/" . $Value->image_path  ?>" alt="Images" style=" margin-left: 62px; width: 87%;">
                             </div>
                         </div>
                         <div class="room-details-title">
@@ -176,11 +291,7 @@ if (isset($roomDetails)) {
                                     Giá :<?php echo  $Value->price_per_night ?>
                                 </li><br>
                                 <li>
-<<<<<<< HEAD
                                     Số Lượng: <?php echo  $Value->capacity ?>/Người
-=======
-                                  Số Lượng:  <?php echo  $Value->capacity ?>/Người
->>>>>>> 2b4dd9d3dfc6f1a88c883f3855e14dae5efe1a0b
                                 </li>
                             </ul>
                         </div>
@@ -189,11 +300,7 @@ if (isset($roomDetails)) {
                                 <?php echo RoomType::getDescriptionById($Value->room_type_id);  ?>
                             </p>
                         </div>
-<<<<<<< HEAD
                         <div class="container mt-4">
-=======
-                        <div class="container mt-4" >
->>>>>>> 2b4dd9d3dfc6f1a88c883f3855e14dae5efe1a0b
                             <div class="row">
                                 <div class="col-md-8" style="width: 150%;">
                                     <h3 class="card-title">Bình luận</h3>
@@ -254,23 +361,15 @@ if (isset($roomDetails)) {
                                                 <small class="text-muted"><?php echo $comment->created_at; ?></small>
                                             </div>
                                         <?php endforeach; ?>
-
-
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div class="room-details-other pb-70">
         <div class="container">
             <div class="room-details-text text-center">
@@ -353,23 +452,25 @@ if (isset($roomDetails)) {
     <script>
         $(document).ready(function() {
             $(".room-slider").owlCarousel({
-                items: 2, // Hiển thị 2 phòng trên mỗi lần cuộn
-                loop: true, // Lặp lại vô hạn
-                margin: 100, // Khoảng cách giữa các phòng
-                // nav: true, // Hiển thị nút điều hướng (prev/next)
-                // responsive:{
-                //     0:{
-                //         items: 1 // Hiển thị 1 phòng trên màn hình nhỏ
-                //     },
-                //     1000:{
-                //         items: 2 // Hiển thị 2 phòng trên màn hình lớn
-                //     }
-                // }
+                items: 2,
+                loop: true,
+                margin: 100,
             });
         });
     </script>
+    <script>
+        function toggleContent(contentId) {
+            var content = document.getElementById(contentId);
+            if (content.style.display === 'block' || content.style.display === '') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+        function toggleServices() {
+        toggleContent('services');
+    }
+    </script>
 </body>
-
-<!-- Mirrored from templates.hibootstrap.com/atoli/default/room-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2023 09:54:36 GMT -->
 
 </html>

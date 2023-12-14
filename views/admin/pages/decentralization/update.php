@@ -19,8 +19,7 @@
                     <label for="description">SĐT</label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="Nhập mô tả" readonly value="<?php echo $value->phone_number; ?>">
                 </div>
-                <?php var_dump($roles) ?>
-
+            
                 <div class="form-group">
                     <label for="roles">Vai Trò</label>
                     <select class="form-control" id="roles" name="roles_id">
