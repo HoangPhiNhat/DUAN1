@@ -81,7 +81,7 @@ class RoomReservation
         return null;
     }
 
-    static function updateData($id, $customer_id, $room_id, $status, $total_amount)
+    public static function updateData($id, $customer_id, $room_id, $status, $total_amount)
     {
         try {
             $db = DB::getInstance();

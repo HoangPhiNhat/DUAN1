@@ -176,7 +176,11 @@ if (isset($roomDetails)) {
                                     Giá :<?php echo  $Value->price_per_night ?>
                                 </li><br>
                                 <li>
+<<<<<<< HEAD
                                     Số Lượng: <?php echo  $Value->capacity ?>/Người
+=======
+                                  Số Lượng:  <?php echo  $Value->capacity ?>/Người
+>>>>>>> 2b4dd9d3dfc6f1a88c883f3855e14dae5efe1a0b
                                 </li>
                             </ul>
                         </div>
@@ -185,7 +189,11 @@ if (isset($roomDetails)) {
                                 <?php echo RoomType::getDescriptionById($Value->room_type_id);  ?>
                             </p>
                         </div>
+<<<<<<< HEAD
                         <div class="container mt-4">
+=======
+                        <div class="container mt-4" >
+>>>>>>> 2b4dd9d3dfc6f1a88c883f3855e14dae5efe1a0b
                             <div class="row">
                                 <div class="col-md-8" style="width: 150%;">
                                     <h3 class="card-title">Bình luận</h3>

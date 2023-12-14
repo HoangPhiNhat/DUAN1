@@ -117,7 +117,6 @@ class ClientController extends BaseController
         $this->folder = 'booking';
         $this->render('book', $data);
     }
-
     public function Contact()
     {
         $list = Facility::getAllData();
