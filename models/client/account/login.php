@@ -42,23 +42,21 @@ class login
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Kiểm tra mật khẩu
-    if ($user && password_verify($password, $user['password'])) {
-        session_start();
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['phone_number'] = $user['phone'];
-        $_SESSION['roles_id'] = $user['roles_id']; // Đảm bảo rằng roles_id cũng được đặt giá trị
-        header('Location: index.php?controller=client&action=home');
-        exit();
-    } else {
-        throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
+        // Kiểm tra mật khẩu
+        if ($user && password_verify($password, $user['password'])) {
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['phone_number'] = $user['phone'];
+            header('Location: index.php?controller=client&action=home');
+            exit();
+        } else {
+            throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
+        }
     }
-}
-
    
-    public static function updateData($id, $name, $email, $phone_number, $gender, $address, $roles_id)
+    public static function updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id)
     {
         $db = DB::getInstance();
     
@@ -84,30 +82,7 @@ class login
     
         $stmt->execute();
     }
-    static function getAllData()
-    {
-        $list = [];
-        $db = DB::getInstance();
-        $req = $db->query('SELECT * FROM customers ORDER BY id desc');
-
-        foreach ($req->fetchAll() as $value) {
-            $list[] = new login(
-                
-                $value['id'],
-                $value['name'],
-                $value['email'],
-                $value['phone_number'],
-                $value['roles_id'],
-                $value['address'],
-                $value['gender'],
-                $value['password'],
-               
-            );
-        }
-
-        return $list;
-    }
-
+    
     static function findData($id)
     {
         $db = DB::getInstance();
@@ -124,8 +99,7 @@ class login
                 $value['phone_number'],
                 $value['password'],
                 $value['address'],
-                $value['gender'],
-              
+                $value['roles_id']
             );
         }
         return null;
@@ -143,78 +117,5 @@ class login
     
         return $user_info;
     }
-    static function addComment($room_id, $customer_id, $rating, $comment_text)
-    {
-        $db = DB::getInstance(); 
-        $customer_id = $_SESSION['user_id'];
-        if (!isset($customer_id )) {
-           echo 'vui lòng đăng nhập để bình luận';
-            return false;
-        }
 
-        $query = "INSERT INTO comments (room_id, customer_id, rating, comment_text) VALUES (:room_id, :customer_id, :rating, :comment_text)";
-        $statement = $db->prepare($query);
-        $statement->bindParam(':room_id', $room_id, PDO::PARAM_INT);
-        $statement->bindParam(':customer_id', $customer_id , PDO::PARAM_INT);
-        $statement->bindParam(':rating', $rating , PDO::PARAM_INT);
-        $statement->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
-
-        // Thực hiện truy vấn
-        $success = $statement->execute();
-
-        return $success;
-    }
-    static function getNameById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT name FROM customers WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['name'] : null;
-    }
-    static function getRolesById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT roles_id FROM customers WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['roles_id'] : null;
-    }
-    static function getPhoneById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT phone_number FROM customers WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['phone_number'] : null;
-    }
-    static function getAddressById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare('SELECT address FROM customers WHERE id = ?');
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['address'] : null;
-    }
-    static function getNameId($customerId)
-    {
-        try {
-            $db = DB::getInstance();
-            $stmt = $db->prepare('SELECT name FROM customers WHERE id = :customer_id');
-            $stmt->bindValue(':customer_id', $customerId, PDO::PARAM_INT);
-            $stmt->execute();
-    
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            return $result ? $result['name'] : null;
-        } catch (PDOException $e) {
-            // Log or display the error
-            echo 'Error: ' . $e->getMessage();
-            return null;
-        }
-    }
 }

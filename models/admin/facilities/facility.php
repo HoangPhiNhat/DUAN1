@@ -33,7 +33,7 @@ class Facility
         $this->updated_date = $updated_date;
     }
 
-    static function getAllData()
+    static function getAllData() 
     {
         $list = [];
         $db = DB::getInstance();
@@ -128,5 +128,5 @@ class Facility
 
         return $result ? $result['name'] : null;
     }
-    
+
 }

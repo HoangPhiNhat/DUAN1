@@ -104,15 +104,6 @@ class roomType
 
         return $result ? $result['name'] : null;
     }
-    static function getTotalQuantityById($roomTypeId)
-    {
-        $db = DB::getInstance();
-        $stmt = $db->prepare("SELECT total_quantity FROM room_types WHERE id = ?");
-        $stmt->execute([$roomTypeId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result ? $result['total_quantity'] : null;
-    }
     static function getDescriptionById($roomTypeId)
     {
         $db = DB::getInstance();
@@ -122,42 +113,5 @@ class roomType
 
         return $result ? $result['description'] : null;
     }
-    //roomtype/list
-    static function getRoomCounts()
-    {
-        try {
-            $db = DB::getInstance(); // Assume DB::getInstance() returns a PDO object
-
-            $query = 'SELECT room_types.id, COUNT(rooms.id) AS room_count
-                      FROM room_types
-                      LEFT JOIN rooms ON room_types.id = rooms.room_type_id
-                      GROUP BY room_types.id';
-
-            $stmt = $db->prepare($query);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            // Handle errors
-            throw new Exception("Error retrieving room counts: " . $e->getMessage());
-        }
-    }
-
-    static function updateTotalQuantity($roomTypeId, $totalQuantity)
-    {
-        try {
-            $db = DB::getInstance(); // Assume DB::getInstance() returns a PDO object
-
-            $query = 'UPDATE room_types SET total_quantity = :totalQuantity WHERE id = :roomTypeId';
-
-            $stmt = $db->prepare($query);
-            $stmt->bindParam(':totalQuantity', $totalQuantity, PDO::PARAM_INT);
-            $stmt->bindParam(':roomTypeId', $roomTypeId, PDO::PARAM_INT);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            // Handle errors
-            throw new Exception("Error updating total_quantity: " . $e->getMessage());
-        }
-    }
-
+    
 }

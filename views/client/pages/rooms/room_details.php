@@ -1,24 +1,3 @@
-<?php
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    // echo "ID from URL: $id";
-    $Value = Rooms::findALLData($id);
-
-    if (!$Value) {
-        echo "Room not found.";
-    }
-} else {
-    echo "Room ID not provided.";
-}
-
-?>
-<?php
-if (isset($roomDetails)) {
-    // Đoạn mã sử dụng $roomDetails ở đây
-} else {
-    echo "Không có thông tin về phòng.";
-}
-?>
 <!doctype html>
 <html lang="zxx">
 
@@ -102,186 +81,48 @@ if (isset($roomDetails)) {
                 </ul>
                 <h3>Room Details</h3>
             </div>
-        </div>
-    </div>
+            <div class="row pt-45">
+                <!-- <div class="col-md-6"> -->
+                <div class="container mt-5 d-flex align-items-center justify-content-center">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p> <?php echo $roomDetails->name; ?></p>
+                                <p>Số Lượng Người Một Phòng: <?php echo $roomDetails->capacity; ?></p>
+                                <p>Giá Tiền: <?php echo $roomDetails->price_per_night; ?> / Per Night</p>
 
-
-
-    <div class="room-details-area pt-100 pb-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="room-details-side">
-
-                        <div class="side-bar-plan">
-                            <div>
-                                <h3 style="border-bottom: 1px dashed; padding: 10px;">Tiện Nghi</h3>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/182/6077cb18254ca947264346.svg" alt=""> Wi-Fi miễn phí trong phòng
-                                    </li>
-
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7cb/569/6077cb56953b3924040946.svg" alt="">Tivi
-                                    </li>
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c6/a80/6077c6a8021a7377939554.svg" alt="">Điện thoại bàn
-                                    </li>
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c7/050/6077c7050a282631755660.svg" alt="">Đèn ngủ
-                                    </li>
-                                </ul>
-                                <ul class="list-unstyled">
-
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/569/6077bc5697c45900912021.svg" alt="">Tủ lạnh
-                                    </li>
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/d80/6077cad80b752086833352.svg" alt="">Ấm đun nước
-                                    </li>
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c0/dc8/6077c0dc805e2209555953.svg" alt="">Máy sấy tóc
-                                    </li>
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c0/96e/6077c096e6ab8328651650.svg" alt="">Nệm gấp gọn
-                                    </li>
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/56b/6077c356b8432428133568.svg" alt="">Hộp khăn giấy
-                                    </li>
-                                    <li>
-                                        <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/38b/6077c338b10e1685649966.svg" alt="">Hộp sơ cứu
-                                    </li>
-                                </ul>
-                                <div id="facilities" style="display: none;">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/6f5/6077c36f52836287661244.svg" alt="">Gương trong phòng tắm
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c5/289/6077c5289ff45278754275.svg" alt="">Ghế
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/a59/6077caa59f7a0758785107.svg" alt="">Áo choàng tắm
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c8/215/6077c821551c0492700039.svg" alt="">Dép trong phòng
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c3/dd0/6077c3dd0950d892676582.svg" alt="">Gương trang điểm
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/4c9/6077ca4c902f3937627627.svg" alt="">Bàn Làm Việc
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c9/d4e/6077c9d4ea611638738305.svg" alt="">Bồn rửa
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c9/a8d/6077c9a8d6529671154255.svg" alt="">Bồn vệ sinh
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <ul>
-                                    <li> <a href="#" onclick="toggleContent('facilities')">Chi tiết</a></li>
-                                </ul>
+                                <!-- <?php echo Rooms::getImagePathId($roomDetails->image_path); ?> -->
                             </div>
-                            <div>
-                                <h3 style="border-bottom: 1px dashed; border-top: 1px solid; padding: 10px;">Các Loại Dịch Vụ </h3>
-                                <ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/fd7/6077bdfd7489f967133370.svg" alt="">Sân vườn
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/286/6077be286137c112291671.svg" alt="">PINT BEER
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/e4d/6077bce4df775970398996.svg" alt="">The Lobby bar&amp;coffee
-                                        </li>
+                            <div class="col-md-6 text-center">
+                                <p>Cơ Sở: <?php echo Facility::getNameById($roomDetails->facility_id); ?></p>
+                                <p>Loại Phòng: <?php echo RoomType::getNameById($roomDetails->room_type_id); ?></p>
+                                <a href="index.php?controller=client&action=bookNow&room_id=<?php echo $roomDetails->id; ?>" class="btn btn-primary mt-3 book-btn">Book Now</a>
+                            </div>
+                        </div><br>
+                        <a href="room-details.html">
+                            <img src="uploads/phong-don.jpeg" alt="" class="img-fluid" style="height: auto; width: 100%;">
+                        </a><br>
 
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/e70/6077bee70a82e820551500.svg" alt="">Nhà hàng
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/0ec/6077bd0ec61a1291824577.svg" alt="">Thang máy
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c2/6da/6077c26da910f708923695.svg" alt="">Két an toàn
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bc/96b/6077bc96b238b626959026.svg" alt="">Trà miễn phí
-                                        </li>
-                                        <li>
-                                            <img class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7be/4aa/6077be4aa25e2834096560.svg" alt="">Nước đóng chai miễn phí
-                                        </li>
-                                    </ul>
-                                    <div id="services" style="display: none;">
-                                    <ul class="list-unstyled">
-                                    <li>
-                      <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7ca/8a7/6077ca8a779fe594121700.svg"
-                        alt="">Bãi đậu xe</li>
-                    <li>
-                      <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7c7/fd2/6077c7fd2d73b812800312.svg"
-                        alt="">Dịch vụ đưa đón</li>
-                  </ul>
-                  <ul class="list-unstyled">
-                    <li>
-                      <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/888/6077bd8880954180611559.svg"
-                        alt="">Sân Golf</li>
-                        
-                    <li>
-                      <img
-                        class="facility-icon" width="30" src="https://hotelcolline.com/storage/app/uploads/public/607/7bd/fd7/6077bdfd7489f967133370.svg"
-                        alt="">Sân vườn</li>
-                 
-                  </ul><ul class="list-unstyled">
-                    
-                    <li>
-                      <img
-                        class="facility-icon" width="30" src="https://cdn2.iconfinder.com/data/icons/medical-healthcare-26/28/Barbell-512.png"
-                        alt="">Phòng GYM</li>
-                        <li>
-                      <img
-                        class="facility-icon" width="30" src="https://cdn0.iconfinder.com/data/icons/summer-and-holiday-line-vol-2/80/dumbbell__fitness__exercise__gym__weight-128.png"
-                        alt="">Bể Bơi</li>
-                 
-                  </ul>
+                        <!-- Other room details -->
+
+                        <p style=" overflow: hidden; text-overflow: ellipsis; max-width: 50vw; ">
+                            Mô Tả:
+                            <?php echo RoomType::getDescriptionById($roomDetails->room_type_id); ?> <br>
+                        </p>
+                        <div>
+                            <div class="add-comment">
+                                <h3>Comment</h3>
+                                <form action="#" method="post" class="border p-3">
+                                <div class="form-group">
+                                        <label for="comment_text">comments:</label>
                                     </div>
-                                    <ul>
-        <li><a href="#" onclick="toggleServices()">Chi tiết Dịch Vụ</a></li>
-    </ul>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="room-details-article">
-                        <h2>Thông Tin Phòng</h2>
-                        <div class="room-details-slider owl-carousel owl-theme">
-                            <div class="room-details-item">
-                                <img src="<?php echo "./uploads/" . $Value->image_path  ?>" alt="Images" style=" margin-left: 62px; width: 87%;">
+                                    <div class="form-group">
+                                        <label for="comment_text">Comment Here:</label>
+                                        <input class="" id="" name="" required></input>
+                                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="room-details-title">
@@ -291,7 +132,7 @@ if (isset($roomDetails)) {
                                     Giá :<?php echo  $Value->price_per_night ?>
                                 </li><br>
                                 <li>
-                                    Số Lượng: <?php echo  $Value->capacity ?>/Người
+                                  Số Lượng:  <?php echo  $Value->capacity ?>/Người
                                 </li>
                             </ul>
                         </div>
@@ -300,7 +141,7 @@ if (isset($roomDetails)) {
                                 <?php echo RoomType::getDescriptionById($Value->room_type_id);  ?>
                             </p>
                         </div>
-                        <div class="container mt-4">
+                        <div class="container mt-4" >
                             <div class="row">
                                 <div class="col-md-8" style="width: 150%;">
                                     <h3 class="card-title">Bình luận</h3>
@@ -361,68 +202,23 @@ if (isset($roomDetails)) {
                                                 <small class="text-muted"><?php echo $comment->created_at; ?></small>
                                             </div>
                                         <?php endforeach; ?>
+
+
+
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="room-details-other pb-70">
-        <div class="container">
-            <div class="room-details-text text-center">
-                <h2>Our Related Offer</h2>
-            </div>
-            <div class="row ">
-                <div>
-                    <div class="room-card-two room-slider owl-carousel owl-theme pt-45">
-                        <?php foreach ($samerooms as $similarRoom) : ?>
-                            <div class="item">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-5 col-md-4 ">
-                                        <div class="room-card-img" style="margin: -16px;">
-                                            <a href="index.php?controller=client&action=room_details&id=<?php echo $similarRoom->id; ?>">
-                                                <img src="<?php echo "./uploads/" . $similarRoom->image_path  ?>" alt="Images" style="height: 150px;">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-8 p-0">
-                                        <div class="room-card-content">
-                                            <h3>
-                                                <a href="index.php?controller=client&action=room_details&id=<?php echo $similarRoom->id; ?>" style="color: black;">
-                                                    <?php echo RoomType::getNameById($similarRoom->room_type_id);  ?>
-                                                </a>
-                                            </h3>
-                                            <span><?php echo $similarRoom->price_per_night; ?></span>
-                                            <div class="rating">
-                                                <i class="bx bxs-star"></i>
-                                                <i class="bx bxs-star"></i>
-                                                <i class="bx bxs-star"></i>
-                                                <i class="bx bxs-star"></i>
-                                                <i class="bx bxs-star"></i>
-                                            </div>
-                                            <ul>
-                                                <li><i class="bx bx-user"></i><?php echo $similarRoom->capacity; ?></li>
-                                            </ul>
-                                            <ul>
-                                                <li><i class="bx bx-show-alt"></i> Sea Balcony</li>
-                                                <li><i class="bx bxs-hotel"></i><?php echo RoomType::getNameById($similarRoom->room_type_id);  ?>/<?php echo $similarRoom->name; ?></li>
-                                            </ul>
-                                            <a href="room-details.html?id=<?php echo $similarRoom->id; ?>" class="book-more-btn">
-                                                Book Now
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
 
     <script src="assets/js/jquery.min.js"></script>
 
@@ -449,28 +245,8 @@ if (isset($roomDetails)) {
     <script src="assets/js/contact-form-script.js"></script>
 
     <script src="assets/js/custom.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".room-slider").owlCarousel({
-                items: 2,
-                loop: true,
-                margin: 100,
-            });
-        });
-    </script>
-    <script>
-        function toggleContent(contentId) {
-            var content = document.getElementById(contentId);
-            if (content.style.display === 'block' || content.style.display === '') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
-            }
-        }
-        function toggleServices() {
-        toggleContent('services');
-    }
-    </script>
 </body>
+
+<!-- Mirrored from templates.hibootstrap.com/atoli/default/room.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Nov 2023 09:54:34 GMT -->
 
 </html>

@@ -18,32 +18,40 @@ $user_info = login::getUserInfoByID($_SESSION['user_id']);
             </div>
             <div class="col-lg-10 bg-light-gray border">
                 <div class="user-all-form">
-                    <div class="contact-forms text-left">
-                        <div style="margin-top: -65px; border-bottom: 1px solid #b4b6b9;">
-                        <h5 style="margin-left: 20px;">Thông Tin Tài Khoản</h5>
-                        </div>
-                        <form action="index.php?controller=client&action=update&id=<?php echo $_SESSION['user_id']; ?>" method="POST" class="forms-sample">
-                            <div class="form-group" style="margin-left: 20px; margin-right: 20px;">
-                                <h7 for="name">Tên </h7>
-                                <input type="text" class="form-control" id="name" name="name" value="<?php echo $user_info['name']; ?>">
-                            </div>
-                            <div class="form-group" style="margin-left: 20px; margin-right: 20px;">
-                                <h7 for="email">Email</h7>
-                                <input type="text" class="form-control" id="email" name="email" value="<?php echo $user_info['email']; ?>">
-                            </div>
-                            <div class="form-group" style="margin-left: 20px; margin-right: 20px;">
-                                <h7 for="phone_number">Số Điện Thoại</h7>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $user_info['phone_number']; ?>">
-                            </div>
-                            <div class="form-group" style="margin-left: 20px; margin-right: 20px;">
-                                <h7 for="address">Địa chỉ</h7>
-                                <input type="text" class="form-control" id="address" name="address" value="<?php echo $user_info['address']; ?>">
-                            </div>
-                            <div style="margin-top: 25px; width: 30%;margin-left: 30px;">
-                                <button class="btn btn-primary btn-lg btn-block">Cập Nhật Tài Khoản</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="contact-forms text-center">
+    <h1 class="text-center" style="margin-top: -65px;">Welcome_Profile</h1>
+    <form action="index.php?controller=client&action=update&id=<?php echo $_SESSION['user_id']; ?>" method="POST" class="forms-sample" style="width: 50%; margin: 0 auto;">
+        <div class="form-group">
+            <label for="name">Tên :</label>
+            <input type="text" class="form-control" id="name" name="name" value="<?php echo $user_info['name']; ?>">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" name="email" value="<?php echo $user_info['email']; ?>">
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Số Điện Thoại:</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $user_info['phone_number']; ?>">
+        </div>
+        <div class="form-group">
+            <label for="gender">Giới tính:</label>
+            <input type="radio" id="male" name="gender" value="male" <?php if ($user_info['gender'] == 'male') echo 'checked'; ?>>
+            <label for="male">Nam</label>
+            <input type="radio" id="female" name="gender" value="female" <?php if ($user_info['gender'] == 'female') echo 'checked'; ?>>
+            <label for="female">Nữ</label>
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ:</label>
+            <input type="text" class="form-control" id="address" name="address" value="<?php echo $user_info['address']; ?>">
+        </div>
+        <div style="margin-top: 15px; width: 186px; margin-left: 144px; padding: 5px; background-color: #007BFF; border: 1px solid #007BFF; border-radius: 5px;">
+            <button class="btn btn-gradient-primary" style="width: 100%;">Cập Nhật Tài Khoản</button>
+        </div>
+    </form>
+</div>
+
+
+
                 </div>
             </div>
         </div>

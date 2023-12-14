@@ -81,9 +81,9 @@ class Booking
             $stmt->execute();
             $roomData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            if (empty($roomData)) {
-                throw new Exception("Rất tiếc là không còn phòng trống cho tiêu chí tìm kiếm của bạn.");
-            }
+        if (empty($roomData)) {
+            throw new Exception("message.");
+        }
 
             $roomObjects = [];
             foreach ($roomData as $room) {
@@ -100,55 +100,9 @@ class Booking
                 );
             }
 
-            return $roomObjects;
-        } catch (Exception $e) {
-            throw new Exception("Error getting available rooms: " . $e->getMessage());
-        }
+        return $roomObjects;
     }
 
-    static function updateRoomQuantities($selectedPerson, $checkinDate, $checkoutDate)
-    {
-        try {
-            $db = DB::getInstance();
-    
-            $query = "SELECT r.room_type_id, COUNT(r.id) AS room_count
-                FROM rooms r
-                LEFT JOIN room_reservations rr ON r.id = rr.room_id
-                WHERE r.capacity <= :capacity
-                    AND (rr.checkin_date IS NULL
-                         OR :checkin_date >= rr.checkout_date
-                         OR rr.id IS NULL)
-                GROUP BY r.room_type_id
-    
-                UNION
-    
-                SELECT r.room_type_id, COUNT(r.id) AS room_count
-                FROM rooms r
-                LEFT JOIN room_reservations rr ON r.id = rr.room_id
-                WHERE r.capacity <= :capacity
-                    AND (rr.checkout_date IS NULL
-                         OR :checkout_date <= rr.checkin_date
-                         OR rr.id IS NULL)
-                GROUP BY r.room_type_id
-            ";
-    
-            $stmt = $db->prepare($query);
-            $stmt->bindParam(':capacity', $selectedPerson);
-            $stmt->bindParam(':checkin_date', $checkinDate);
-            $stmt->bindParam(':checkout_date', $checkoutDate);
-            $stmt->execute();
-            $roomTypeData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-            if (empty($roomTypeData)) {
-                throw new Exception("Rất tiếc là không còn phòng trống cho tiêu chí tìm kiếm của bạn.");
-            }
-    
-            // Perform the logic to update room quantities based on $roomTypeData
-            // ...
-    
-            return $roomTypeData;
-        } catch (Exception $e) {
-            throw new Exception("Lỗi khi cập nhật thông tin phòng: " . $e->getMessage());
-        }
-    }
+
 }
+

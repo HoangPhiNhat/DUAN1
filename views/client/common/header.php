@@ -38,7 +38,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="icon" type="image/png" href="views/client/assets/img/favicon.png">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Atoli - Hotel & Resorts HTML Template</title>
     <style>
         button {

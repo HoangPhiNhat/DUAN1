@@ -20,81 +20,6 @@ class ClientController extends BaseController
         $this->parentFolder = 'client';
         $this->subFolder = 'pages';
     }
-    public function redirect()
-{
-    $customer_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-
-    // Thông tin phòng 1
-    $customer_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-            $room_id = isset($_GET['Room1']) ? $_GET['Room1'] : null;
-            $checkin_date_input = isset($_GET['checkin_date']) ? $_GET['checkin_date'] : null;
-            $checkout_date_input = isset($_GET['checkout_date']) ? $_GET['checkout_date'] : null;
-            $total_amount_trimmed = isset($_GET['vnp_Amount']) ? $_GET['vnp_Amount'] : null;
-           $total =  $total_amount_trimmed / 100;
-
-            if ($customer_id && $room_id && $checkin_date_input && $checkout_date_input && $total) {
-                try {
-                    $checkin_date = DateTime::createFromFormat('d/m/Y', $checkin_date_input)->format('Y-m-d');
-                    $checkout_date = DateTime::createFromFormat('d/m/Y', $checkout_date_input)->format('Y-m-d');
-                    $total_amount = preg_replace("/[^0-9]/", "", $total);
-                    echo  $total_amount;
-                    $bookingId = SecureBooking::reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount);
-                } catch (\Exception $e) {
-                    // Xử lý lỗi khi đặt phòng thất bại
-                    echo "Đặt phòng thất bại. Lỗi: " . $e->getMessage();
-                }
-            }
-    // Thông tin phòng 2
-    $room_id_2 = isset($_GET['Room2']) ? $_GET['Room2'] : null;
-
-    // Thông tin phòng 3
-    $room_id_3 = isset($_GET['Room3']) ? $_GET['Room3'] : null;
-    
-    // Kiểm tra xem có thông tin phòng 3 hay không
-    if ($room_id_3) {
-        $checkin_date_input_3 = isset($_GET['checkin_date']) ? $_GET['checkin_date'] : null;
-        $checkout_date_input_3 = isset($_GET['checkout_date']) ? $_GET['checkout_date'] : null;
-        $total_amount_trimmed_3 = isset($_GET['vnp_Amount']) ? $_GET['vnp_Amount'] : null;
-        $total_3 = $total_amount_trimmed_3 / 100;
-
-        // Kiểm tra xem có ngày checkin, checkout và tổng giá trị hay không
-        if ($checkin_date_input_3 && $checkout_date_input_3 && $total_3) {
-            try {
-                $checkin_date_3 = DateTime::createFromFormat('d/m/Y', $checkin_date_input_3)->format('Y-m-d');
-                $checkout_date_3 = DateTime::createFromFormat('d/m/Y', $checkout_date_input_3)->format('Y-m-d');
-                $total_amount_3 = preg_replace("/[^0-9]/", "", $total_3);
-
-                $bookingId3 = SecureBooking::reserveRoom($customer_id, $room_id_3, $checkin_date_3, $checkout_date_3, $total_amount_3);
-                
-            } catch (\Exception $e) {
-                echo "Đặt phòng 3 thất bại: " . $e->getMessage();
-            }
-        }
-    }
-
-    if ($room_id_2) {
-        $checkin_date_input_2 = isset($_GET['checkin_date']) ? $_GET['checkin_date'] : null;
-        $checkout_date_input_2 = isset($_GET['checkout_date']) ? $_GET['checkout_date'] : null;
-        $total_amount_trimmed_2 = isset($_GET['vnp_Amount']) ? $_GET['vnp_Amount'] : null;
-        $total_2 = $total_amount_trimmed_2 / 100;
-
-        if ($checkin_date_input_2 && $checkout_date_input_2 && $total_2) {
-            try {
-                $checkin_date_2 = DateTime::createFromFormat('d/m/Y', $checkin_date_input_2)->format('Y-m-d');
-                $checkout_date_2 = DateTime::createFromFormat('d/m/Y', $checkout_date_input_2)->format('Y-m-d');
-                $total_amount_2 = preg_replace("/[^0-9]/", "", $total_2);
-
-                $bookingId2 = SecureBooking::reserveRoom($customer_id, $room_id_2, $checkin_date_2, $checkout_date_2, $total_amount_2);
-                
-            } catch (\Exception $e) {
-                echo "Đặt phòng 2 thất bại: " . $e->getMessage();
-            }
-        }
-    }
-    $this->folder = 'home';
-        $this->render('redirect');
-
-}
 
     public function home()
     {
@@ -104,6 +29,9 @@ class ClientController extends BaseController
         $this->folder = 'home';
         $this->render('index', $data);
     }
+
+
+
     public function aboutUs()
     {
         $this->folder = 'aboutUs';
@@ -111,10 +39,20 @@ class ClientController extends BaseController
     }
     public function bookNow()
     {
-        $list = Facility::getAllData();
+        $InfoUser = array();
+        if (isset($_SESSION['user_id'])) {
+            $InfoUser['name'] = $_SESSION['user_name'];
+            $InfoUser['email'] = $_SESSION['email'];
+            $InfoUser['phone'] = isset($_SESSION['user_phone']) ? $_SESSION['user_phone'] : '';
+         } else {
+            $InfoUser['name'] = '';
+            $InfoUser['email'] = '';
+            $InfoUser['phone'] = '';
+        }
+
         $roomType = roomType::getAllData();
-        $data = array('roomType' => $roomType, 'list' => $list);
-        $this->folder = 'booking';
+        $data = array('roomType' => $roomType, 'InfoUser' => $InfoUser);
+        $this->folder = 'bookingRoom';
         $this->render('book', $data);
     }
     public function Contact()
@@ -128,99 +66,60 @@ class ClientController extends BaseController
     {
         $roles = roles::getAllData();
         $lists = Rooms::getAllData();
-        $list = Facility::getAllData();
-        $data = array('lists' => $lists, 'list' => $list , 'roles' =>$roles,);
+
+        $data = array('lists' => $lists);
         $this->folder = 'rooms';
         $this->render('room', $data);
     }
     public function room_details()
-    {
-        try {
-            $id = $_GET['id'];
-           
-            $roomDetails = Rooms::getRoomDetailsById($id);
-           
-            $comments = Comment::getCommentsByRoomId($id);
-            $list = Facility::getAllData();
-           
-            $data = [
-                'roomDetails' => $roomDetails,
-                'comments' => $comments,
-                'list' => $list
-            ];
-            $samerooms = Rooms::getRoomsByCapacity($roomDetails->capacity);
-           
-            $data['samerooms'] = $samerooms;
-    
+{
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $roomDetails = Rooms::findData($id);
+        if ($roomDetails) {
+            $data = ['roomDetails' => $roomDetails];
             $this->folder = 'rooms';
             $this->render('room_details', $data);
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-            $data = ['error' => $error];
-            $this->folder = 'rooms';
-            $this->render('room_details', $data);
+        } else {
+            echo "Room details not found.";
         }
+    } else {
+        echo "Room ID not provided.";
     }
-    
-    public function booking_history()
-    {
-        $user_name = $_SESSION['user_name'];
-        $bookingHistory = roomReservation::getBookingHistory($user_name);
+}
+public function roomSelection()
+{
+    $selectedPerson = isset($_GET['person']) ? $_GET['person'] : 1;
+    $checkinDate = isset($_GET['checkin_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkin_date'])->format('Y-m-d') : null;
+    $checkoutDate = isset($_GET['checkout_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkout_date'])->format('Y-m-d') : null;
+
+
+    try {
+        $availableRooms = Booking::getAvailableRooms($selectedPerson, $checkinDate, $checkoutDate);
         $list = Facility::getAllData();
-        $data = array('bookingHistory' => $bookingHistory, 'list' => $list);
-        $this->folder = 'booking';
-        $this->render('booking_history', $data);
+        $data = array('list' => $list, 'availableRooms' => $availableRooms);
+        $this->folder = 'secureBooking';
+        $this->render('roomSelection', $data);
+
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
     }
-    public function roomSelection()
-    {
-        try {
-            $selectedPerson = isset($_GET['person']) ? $_GET['person'] : 1;
-            $checkinDate = isset($_GET['checkin_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkin_date'])->format('Y-m-d') : null;
-            $checkoutDate = isset($_GET['checkout_date']) ? DateTime::createFromFormat('d/m/Y', $_GET['checkout_date'])->format('Y-m-d') : null;
-    
-            $availableRooms = Booking::getAvailableRooms($selectedPerson, $checkinDate, $checkoutDate);
-            $facilities = Facility::getAllData();
-            $roles = Login::getAllData();
-    
-            // Additional logic for updating room quantities and hiding reserved rooms
-            $roomTypeCounts = Booking::updateRoomQuantities($selectedPerson, $checkinDate, $checkoutDate);
-            Rooms::hideReservedRooms();
-            $list = Facility::getAllData();
-            $data = [
-                'list' => $list,
-                'facilities' => $facilities,
-                'availableRooms' => $availableRooms,
-                'roomTypeCounts' => $roomTypeCounts,
-                'roles' => $roles
-            ];
-    
-               $this->folder = 'booking';
-            $this->render('roomSelection', $data);
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-            $data = ['error' => $error];
-               $this->folder = 'booking';
-            $this->render('roomSelection', $data);
-        }
-    }
-    public function secureBooking()
-    {
-        $Room1 = intval($_GET['Room1']);
-        $Room2 = isset($_GET['Room2']) ? intval($_GET['Room2']) : null;
-        $Room3 = isset($_GET['Room3']) ? intval($_GET['Room3']) : null;
-        $serviceCharge = 109.918;
-        $VAT = 271.204;
-        $price1 = isset($_GET['price1']) ? intval(str_replace('.', '', $_GET['price1'])) : 0;
-        $price2 = isset($_GET['price2']) ? intval(str_replace('.', '', $_GET['price2'])) : 0;
-        $price3 = isset($_GET['price3']) ? intval(str_replace('.', '', $_GET['price3'])) : 0;
-        $checkinDateString = $_GET['checkin_date'];
-        $checkoutDateString = $_GET['checkout_date'];
-        $checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
-        $checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
-        $numberOfNights = $checkinDate->diff($checkoutDate)->days;
-        $totalPrice = ($price1 + $price2 + $price3) * $numberOfNights + intval(str_replace('.', '', $serviceCharge)) + intval(str_replace('.', '', $VAT));
-        $amount = $totalPrice;
-        $InfoUser = array();
+}
+
+public function secureBooking()
+{
+$serviceCharge = 109.918;
+$VAT = 271.204;
+$priceString = $_GET['price'];
+$checkinDateString = $_GET['checkin_date'];
+$checkoutDateString = $_GET['checkout_date'];
+$price = intval(str_replace('.', '', $priceString));
+$checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
+$checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
+$numberOfNights = $checkinDate->diff($checkoutDate)->days;
+$totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
+    $amount=$totalPrice;
+    $InfoUser = array();
         if (isset($_SESSION['user_id'])) {
             $InfoUser['id'] =  $_SESSION['user_id'];
             $InfoUser['name'] = $_SESSION['user_name'];
@@ -248,7 +147,7 @@ class ClientController extends BaseController
         $this->render('secureBooking', $data);
     }
 
-    public function paymentGateways($amount, $checkinDateString, $checkoutDateString, $Room1, $Room2, $Room3)
+public function paymentGateways($amount)
     {
 
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -351,115 +250,102 @@ class ClientController extends BaseController
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            try {
-                login::checkLogin($email, $password);
-                header('Location: index.php?controller=client&action=home');
-                exit();
-            } catch (Exception $e) {
-                $errorMessage = $e->getMessage();
-                $data = array('error' => $errorMessage);
-                $this->folder = 'signIn';
-                $this->render('sign-in', $data);
-            }
-        } else {
-            $this->folder = 'signIn';
-            $this->render('sign-in');
-        }
-    }
-    public function logOut()
-    {
-        $this->folder = 'signIn';
-        $this->render('logOut');
-    }
-    public function profile()
-    {
-        $list = Facility::getAllData();
-        $data = array('list' => $list);
-        $this->folder = 'Setting';
-        $this->render('profile', $data);
-    }
-    public function update()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy các dữ liệu từ form
-            $id = $_SESSION['user_id'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $phone_number = $_POST['phone_number'];
-            $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
-            $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : null;
-            $address = $_POST['address'];
-            login::updateData($id, $name, $email, $phone_number, $gender, $address, $roles_id);
-
-            // Cập nhật session với thông tin mới
-            $_SESSION['user_name'] = $name;
-            $message = "Dữ liệu đã được sửa thành công";
-            $data = array('message' => $message);
-            $this->folder = 'Setting';
-            $this->render('update');
-            echo "Cập nhật thành công!";
-            header('Location: index.php?controller=client&action=profile');
+        try {
+            login::checkLogin($email, $password);
+            header('Location: index.php?controller=client&action=home');
             exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $data = array('error' => $errorMessage);
+            $this->folder = 'signIn';
+            $this->render('sign-in', $data);
         }
+    } else {
+        $this->folder = 'signIn';
+        $this->render('sign-in');
     }
-    public function findProfile()
-    {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $value = login::findData($id);
-            if ($value) {
-                $data = array('value' => $value);
-                $this->folder = 'Setting';
-                $this->render('update', $data);
-            } else {
-                echo "Không tìm thấy dữ liệu!";
-            }
+}
+public function logOut()
+{
+    $this->folder = 'signIn';
+    $this->render('logOut');
+}
+public function profile()
+{
+    $this->folder = 'Setting';
+    $this->render('profile');
+}
+public function booking_history()
+{
+    $this->folder = 'booking_history';
+    $this->render('booking_history');
+}
+
+public function update() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_SESSION['user_id'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone_number = $_POST['phone_number'];
+
+        // Kiểm tra xem 'gender' có tồn tại trong $_POST không
+        $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
+
+        // Kiểm tra xem 'new_password' có tồn tại trong $_POST không
+        $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : null;
+
+        // Kiểm tra xem 'roles_id' có tồn tại trong $_POST không
+        $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : null;
+
+        $address = $_POST['address'];
+
+        // Nếu người dùng nhập mật khẩu mới, thì hash nó
+        $password = empty($new_password) ? null : password_hash($new_password, PASSWORD_DEFAULT);
+
+        // Thực hiện cập nhật thông tin tài khoản
+        login::updateData($id, $name, $email, $phone_number, $gender, $address, $password, $roles_id);
+
+        // Cập nhật session với thông tin mới
+        $_SESSION['user_name'] = $name;
+        $message = "Dữ liệu đã được sửa thành công";
+        $data = array('message' => $message);
+        $this->folder = 'Setting';
+        $this->render('update');
+        // Chuyển hướng hoặc hiển thị thông báo cập nhật thành công
+        // Ở đây, bạn có thể chuyển hướng đến trang profile hoặc hiển thị thông báo thành công.
+        // Ví dụ: header('Location: index.php?controller=client&action=profile');
+        // echo '<script>window.location.href = "index.php?controller=client&action=profile";</script>';
+        echo "Cập nhật thành công!";
+        exit();
+    }
+}
+
+
+public function findProfile()
+{
+    // Kiểm tra xem có tham số 'id' trên URL không
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+
+        // Gọi hàm findData để lấy dữ liệu cần thiết
+        $value = login::findData($id);
+
+        // Kiểm tra xem có dữ liệu trả về không
+        if ($value) {
+            // Chuyển hướng sang trang update với dữ liệu
+            $data = array('value' => $value);
+            $this->folder = 'Setting';
+            $this->render('update', $data);
         } else {
-            echo "Thiếu tham số 'id' trên URL!";
+            // Xử lý trường hợp không tìm thấy dữ liệu
+            echo "Không tìm thấy dữ liệu!";
         }
+    } else {
+        // Xử lý trường hợp không có tham số 'id' trên URL
+        echo "Thiếu tham số 'id' trên URL!";
     }
-    public function addComment()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_SESSION['user_id'])) {
-                $customer_id = $_SESSION['user_id'];
-                $rating = $_POST['rating'];
-                $comment_text = $_POST['comment_text'];
-                if (isset($_POST['room_id'])) {
-                    $room_id = $_POST['room_id'];
-                    $success = login::addComment($room_id, $customer_id, $rating, $comment_text);
-                    if ($success) {
-                        echo "Bình luận đã được thêm vào cơ sở dữ liệu.";
-                    } else {
-                        echo "Có lỗi xảy ra khi thêm bình luận.";
-                    }
-                    header("Location: index.php?controller=client&action=room_details&id=" . $room_id);
-                    exit();
-                } else {
-                    echo "Không có thông tin về phòng.";
-                }
-            } else {
-                echo "Bạn cần đăng nhập để thêm bình luận.";
-            }
-        }
-        $this->folder = 'rooms';
-        $this->render('room_details');
-    }
-    // public function roomSame($currentRoomName, $currentRoomTypeId)
-    // {
-    //     // Fetch details of the current room
-    //     $similarRooms = Rooms::getSimilarRooms($currentRoomName, $currentRoomTypeId);
+}
 
-    //     // Debugging: var_dump the result
-    //     var_dump($similarRooms);
-
-    //     $data = array(
-    //         'similarRooms' => $similarRooms
-    //     );
-
-    //     $this->folder = 'rooms';
-    //     $this->render('room_details', $data);
-    // }
     public function error()
     {
         $data = array('is404' => true);
