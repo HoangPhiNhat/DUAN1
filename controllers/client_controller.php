@@ -19,49 +19,36 @@ class ClientController extends BaseController
         $this->parentFolder = 'client';
         $this->subFolder = 'pages';
     }
-    public function home()
+    public function redirect()
     {
-        $response_code = isset($_GET['vnp_ResponseCode']) ? $_GET['vnp_ResponseCode'] : 'null';
-        $successScript = '';
 
-        if ($response_code == '00') {
-            $successScript = "<script>swal({
-                title: 'Thanh toán thành công',
-                icon: 'success'
-            });
-            </script>";
             $customer_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-            $room_id = isset($_GET['bookRoom']) ? $_GET['bookRoom'] : null;
+            $room_id = isset($_GET['Room1']) ? $_GET['Room1'] : null;
             $checkin_date_input = isset($_GET['checkin_date']) ? $_GET['checkin_date'] : null;
             $checkout_date_input = isset($_GET['checkout_date']) ? $_GET['checkout_date'] : null;
             $total_amount_trimmed = isset($_GET['vnp_Amount']) ? $_GET['vnp_Amount'] : null;
+           $total =  $total_amount_trimmed / 100;
 
-            if ($customer_id && $room_id && $checkin_date_input && $checkout_date_input && $total_amount_trimmed) {
+            if ($customer_id && $room_id && $checkin_date_input && $checkout_date_input && $total) {
                 try {
-                    // Chuyển định dạng ngày tháng
                     $checkin_date = DateTime::createFromFormat('d/m/Y', $checkin_date_input)->format('Y-m-d');
                     $checkout_date = DateTime::createFromFormat('d/m/Y', $checkout_date_input)->format('Y-m-d');
-
-                    // Loại bỏ các ký tự không mong muốn từ giá trị total_amount
-                    $total_amount = preg_replace("/[^0-9]/", "", $total_amount_trimmed);
-
-                    // Gọi hàm để đặt phòng
+                    $total_amount = preg_replace("/[^0-9]/", "", $total);
                     $bookingId = SecureBooking::reserveRoom($customer_id, $room_id, $checkin_date, $checkout_date, $total_amount);
-                    // Nếu cần, bạn có thể in ra thông báo đặt phòng thành công ở đây
                 } catch (\Exception $e) {
                     // Xử lý lỗi khi đặt phòng thất bại
                     echo "Đặt phòng thất bại. Lỗi: " . $e->getMessage();
                 }
             }
 
-            // Chuyển hướng về trang chủ sau khi xử lý thanh toán thành công
-            header("Location: index.php?controller=client&action=home");
-            exit();
-        }
-
+        $this->folder = 'home';
+        $this->render('redirect');
+    }
+    public function home()
+    {
         $lists = Rooms::getAllData();
         $list = Facility::getAllData();
-        $data = array('lists' => $lists, 'list' => $list, 'successScript' => $successScript);
+        $data = array('lists' => $lists, 'list' => $list);
         $this->folder = 'home';
         $this->render('index', $data);
     }
@@ -78,7 +65,7 @@ class ClientController extends BaseController
     {
         $roomType = roomType::getAllData();
         $data = array('roomType' => $roomType);
-        $this->folder = 'bookingRoom';
+        $this->folder = 'booking';
         $this->render('book', $data);
     }
 
@@ -120,7 +107,7 @@ class ClientController extends BaseController
         $bookingHistory = roomReservation::getBookingHistory($user_name);
         $list = Facility::getAllData();
         $data = array('bookingHistory' => $bookingHistory, 'list' => $list);
-        $this->folder = 'booking_history';
+        $this->folder = 'booking';
         $this->render('booking_history', $data);
     }
     public function roomSelection()
@@ -133,38 +120,39 @@ class ClientController extends BaseController
             $availableRooms = Booking::getAvailableRooms($selectedPerson, $checkinDate, $checkoutDate);
 
             if (empty($availableRooms)) {
-                // Không có phòng trống, báo lỗi
-                $error = "Sorry, no available rooms for the selected dates and person.";
+                $error = ".";
             } else {
-                // Có phòng trống, tiếp tục xử lý
                 $error = null;
             }
             $list = Facility::getAllData();
             $data = array('list' => $list, 'availableRooms' => $availableRooms, 'error' => $error);
-            $this->folder = 'secureBooking';
+            $this->folder = 'booking';
             $this->render('roomSelection', $data);
         } catch (Exception $e) {
             // Xử lý ngoại lệ nếu có
             $error = $e->getMessage();
             $data = array('error' => $error);
-            $this->folder = 'secureBooking';
+            $this->folder = 'booking';
             $this->render('roomSelection', $data);
         }
     }
 
     public function secureBooking()
     {
-        $bookRoom = $_GET['bookRoom'];
+        $Room1 = intval($_GET['Room1']);
+        $Room2 = isset($_GET['Room2']) ? intval($_GET['Room2']) : null;
+        $Room3 = isset($_GET['Room3']) ? intval($_GET['Room3']) : null;
         $serviceCharge = 109.918;
         $VAT = 271.204;
-        $priceString = $_GET['price'];
+        $price1 = isset($_GET['price1']) ? intval(str_replace('.', '', $_GET['price1'])) : 0;
+        $price2 = isset($_GET['price2']) ? intval(str_replace('.', '', $_GET['price2'])) : 0;
+        $price3 = isset($_GET['price3']) ? intval(str_replace('.', '', $_GET['price3'])) : 0;
         $checkinDateString = $_GET['checkin_date'];
         $checkoutDateString = $_GET['checkout_date'];
-        $price = intval(str_replace('.', '', $priceString));
         $checkinDate = DateTime::createFromFormat('d/m/Y', $checkinDateString);
         $checkoutDate = DateTime::createFromFormat('d/m/Y', $checkoutDateString);
         $numberOfNights = $checkinDate->diff($checkoutDate)->days;
-        $totalPrice = $price * $numberOfNights + intval(str_replace('.', '', $serviceCharge))  + intval(str_replace('.', '', $VAT));
+        $totalPrice = ($price1 + $price2 + $price3) * $numberOfNights + intval(str_replace('.', '', $serviceCharge)) + intval(str_replace('.', '', $VAT));
         $amount = $totalPrice;
         $InfoUser = array();
         if (isset($_SESSION['user_id'])) {
@@ -177,32 +165,32 @@ class ClientController extends BaseController
             $InfoUser['email'] = '';
             $InfoUser['phone'] = '';
         }
-        $roomID = isset($_GET['bookRoom']) ? $_GET['bookRoom'] : null;
-        $room = Booking::getRoomById($roomID);
+        $room1ID = isset($_GET['Room1']) ? $_GET['Room1'] : null;
+        $room2ID = isset($_GET['Room2']) ? $_GET['Room2'] : null;
+        $room3ID = isset($_GET['Room3']) ? $_GET['Room3'] : null;
+        $room1 = Booking::getRoomById($room1ID);
+        $room2 = Booking::getRoomById($room2ID);
+        $room3 = Booking::getRoomById($room3ID);
 
-        // Kiểm tra xem $room có tồn tại và có giá trị hợp lệ hay không
-        if ($room) {
-            echo "Room Name: " . $room->name;
-            // ...
-        } else {
-            echo "Không tìm thấy thông tin phòng hoặc thông tin không hợp lệ.";
-        }
 
-        $this->paymentGateways($amount, $checkinDateString, $checkoutDateString, $bookRoom);
-        $data = array('room' => $room, 'InfoUser' => $InfoUser);
-        $this->folder = 'secureBooking';
+        $this->paymentGateways($amount, $checkinDateString, $checkoutDateString, $Room1, $Room2, $Room3);
+        $data = array('room1' => $room1,
+                      'room2' => $room2,
+                      'room3' => $room3,
+                      'InfoUser' => $InfoUser);
+        $this->folder = 'booking';
         $this->render('secureBooking', $data);
     }
 
 
-    public function paymentGateways($amount, $checkinDateString, $checkoutDateString, $bookRoom)
+    public function paymentGateways($amount, $checkinDateString, $checkoutDateString, $Room1, $Room2, $Room3)
     {
 
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost/DUAN1/index.php?controller=client&action=home&checkin_date={$checkinDateString}&checkout_date={$checkoutDateString}&bookRoom={$bookRoom}";
+        $vnp_Returnurl = "http://localhost/DUAN1/index.php?controller=client&action=redirect&checkin_date={$checkinDateString}&checkout_date={$checkoutDateString}&Room1={$Room1}&Room2={$Room2}&Room3={$Room3}";
         $vnp_TmnCode = "CGXZLS0Z"; //Mã website tại VNPAY
         $vnp_HashSecret = "XNBCJFAKAZQSGTARRLGCHVZWCIOIGSHN"; //Chuỗi bí mật
 
@@ -213,29 +201,6 @@ class ClientController extends BaseController
         $vnp_Locale = "vn";
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-        //Add Params of 2.0.1 Version
-        // $vnp_ExpireDate = $_POST['txtexpire'];
-        // //Billing
-        // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
-        // $vnp_Bill_Email = $_POST['txt_billing_email'];
-        // $fullName = trim($_POST['txt_billing_fullname']);
-        // if (isset($fullName) && trim($fullName) != '') {
-        //     $name = explode(' ', $fullName);
-        //     $vnp_Bill_FirstName = array_shift($name);
-        //     $vnp_Bill_LastName = array_pop($name);
-        // }
-        // $vnp_Bill_Address = $_POST['txt_inv_addr1'];
-        // $vnp_Bill_City = $_POST['txt_bill_city'];
-        // $vnp_Bill_Country = $_POST['txt_bill_country'];
-        // $vnp_Bill_State = $_POST['txt_bill_state'];
-        // Invoice
-        // $vnp_Inv_Phone = $_POST['txt_inv_mobile'];
-        // $vnp_Inv_Email = $_POST['txt_inv_email'];
-        // $vnp_Inv_Customer = $_POST['txt_inv_customer'];
-        // $vnp_Inv_Address = $_POST['txt_inv_addr1'];
-        // $vnp_Inv_Company = $_POST['txt_inv_company'];
-        // $vnp_Inv_Taxcode = $_POST['txt_inv_taxcode'];
-        // $vnp_Inv_Type = $_POST['cbo_inv_type'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -249,21 +214,6 @@ class ClientController extends BaseController
             "vnp_OrderType" => $vnp_OrderType,
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
-            // "vnp_ExpireDate" => $vnp_ExpireDate,
-            // "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
-            // "vnp_Bill_Email" => $vnp_Bill_Email,
-            // "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
-            // "vnp_Bill_LastName" => $vnp_Bill_LastName,
-            // "vnp_Bill_Address" => $vnp_Bill_Address,
-            // "vnp_Bill_City" => $vnp_Bill_City,
-            // "vnp_Bill_Country" => $vnp_Bill_Country,
-            // "vnp_Inv_Phone" => $vnp_Inv_Phone,
-            // "vnp_Inv_Email" => $vnp_Inv_Email,
-            // "vnp_Inv_Customer" => $vnp_Inv_Customer,
-            // "vnp_Inv_Address" => $vnp_Inv_Address,
-            // "vnp_Inv_Company" => $vnp_Inv_Company,
-            // "vnp_Inv_Taxcode" => $vnp_Inv_Taxcode,
-            // "vnp_Inv_Type" => $vnp_Inv_Type
         );
 
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
@@ -300,7 +250,7 @@ class ClientController extends BaseController
             header('Location: ' . $vnp_Url);
             die();
         } else {
-            echo "<p id='displayedURL' style ='display:none'>$vnp_Url</p>";
+            echo "<p id='displayedURL' style ='display: none'>$vnp_Url</p>";
         }
     }
     public function register()

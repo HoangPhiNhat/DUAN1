@@ -3001,8 +3001,8 @@ img {
     margin-bottom: 20px;
     padding-left: 20px;
     border-radius: 50px;
-    background-color: #b56952;
-    color: #fff
+    /* background-color: #b56952; */
+    color: #000;
 }
 
 .side-bar-form .nice-select .list {
@@ -4454,7 +4454,7 @@ img {
 }
 
 .booking-form .nice-select .list .option:hover {
-    background-color: #b56952 !important;
+    background-color: #c890ff !important;
     color: #fff
 }
 
@@ -6166,6 +6166,7 @@ img {
 .infoHotel {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .room_details, .room_details_left {
@@ -6180,4 +6181,25 @@ img {
 .fb-gray-bg {
     border-bottom: 1px dashed;
     margin-bottom: 22px;
+}
+.choose-room {
+    background-color: #f5f5f5;
+    border: 1px #B3B3B3 dotted;
+    height: 80px;
+    margin: 10px 0;
+    padding-top: 30px;
+    text-align: center;
+}
+.itemLeft p {
+    margin: 0;
+    text-align: left;
+}
+.customRoomLabel {
+    margin-top: -30px;
+    padding: 12px 20px 20px 20px;
+}
+#clearButton {
+    width: 100%;
+    text-align: right;
+    background-color: transparent;
 }
