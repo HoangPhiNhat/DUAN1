@@ -843,7 +843,7 @@ function init(event) {
 window.addEventListener("load", init, false);
 
         </script>
-        <!-- <script>
+        <script>
         const delayTime = 10;
         function updateCountdown() {
             const countdownElement = document.getElementById('countdown');
@@ -862,7 +862,7 @@ window.addEventListener("load", init, false);
             window.location.href = "http://localhost/DUAN1/index.php?controller=client&action=home";
         }
         window.onload = updateCountdown;
-    </script> -->
+    </script>
     </head>
     <body id="kt_body"
         class="app-blank app-blank bgi-size-cover bgi-position-center bgi-no-repeat error404 mega-menu-main">
